@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace personal_library
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
-        public Form1()
+        public LoginForm()
         {
             InitializeComponent();
+            SetInitialState();
+        }
+
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            DoLogin();
         }
     }
 }
