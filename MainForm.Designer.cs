@@ -1,4 +1,4 @@
-﻿namespace personal_library
+﻿namespace PersonalLibrary
 {
     partial class MainForm
     {

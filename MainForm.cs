@@ -8,19 +8,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using PersonalLibrary.Dao;
+using PersonalLibrary.Models;
 
-namespace personal_library
+namespace PersonalLibrary
 {
     public partial class MainForm : Form
     {
+        private static readonly string CONNECTION_STRING = "data source=LAPTOP-EENRFF17\\SQLEXPRESS;initial catalog = course_project; User ID=lib_db_user;Password=123456;";
+        private SqlConnection dbConnection;
+        private LoginForm loginForm;
+        private LibraryDao libraryDao;
+        private AuthorDao authorDao;
         public MainForm(LoginForm loginForm)
         {
             InitializeComponent();
             this.loginForm = loginForm;
+            this.dbConnection = new SqlConnection(CONNECTION_STRING);
+            this.libraryDao = new LibraryDao(dbConnection);
+            this.authorDao = new AuthorDao(dbConnection);
             LoadData();
         }
 
-        private LoginForm loginForm;
+       
 
         private void MainForm_FormClosing(Object sender, FormClosingEventArgs e)
         {
@@ -33,21 +43,20 @@ namespace personal_library
                 e.Cancel = true;
                 return;
             }
+            dbConnection.Close();
             loginForm.Close();
         }
         private void LoadData()
         {
-            string connectionString = "data source=LAPTOP-EENRFF17\\SQLEXPRESS;initial catalog = course_project; User ID=lib_db_user;Password=123456;";
-            SqlConnection cnn = new SqlConnection(connectionString);
             try
             {
-                cnn.Open();
-                MessageBox.Show("Connection Open ! ");
-                cnn.Close();
+                dbConnection.Open();
+                List<Author> allAuthors = authorDao.GetAllAuthors();
+                List<Literature> literature = libraryDao.GetAllLiterature();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Can not open connection ! " + ex.Message);
+                MessageBox.Show("Can not open db connection ! " + ex.Message);
             }
         }
     }

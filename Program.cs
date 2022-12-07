@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace personal_library
+namespace PersonalLibrary
 {
     internal static class Program
     {

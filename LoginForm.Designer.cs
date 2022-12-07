@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using PersonalLibrary.Models;
 
-namespace personal_library
+
+namespace PersonalLibrary
 {
     partial class LoginForm
     {
@@ -113,7 +115,7 @@ namespace personal_library
             string login = loginInput.Text;
             string password = passwordInput.Text;
             User user = USERS.ContainsKey(login) ? USERS[login] : null; 
-            if (user == null || !user.getPassword().Equals(password)) 
+            if (user == null || !user.password.Equals(password)) 
             {
                 var result = MessageBox.Show("Wrong user name or password ", "Can not login",
                                              MessageBoxButtons.OK,
