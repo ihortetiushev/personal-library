@@ -30,23 +30,30 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.allLiteratureTab = new System.Windows.Forms.TabPage();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.literatureSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.literatureGridView = new System.Windows.Forms.DataGridView();
             this.categoriesTab = new System.Windows.Forms.TabPage();
             this.tabAuthors = new System.Windows.Forms.TabPage();
             this.authorsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.authorsGridView = new System.Windows.Forms.DataGridView();
+            this.cateroriesSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.cateroriesGridView = new System.Windows.Forms.DataGridView();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
+            this.literatureSplitContainer.Panel2.SuspendLayout();
+            this.literatureSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).BeginInit();
+            this.categoriesTab.SuspendLayout();
             this.tabAuthors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.authorsSplitContainer)).BeginInit();
             this.authorsSplitContainer.Panel2.SuspendLayout();
             this.authorsSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.authorsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).BeginInit();
+            this.cateroriesSplitContainer.Panel2.SuspendLayout();
+            this.cateroriesSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -65,45 +72,49 @@
             // 
             // allLiteratureTab
             // 
-            this.allLiteratureTab.Controls.Add(this.splitContainer1);
+            this.allLiteratureTab.Controls.Add(this.literatureSplitContainer);
             this.allLiteratureTab.Location = new System.Drawing.Point(4, 25);
             this.allLiteratureTab.Name = "allLiteratureTab";
             this.allLiteratureTab.Padding = new System.Windows.Forms.Padding(3);
-            this.allLiteratureTab.Size = new System.Drawing.Size(768, 397);
+            this.allLiteratureTab.Size = new System.Drawing.Size(895, 486);
             this.allLiteratureTab.TabIndex = 0;
-            this.allLiteratureTab.Text = "All Literature";
+            this.allLiteratureTab.Text = "Literature";
             this.allLiteratureTab.UseVisualStyleBackColor = true;
             // 
-            // splitContainer1
+            // literatureSplitContainer
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.literatureSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.literatureSplitContainer.Location = new System.Drawing.Point(3, 3);
+            this.literatureSplitContainer.Name = "literatureSplitContainer";
+            this.literatureSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel2
+            // literatureSplitContainer.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(762, 391);
-            this.splitContainer1.SplitterDistance = 169;
-            this.splitContainer1.TabIndex = 0;
+            this.literatureSplitContainer.Panel2.Controls.Add(this.literatureGridView);
+            this.literatureSplitContainer.Size = new System.Drawing.Size(889, 480);
+            this.literatureSplitContainer.SplitterDistance = 150;
+            this.literatureSplitContainer.TabIndex = 0;
             // 
-            // dataGridView1
+            // literatureGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(50, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(842, 193);
-            this.dataGridView1.TabIndex = 0;
+            this.literatureGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.literatureGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.literatureGridView.Location = new System.Drawing.Point(3, 3);
+            this.literatureGridView.Name = "literatureGridView";
+            this.literatureGridView.RowHeadersWidth = 51;
+            this.literatureGridView.RowTemplate.Height = 24;
+            this.literatureGridView.Size = new System.Drawing.Size(889, 320);
+            this.literatureGridView.TabIndex = 0;
             // 
             // categoriesTab
             // 
+            this.categoriesTab.Controls.Add(this.cateroriesSplitContainer);
             this.categoriesTab.Location = new System.Drawing.Point(4, 25);
             this.categoriesTab.Name = "categoriesTab";
             this.categoriesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.categoriesTab.Size = new System.Drawing.Size(768, 397);
+            this.categoriesTab.Size = new System.Drawing.Size(895, 486);
             this.categoriesTab.TabIndex = 1;
             this.categoriesTab.Text = "Categories";
             this.categoriesTab.UseVisualStyleBackColor = true;
@@ -129,7 +140,7 @@
             // 
             this.authorsSplitContainer.Panel2.Controls.Add(this.authorsGridView);
             this.authorsSplitContainer.Size = new System.Drawing.Size(895, 486);
-            this.authorsSplitContainer.SplitterDistance = 181;
+            this.authorsSplitContainer.SplitterDistance = 150;
             this.authorsSplitContainer.TabIndex = 0;
             // 
             // authorsGridView
@@ -142,8 +153,35 @@
             this.authorsGridView.Name = "authorsGridView";
             this.authorsGridView.RowHeadersWidth = 51;
             this.authorsGridView.RowTemplate.Height = 24;
-            this.authorsGridView.Size = new System.Drawing.Size(864, 295);
+            this.authorsGridView.Size = new System.Drawing.Size(889, 326);
             this.authorsGridView.TabIndex = 0;
+            // 
+            // cateroriesSplitContainer
+            // 
+            this.cateroriesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cateroriesSplitContainer.Location = new System.Drawing.Point(3, 3);
+            this.cateroriesSplitContainer.Name = "cateroriesSplitContainer";
+            this.cateroriesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // cateroriesSplitContainer.Panel2
+            // 
+            this.cateroriesSplitContainer.Panel2.Controls.Add(this.cateroriesGridView);
+            this.cateroriesSplitContainer.Size = new System.Drawing.Size(889, 480);
+            this.cateroriesSplitContainer.SplitterDistance = 150;
+            this.cateroriesSplitContainer.TabIndex = 0;
+            // 
+            // cateroriesGridView
+            // 
+            this.cateroriesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cateroriesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.cateroriesGridView.Location = new System.Drawing.Point(3, 3);
+            this.cateroriesGridView.Name = "cateroriesGridView";
+            this.cateroriesGridView.RowHeadersWidth = 51;
+            this.cateroriesGridView.RowTemplate.Height = 24;
+            this.cateroriesGridView.Size = new System.Drawing.Size(883, 320);
+            this.cateroriesGridView.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -157,15 +195,20 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.allLiteratureTab.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.literatureSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).EndInit();
+            this.literatureSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).EndInit();
+            this.categoriesTab.ResumeLayout(false);
             this.tabAuthors.ResumeLayout(false);
             this.authorsSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.authorsSplitContainer)).EndInit();
             this.authorsSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.authorsGridView)).EndInit();
+            this.cateroriesSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).EndInit();
+            this.cateroriesSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -175,10 +218,12 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage allLiteratureTab;
         private System.Windows.Forms.TabPage categoriesTab;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.SplitContainer literatureSplitContainer;
+        private System.Windows.Forms.DataGridView literatureGridView;
         private System.Windows.Forms.TabPage tabAuthors;
         private System.Windows.Forms.SplitContainer authorsSplitContainer;
         private System.Windows.Forms.DataGridView authorsGridView;
+        private System.Windows.Forms.SplitContainer cateroriesSplitContainer;
+        private System.Windows.Forms.DataGridView cateroriesGridView;
     }
 }

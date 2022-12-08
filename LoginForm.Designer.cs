@@ -123,7 +123,7 @@ namespace PersonalLibrary
                 return;
             }
             this.Hide();
-            MainForm mainForm = new MainForm(this);
+            MainForm mainForm = new MainForm(this, user);
             mainForm.ShowDialog();
         }
 
@@ -135,7 +135,7 @@ namespace PersonalLibrary
         private Dictionary<string, User> USERS = new Dictionary<string, User>()
         {
             { "admin", new User("admin","password",User.UserType.Administrator)},
-            { "user", new User("user","password",User.UserType.Administrator)}
+            { "user", new User("user","password",User.UserType.Reader)}
         };
     }
 }

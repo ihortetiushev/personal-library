@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category.cs" />
     <Compile Include="Author.cs" />
     <Compile Include="AuthorDao.cs" />
     <Compile Include="Literature.cs" />
