@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericDao.cs" />
+    <Compile Include="CategoryDao.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Author.cs" />
     <Compile Include="AuthorDao.cs" />

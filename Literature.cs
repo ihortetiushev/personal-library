@@ -8,7 +8,7 @@ namespace PersonalLibrary.Models
 {
     internal class Literature
     {
-        public int literatureId { get; set; }
-        public string title { get; set; }
+        public int LiteratureId { get; set; }
+        public string Title { get; set; }
     }
 }

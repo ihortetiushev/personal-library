@@ -8,10 +8,10 @@ namespace PersonalLibrary.Models
 {
     internal class Author
     {
-        public int authorId { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public DateTime  birthDate{ get; set; }
-        public string comment { get; set; }
+        public int AuthorId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime  BirthDate{ get; set; }
+        public string Comment { get; set; }
     }
 }

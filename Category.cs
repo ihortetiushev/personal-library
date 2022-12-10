@@ -8,8 +8,8 @@ namespace PersonalLibrary.Models
 {
     internal class Category
     {
-        public int categoryId { get; set; }
-        public string name { get; set; }
-        public string comment { get; set; }
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

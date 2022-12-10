@@ -10,34 +10,26 @@ using PersonalLibrary.Models;
 
 namespace PersonalLibrary.Dao
 {
-    internal class AuthorDao
+    internal class AuthorDao:GenericDao<Author>
     {
-        private SqlConnection sqlConnection;
-        public AuthorDao(SqlConnection sqlConnection)
+        public AuthorDao(SqlConnection sqlConnection):base(sqlConnection)
         {
-            this.sqlConnection = sqlConnection;
         }
         public List<Author> GetAllAuthors()
         {
-            List<Author> authors = new List<Author>();
-            SqlCommand command = new SqlCommand("select * from author", sqlConnection);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    Author item = new Author();
-                    item.authorId = reader.GetInt32(reader.GetOrdinal("author_id"));
-                    item.firstName = reader.GetString(reader.GetOrdinal("first_name"));
-                    item.lastName = reader.GetString(reader.GetOrdinal("last_name"));
-                    item.birthDate = reader.GetDateTime(reader.GetOrdinal("birth_date"));
-                    item.comment = reader.GetString(reader.GetOrdinal("comment"));
+            return ExecuteQuery("select * from author");
+        }
 
-                    authors.Add(item);
-                }
-            }
-            reader.Close();
-            return authors;
+        protected override Author LoadItem(SqlDataReader reader)
+        {
+            return new Author
+            {
+                AuthorId = reader.GetInt32(reader.GetOrdinal("author_id")),
+                FirstName = reader.GetString(reader.GetOrdinal("first_name")),
+                LastName = reader.GetString(reader.GetOrdinal("last_name")),
+                BirthDate = reader.GetDateTime(reader.GetOrdinal("birth_date")),
+                Comment = reader.GetString(reader.GetOrdinal("comment"))
+            };
         }
     }
 

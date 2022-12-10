@@ -15,17 +15,23 @@ namespace PersonalLibrary
 {
     public partial class MainForm : Form
     {
-        private static readonly int COLUMN_INDEX_ID = 0;
-        private static readonly int COLUMN_INDEX_FIRST_NAME = 1;
-        private static readonly int COLUMN_INDEX_LAST_NAME = 2;
-        private static readonly int COLUMN_INDEX_BIRTH_DATE = 3;
-        private static readonly int COLUMN_INDEX_COMMENT = 4;
-            
+        private static readonly int AUTHOR_COLUMN_INDEX_ID = 0;
+        private static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
+        private static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
+        private static readonly int AUTHOR_COLUMN_INDEX_BIRTH_DATE = 3;
+        private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 4;
+
+        private static readonly int CATEGORY_COLUMN_INDEX_ID = 0;
+        private static readonly int CATEGORY_COLUMN_INDEX_NAME = 1;
+        private static readonly int CATEGORY_COLUMN_INDEX_DESC = 2;
+
+
         private static readonly string CONNECTION_STRING = "data source=LAPTOP-EENRFF17\\SQLEXPRESS;initial catalog = course_project; User ID=lib_db_user;Password=123456;";
-        private SqlConnection dbConnection;
-        private LoginForm loginForm;
-        private LibraryDao libraryDao;
-        private AuthorDao authorDao;
+        private readonly SqlConnection dbConnection;
+        private readonly LoginForm loginForm;
+        private readonly LibraryDao libraryDao;
+        private readonly AuthorDao authorDao;
+        private readonly CategoryDao categoryDao;
         public MainForm(LoginForm loginForm, User loggedInUser)
         {
             InitializeComponent();
@@ -33,14 +39,15 @@ namespace PersonalLibrary
             this.dbConnection = new SqlConnection(CONNECTION_STRING);
             this.libraryDao = new LibraryDao(dbConnection);
             this.authorDao = new AuthorDao(dbConnection);
-            setTitle(loggedInUser);
+            this.categoryDao = new CategoryDao(dbConnection);
+            SetTitle(loggedInUser);
             LoadData();
             
         }
 
-        private void setTitle(User loggedInUser) 
+        private void SetTitle(User loggedInUser) 
         {
-            this.Text = "Personal library (" + loggedInUser.userType + ")";
+            this.Text = "Personal library (" + loggedInUser.Type + ")";
         }
        
 
@@ -60,29 +67,44 @@ namespace PersonalLibrary
         }
         private void LoadData()
         {
+            Cursor oldCur = Cursor.Current;
             try
             {
+                Cursor.Current = Cursors.WaitCursor;
                 dbConnection.Open();
                 List<Author> allAuthors = authorDao.GetAllAuthors();
                 List<Literature> literature = libraryDao.GetAllLiterature();
-                populateAutorGridData(allAuthors);
+                List<Category> categories = categoryDao.GetAllCategories();
+                PopulateAutorGridData(allAuthors);
+                PopulateCategoryGridData(categories);
+                Cursor.Current = oldCur;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Can not open db connection ! " + ex.Message);
+                Cursor.Current = oldCur;
+                MessageBox.Show("Error loading data not open db connection ! " + ex.Message);
             }
         }
 
-        private void populateAutorGridData(List<Author> authors) 
+        private void PopulateAutorGridData(List<Author> authors) 
         {
-            DataTable authorsTable = createTable(authorsGridView);
+            DataTable authorsTable = CreateAuthorTable();
             foreach (Author author in authors)
             {
-                 authorsTable.LoadDataRow(toAuthorRow(author), true);
+                 authorsTable.LoadDataRow(ToAuthorRow(author), true);
             }
         }
 
-        private DataTable createTable(System.Windows.Forms.DataGridView dataGrid)
+        private void PopulateCategoryGridData(List<Category> categories)
+        {
+            DataTable table = CreateCategotyTable();
+            foreach (Category category in categories)
+            {
+                table.LoadDataRow(ToCategoryRow(category), true);
+            }
+        }
+
+        private DataTable CreateAuthorTable()
         {
             DataTable table = new DataTable();
             table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
@@ -91,23 +113,46 @@ namespace PersonalLibrary
             table.Columns.Add(new DataColumn("Birth Date", Type.GetType("System.DateTime")));
             table.Columns.Add(new DataColumn("Comment", Type.GetType("System.String")));
 
-            dataGrid.DataSource = table;
-            dataGrid.Columns[COLUMN_INDEX_ID].Width = 50;
-            dataGrid.Columns[COLUMN_INDEX_FIRST_NAME].Width = 130;
-            dataGrid.Columns[COLUMN_INDEX_LAST_NAME].Width = 130;
-            dataGrid.Columns[COLUMN_INDEX_BIRTH_DATE].Width = 70;
-            dataGrid.Columns[COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            authorsGridView.DataSource = table;
+            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_ID].Width = 50;
+            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_FIRST_NAME].Width = 130;
+            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_LAST_NAME].Width = 130;
+            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_BIRTH_DATE].Width = 70;
+            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
         }
 
-        private object[] toAuthorRow(Author author)
+        private DataTable CreateCategotyTable()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
+            table.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
+            table.Columns.Add(new DataColumn("Description", Type.GetType("System.String")));
+
+            cateroriesGridView.DataSource = table;
+            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_ID].Width = 50;
+            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_NAME].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_DESC].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            return table;
+        }
+
+        private object[] ToAuthorRow(Author author)
         {
             object[] values = new object[5];
-            values[COLUMN_INDEX_ID] = author.authorId;
-            values[COLUMN_INDEX_FIRST_NAME] = author.firstName;
-            values[COLUMN_INDEX_LAST_NAME] = author.lastName;
-            values[COLUMN_INDEX_BIRTH_DATE] = author.birthDate;
-            values[COLUMN_INDEX_COMMENT] = author.comment;
+            values[AUTHOR_COLUMN_INDEX_ID] = author.AuthorId;
+            values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
+            values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
+            values[AUTHOR_COLUMN_INDEX_BIRTH_DATE] = author.BirthDate;
+            values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
+            return values;
+        }
+
+        private object[] ToCategoryRow(Category category)
+        {
+            object[] values = new object[3];
+            values[CATEGORY_COLUMN_INDEX_ID]= category.CategoryId;
+            values[CATEGORY_COLUMN_INDEX_NAME] = category.Name;
+            values[CATEGORY_COLUMN_INDEX_DESC] = category.Description;
             return values;
         }
     }

@@ -33,66 +33,66 @@ namespace PersonalLibrary
         /// </summary>
         private void InitializeComponent()
         {
-            this.loginInput = new System.Windows.Forms.TextBox();
-            this.passwordInput = new System.Windows.Forms.TextBox();
-            this.loginButton = new System.Windows.Forms.Button();
-            this.loginLabel = new System.Windows.Forms.Label();
-            this.passwordLabel = new System.Windows.Forms.Label();
+            this.LoginInput = new System.Windows.Forms.TextBox();
+            this.PasswordInput = new System.Windows.Forms.TextBox();
+            this.LoginButton = new System.Windows.Forms.Button();
+            this.LoginLabel = new System.Windows.Forms.Label();
+            this.PasswordLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // loginInput
+            // LoginInput
             // 
-            this.loginInput.Location = new System.Drawing.Point(66, 77);
-            this.loginInput.Name = "loginInput";
-            this.loginInput.Size = new System.Drawing.Size(188, 22);
-            this.loginInput.TabIndex = 1;
+            this.LoginInput.Location = new System.Drawing.Point(66, 77);
+            this.LoginInput.Name = "LoginInput";
+            this.LoginInput.Size = new System.Drawing.Size(188, 22);
+            this.LoginInput.TabIndex = 1;
             // 
-            // passwordInput
+            // PasswordInput
             // 
-            this.passwordInput.Location = new System.Drawing.Point(66, 147);
-            this.passwordInput.Name = "passwordInput";
-            this.passwordInput.PasswordChar = '*';
-            this.passwordInput.Size = new System.Drawing.Size(188, 22);
-            this.passwordInput.TabIndex = 2;
+            this.PasswordInput.Location = new System.Drawing.Point(66, 147);
+            this.PasswordInput.Name = "PasswordInput";
+            this.PasswordInput.PasswordChar = '*';
+            this.PasswordInput.Size = new System.Drawing.Size(188, 22);
+            this.PasswordInput.TabIndex = 2;
             // 
-            // loginButton
+            // LoginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(66, 237);
-            this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(188, 37);
-            this.loginButton.TabIndex = 3;
-            this.loginButton.Text = "Login";
-            this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.LoginButton.Location = new System.Drawing.Point(66, 237);
+            this.LoginButton.Name = "LoginButton";
+            this.LoginButton.Size = new System.Drawing.Size(188, 37);
+            this.LoginButton.TabIndex = 3;
+            this.LoginButton.Text = "Login";
+            this.LoginButton.UseVisualStyleBackColor = true;
+            this.LoginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
-            // loginLabel
+            // LoginLabel
             // 
-            this.loginLabel.AutoSize = true;
-            this.loginLabel.Location = new System.Drawing.Point(63, 58);
-            this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(40, 16);
-            this.loginLabel.TabIndex = 4;
-            this.loginLabel.Text = "Login";
+            this.LoginLabel.AutoSize = true;
+            this.LoginLabel.Location = new System.Drawing.Point(63, 58);
+            this.LoginLabel.Name = "LoginLabel";
+            this.LoginLabel.Size = new System.Drawing.Size(40, 16);
+            this.LoginLabel.TabIndex = 4;
+            this.LoginLabel.Text = "Login";
             // 
-            // passwordLabel
+            // PasswordLabel
             // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(63, 128);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(67, 16);
-            this.passwordLabel.TabIndex = 5;
-            this.passwordLabel.Text = "Password";
+            this.PasswordLabel.AutoSize = true;
+            this.PasswordLabel.Location = new System.Drawing.Point(63, 128);
+            this.PasswordLabel.Name = "PasswordLabel";
+            this.PasswordLabel.Size = new System.Drawing.Size(67, 16);
+            this.PasswordLabel.TabIndex = 5;
+            this.PasswordLabel.Text = "Password";
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(320, 332);
-            this.Controls.Add(this.passwordLabel);
-            this.Controls.Add(this.loginLabel);
-            this.Controls.Add(this.loginButton);
-            this.Controls.Add(this.passwordInput);
-            this.Controls.Add(this.loginInput);
+            this.Controls.Add(this.PasswordLabel);
+            this.Controls.Add(this.LoginLabel);
+            this.Controls.Add(this.LoginButton);
+            this.Controls.Add(this.PasswordInput);
+            this.Controls.Add(this.LoginInput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -108,14 +108,14 @@ namespace PersonalLibrary
 
         private void SetInitialState()
         {
-            this.passwordInput.PasswordChar = '*';
+            this.PasswordInput.PasswordChar = '*';
         }
         private void DoLogin()
         {
-            string login = loginInput.Text;
-            string password = passwordInput.Text;
+            string login = LoginInput.Text;
+            string password = PasswordInput.Text;
             User user = USERS.ContainsKey(login) ? USERS[login] : null; 
-            if (user == null || !user.password.Equals(password)) 
+            if (user == null || !user.Password.Equals(password)) 
             {
                 var result = MessageBox.Show("Wrong user name or password ", "Can not login",
                                              MessageBoxButtons.OK,
@@ -127,15 +127,16 @@ namespace PersonalLibrary
             mainForm.ShowDialog();
         }
 
-        private System.Windows.Forms.TextBox loginInput;
-        private System.Windows.Forms.TextBox passwordInput;
-        private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.Label loginLabel;
-        private System.Windows.Forms.Label passwordLabel;
+        private System.Windows.Forms.TextBox LoginInput;
+        private System.Windows.Forms.TextBox PasswordInput;
+        private System.Windows.Forms.Button LoginButton;
+        private System.Windows.Forms.Label LoginLabel;
+        private System.Windows.Forms.Label PasswordLabel;
         private Dictionary<string, User> USERS = new Dictionary<string, User>()
         {
-            { "admin", new User("admin","password",User.UserType.Administrator)},
-            { "user", new User("user","password",User.UserType.Reader)}
+            //TODO - change to smth meaningful 
+            { "1", new User("1","1",User.UserType.Administrator)},
+            { "2", new User("2","2",User.UserType.Reader)}
         };
     }
 }

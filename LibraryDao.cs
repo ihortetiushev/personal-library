@@ -5,31 +5,23 @@ using PersonalLibrary.Models;
 
 namespace PersonalLibrary.Dao
 {
-    internal class LibraryDao
+    internal class LibraryDao:GenericDao<Literature>
     {
-        private SqlConnection sqlConnection;
-        public LibraryDao(SqlConnection sqlConnection)
+        public LibraryDao(SqlConnection sqlConnection):base(sqlConnection)
         {
-            this.sqlConnection = sqlConnection;
         }
         public List<Literature> GetAllLiterature()
         {
-            List<Literature> literatureList = new List<Literature>();
-            SqlCommand command = new SqlCommand("select * from literature", sqlConnection);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    Literature item = new Literature();
-                    item.literatureId = reader.GetInt32(reader.GetOrdinal("literature_id"));
-                    item.title = reader.GetString(reader.GetOrdinal("title"));
+            return base.ExecuteQuery("select * from literature");
+        }
 
-                    literatureList.Add(item);
-                }
-            }
-            reader.Close();
-            return literatureList;
+        protected override Literature LoadItem(SqlDataReader reader)
+        {
+            return new Literature
+            {
+                LiteratureId = reader.GetInt32(reader.GetOrdinal("literature_id")),
+                Title = reader.GetString(reader.GetOrdinal("title"))
+            };
         }
     }
 
