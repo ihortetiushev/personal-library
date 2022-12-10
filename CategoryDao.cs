@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 using PersonalLibrary.Models;
 
 
@@ -25,6 +27,33 @@ namespace PersonalLibrary.Dao
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 Description = reader.GetString(reader.GetOrdinal("description"))
             };
+        }
+
+        public void CreateCategory(Category category)
+        {
+            try
+            {
+                if (category.CategoryId > 0)
+                {
+                    throw new ArgumentException("CategoryId must be not positive");
+                }
+                var sql = @"INSERT into category 
+                            (name, description) OUTPUT Inserted.caterory_id
+                            VALUES(@Name, @Description)";
+                using (var cmd = new SqlCommand(sql, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@Name", category.Name);
+                    cmd.Parameters.AddWithValue("@Description", category.Description);
+                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+                    category.CategoryId = insertedID;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Data is not saved " + e.Message, "Error!",
+                             MessageBoxButtons.OK,
+                             MessageBoxIcon.Error);
+            }
         }
     }
 

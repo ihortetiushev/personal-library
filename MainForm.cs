@@ -40,7 +40,9 @@ namespace PersonalLibrary
         private void InitializeState(User loggedInUser) 
         {
             this.Text = "Personal library (" + loggedInUser.Type + ")";
-            this.addNewAuthorButton.Enabled = loggedInUser.Type == User.UserType.Administrator;
+            bool readOnly = loggedInUser.Type == User.UserType.Reader;
+            this.addNewAuthorButton.Enabled = !readOnly;
+            this.addNewCaterogyButton.Enabled = !readOnly;
         }
        
 
@@ -166,6 +168,11 @@ namespace PersonalLibrary
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoExit();
+        }
+
+        private void AddNewCaterogyButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

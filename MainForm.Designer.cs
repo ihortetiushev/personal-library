@@ -42,6 +42,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewCaterogyButton = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
@@ -50,6 +51,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).BeginInit();
             this.categoriesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).BeginInit();
+            this.cateroriesSplitContainer.Panel1.SuspendLayout();
             this.cateroriesSplitContainer.Panel2.SuspendLayout();
             this.cateroriesSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).BeginInit();
@@ -82,7 +84,7 @@
             this.allLiteratureTab.Location = new System.Drawing.Point(4, 25);
             this.allLiteratureTab.Name = "allLiteratureTab";
             this.allLiteratureTab.Padding = new System.Windows.Forms.Padding(3);
-            this.allLiteratureTab.Size = new System.Drawing.Size(895, 486);
+            this.allLiteratureTab.Size = new System.Drawing.Size(895, 466);
             this.allLiteratureTab.TabIndex = 0;
             this.allLiteratureTab.Text = "Literature";
             this.allLiteratureTab.UseVisualStyleBackColor = true;
@@ -97,8 +99,8 @@
             // literatureSplitContainer.Panel2
             // 
             this.literatureSplitContainer.Panel2.Controls.Add(this.literatureGridView);
-            this.literatureSplitContainer.Size = new System.Drawing.Size(889, 480);
-            this.literatureSplitContainer.SplitterDistance = 150;
+            this.literatureSplitContainer.Size = new System.Drawing.Size(889, 460);
+            this.literatureSplitContainer.SplitterDistance = 143;
             this.literatureSplitContainer.TabIndex = 0;
             // 
             // literatureGridView
@@ -111,7 +113,7 @@
             this.literatureGridView.Name = "literatureGridView";
             this.literatureGridView.RowHeadersWidth = 51;
             this.literatureGridView.RowTemplate.Height = 24;
-            this.literatureGridView.Size = new System.Drawing.Size(889, 320);
+            this.literatureGridView.Size = new System.Drawing.Size(889, 307);
             this.literatureGridView.TabIndex = 0;
             // 
             // categoriesTab
@@ -120,7 +122,7 @@
             this.categoriesTab.Location = new System.Drawing.Point(4, 25);
             this.categoriesTab.Name = "categoriesTab";
             this.categoriesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.categoriesTab.Size = new System.Drawing.Size(895, 486);
+            this.categoriesTab.Size = new System.Drawing.Size(895, 466);
             this.categoriesTab.TabIndex = 1;
             this.categoriesTab.Text = "Categories";
             this.categoriesTab.UseVisualStyleBackColor = true;
@@ -132,11 +134,15 @@
             this.cateroriesSplitContainer.Name = "cateroriesSplitContainer";
             this.cateroriesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // cateroriesSplitContainer.Panel1
+            // 
+            this.cateroriesSplitContainer.Panel1.Controls.Add(this.addNewCaterogyButton);
+            // 
             // cateroriesSplitContainer.Panel2
             // 
             this.cateroriesSplitContainer.Panel2.Controls.Add(this.cateroriesGridView);
-            this.cateroriesSplitContainer.Size = new System.Drawing.Size(889, 480);
-            this.cateroriesSplitContainer.SplitterDistance = 150;
+            this.cateroriesSplitContainer.Size = new System.Drawing.Size(889, 460);
+            this.cateroriesSplitContainer.SplitterDistance = 143;
             this.cateroriesSplitContainer.TabIndex = 0;
             // 
             // cateroriesGridView
@@ -149,7 +155,7 @@
             this.cateroriesGridView.Name = "cateroriesGridView";
             this.cateroriesGridView.RowHeadersWidth = 51;
             this.cateroriesGridView.RowTemplate.Height = 24;
-            this.cateroriesGridView.Size = new System.Drawing.Size(883, 320);
+            this.cateroriesGridView.Size = new System.Drawing.Size(883, 307);
             this.cateroriesGridView.TabIndex = 0;
             // 
             // tabAuthors
@@ -210,7 +216,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(927, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(927, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -219,7 +225,7 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(70, 24);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(70, 26);
             this.toolStripMenuItem1.Text = "System";
             // 
             // exitToolStripMenuItem
@@ -228,6 +234,16 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // addNewCaterogyButton
+            // 
+            this.addNewCaterogyButton.Location = new System.Drawing.Point(724, 23);
+            this.addNewCaterogyButton.Name = "addNewCaterogyButton";
+            this.addNewCaterogyButton.Size = new System.Drawing.Size(136, 32);
+            this.addNewCaterogyButton.TabIndex = 0;
+            this.addNewCaterogyButton.Text = "Add New Category";
+            this.addNewCaterogyButton.UseVisualStyleBackColor = true;
+            this.addNewCaterogyButton.Click += new System.EventHandler(this.AddNewCaterogyButton_Click);
             // 
             // MainForm
             // 
@@ -248,6 +264,7 @@
             this.literatureSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).EndInit();
             this.categoriesTab.ResumeLayout(false);
+            this.cateroriesSplitContainer.Panel1.ResumeLayout(false);
             this.cateroriesSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).EndInit();
             this.cateroriesSplitContainer.ResumeLayout(false);
@@ -281,5 +298,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Button addNewCaterogyButton;
     }
 }
