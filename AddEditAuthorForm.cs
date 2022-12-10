@@ -1,4 +1,6 @@
 ﻿using PersonalLibrary;
+using PersonalLibrary.Dao;
+using PersonalLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +16,12 @@ namespace personal_library
     public partial class AddEditAuthorForm : Form
     {
         private readonly MainForm parentForm;
-        public AddEditAuthorForm(MainForm parentForm)
+        private readonly Repository repository;
+        public AddEditAuthorForm(MainForm parentForm, Repository repository)
         {
             InitializeComponent();
             this.parentForm = parentForm;
+            this.repository = repository;
         }
 
         private void CancelSaveAutorButton_Click(object sender, EventArgs e)
@@ -27,12 +31,22 @@ namespace personal_library
 
         private void SaveAuthorButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (CreateNewAuthor())
+            {
+                this.Close();
+            }
         }
         private bool CreateNewAuthor() 
         {
-            return false;// parentForm.auto
-
+            Author author = new Author
+            {
+                AuthorId = -1,
+                FirstName = this.authorFirstNameInput.Text,
+                LastName = this.authorLastNameInput.Text,
+                Comment = this.authorCommentInput.Text
+            };
+            this.repository.GetAuthorDao().CreateAuthor(author);
+            return author.AuthorId > 0;
         }
     }
 }

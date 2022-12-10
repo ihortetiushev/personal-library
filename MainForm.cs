@@ -146,7 +146,7 @@ namespace PersonalLibrary
 
         private void AddNewAuthorButton_Click(object sender, EventArgs e)
         {
-            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this);
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository);
             addEditAuthorForm.ShowDialog();
         }
 

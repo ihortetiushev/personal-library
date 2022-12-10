@@ -119,7 +119,7 @@ namespace PersonalLibrary
             User user = USERS.ContainsKey(login) ? USERS[login] : null; 
             if (user == null || !user.Password.Equals(password)) 
             {
-                var result = MessageBox.Show("Wrong user name or password ", "Can not login",
+                MessageBox.Show("Wrong user name or password ", "Can not login",
                                              MessageBoxButtons.OK,
                                              MessageBoxIcon.Error);
                 return;
