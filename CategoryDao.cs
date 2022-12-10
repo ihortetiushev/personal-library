@@ -5,7 +5,7 @@ using PersonalLibrary.Models;
 
 namespace PersonalLibrary.Dao
 {
-    internal class CategoryDao:GenericDao<Category>
+    public class CategoryDao:GenericDao<Category>
     {
         public CategoryDao(SqlConnection sqlConnection):base(sqlConnection)
         {

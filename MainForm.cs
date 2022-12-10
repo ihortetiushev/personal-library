@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
+using personal_library;
 
 namespace PersonalLibrary
 {
@@ -18,28 +19,19 @@ namespace PersonalLibrary
         private static readonly int AUTHOR_COLUMN_INDEX_ID = 0;
         private static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
         private static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
-        private static readonly int AUTHOR_COLUMN_INDEX_BIRTH_DATE = 3;
-        private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 4;
+        private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 3;
 
         private static readonly int CATEGORY_COLUMN_INDEX_ID = 0;
         private static readonly int CATEGORY_COLUMN_INDEX_NAME = 1;
         private static readonly int CATEGORY_COLUMN_INDEX_DESC = 2;
 
-
-        private static readonly string CONNECTION_STRING = "data source=LAPTOP-EENRFF17\\SQLEXPRESS;initial catalog = course_project; User ID=lib_db_user;Password=123456;";
-        private readonly SqlConnection dbConnection;
+        private readonly Repository repository;
         private readonly LoginForm loginForm;
-        private readonly LibraryDao libraryDao;
-        private readonly AuthorDao authorDao;
-        private readonly CategoryDao categoryDao;
-        public MainForm(LoginForm loginForm, User loggedInUser)
+        public MainForm(LoginForm loginForm, User loggedInUser, Repository repository)
         {
             InitializeComponent();
             this.loginForm = loginForm;
-            this.dbConnection = new SqlConnection(CONNECTION_STRING);
-            this.libraryDao = new LibraryDao(dbConnection);
-            this.authorDao = new AuthorDao(dbConnection);
-            this.categoryDao = new CategoryDao(dbConnection);
+            this.repository = repository;
             SetTitle(loggedInUser);
             LoadData();
             
@@ -62,7 +54,7 @@ namespace PersonalLibrary
                 e.Cancel = true;
                 return;
             }
-            dbConnection.Close();
+            this.repository.CloseConnection();
             loginForm.Close();
         }
         private void LoadData()
@@ -71,10 +63,9 @@ namespace PersonalLibrary
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
-                dbConnection.Open();
-                List<Author> allAuthors = authorDao.GetAllAuthors();
-                List<Literature> literature = libraryDao.GetAllLiterature();
-                List<Category> categories = categoryDao.GetAllCategories();
+                List<Author> allAuthors = this.repository.GetAuthorDao().GetAllAuthors();
+                List<Literature> literature = this.repository.GetLibraryDao().GetAllLiterature();
+                List<Category> categories = this.repository.GetCategoryDao().GetAllCategories();
                 PopulateAutorGridData(allAuthors);
                 PopulateCategoryGridData(categories);
                 Cursor.Current = oldCur;
@@ -82,7 +73,7 @@ namespace PersonalLibrary
             catch (Exception ex)
             {
                 Cursor.Current = oldCur;
-                MessageBox.Show("Error loading data not open db connection ! " + ex.Message);
+                MessageBox.Show("Error loading data!:" + ex.Message);
             }
         }
 
@@ -110,14 +101,12 @@ namespace PersonalLibrary
             table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
             table.Columns.Add(new DataColumn("First Name", Type.GetType("System.String")));
             table.Columns.Add(new DataColumn("Last Name", Type.GetType("System.String")));
-            table.Columns.Add(new DataColumn("Birth Date", Type.GetType("System.DateTime")));
             table.Columns.Add(new DataColumn("Comment", Type.GetType("System.String")));
 
             authorsGridView.DataSource = table;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_ID].Width = 50;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_FIRST_NAME].Width = 130;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_LAST_NAME].Width = 130;
-            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_BIRTH_DATE].Width = 70;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
         }
@@ -138,11 +127,10 @@ namespace PersonalLibrary
 
         private object[] ToAuthorRow(Author author)
         {
-            object[] values = new object[5];
+            object[] values = new object[4];
             values[AUTHOR_COLUMN_INDEX_ID] = author.AuthorId;
             values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
             values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
-            values[AUTHOR_COLUMN_INDEX_BIRTH_DATE] = author.BirthDate;
             values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
             return values;
         }
@@ -155,5 +143,16 @@ namespace PersonalLibrary
             values[CATEGORY_COLUMN_INDEX_DESC] = category.Description;
             return values;
         }
+
+        private void AddNewAuthorButton_Click(object sender, EventArgs e)
+        {
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this);
+            addEditAuthorForm.ShowDialog();
+        }
+
+        private void AddNewAuthor() 
+        {
+        }
     }
+
 }

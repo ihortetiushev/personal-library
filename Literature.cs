@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PersonalLibrary.Models
 {
-    internal class Literature
+    public class Literature
     {
         public int LiteratureId { get; set; }
         public string Title { get; set; }

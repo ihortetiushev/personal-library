@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
 
 
@@ -106,6 +107,7 @@ namespace PersonalLibrary
 
         #endregion
 
+        private readonly Repository repository;
         private void SetInitialState()
         {
             this.PasswordInput.PasswordChar = '*';
@@ -123,10 +125,10 @@ namespace PersonalLibrary
                 return;
             }
             this.Hide();
-            MainForm mainForm = new MainForm(this, user);
+            MainForm mainForm = new MainForm(this, user, repository);
             mainForm.ShowDialog();
         }
-
+        
         private System.Windows.Forms.TextBox LoginInput;
         private System.Windows.Forms.TextBox PasswordInput;
         private System.Windows.Forms.Button LoginButton;

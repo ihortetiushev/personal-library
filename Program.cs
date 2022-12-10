@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonalLibrary.Dao;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,13 @@ namespace PersonalLibrary
         [STAThread]
         static void Main()
         {
+            Repository repository = new Repository();
+            if (!repository.OpenConnection()) {
+                Environment.Exit(-1);
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new LoginForm(repository));
         }
     }
 }

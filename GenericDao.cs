@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using PersonalLibrary.Models;
 
 
 namespace PersonalLibrary.Dao
 {
-    internal abstract class GenericDao<T>
+    public abstract class GenericDao<T>
     {
-        private readonly SqlConnection sqlConnection;
+        protected readonly SqlConnection sqlConnection;
         public GenericDao(SqlConnection sqlConnection)
         {
             this.sqlConnection = sqlConnection;
