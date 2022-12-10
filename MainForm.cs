@@ -32,30 +32,38 @@ namespace PersonalLibrary
             InitializeComponent();
             this.loginForm = loginForm;
             this.repository = repository;
-            SetTitle(loggedInUser);
+            InitializeState(loggedInUser);
             LoadData();
             
         }
 
-        private void SetTitle(User loggedInUser) 
+        private void InitializeState(User loggedInUser) 
         {
             this.Text = "Personal library (" + loggedInUser.Type + ")";
+            this.addNewAuthorButton.Enabled = loggedInUser.Type == User.UserType.Administrator;
         }
        
 
         private void MainForm_FormClosing(Object sender, FormClosingEventArgs e)
         {
-
-            var result = MessageBox.Show("Do you want to exit?", "Confirm exit",
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question);
-            if (result != DialogResult.Yes)
+            if (!DoExit()) 
             {
                 e.Cancel = true;
-                return;
+            }
+        }
+
+        private bool DoExit() 
+        {
+            var result = MessageBox.Show("Do you want to exit?", "Confirm exit",
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question);
+            if (result != DialogResult.Yes)
+            {
+                 return false;
             }
             this.repository.CloseConnection();
             loginForm.Close();
+            return true;
         }
         private void LoadData()
         {
@@ -146,12 +154,18 @@ namespace PersonalLibrary
 
         private void AddNewAuthorButton_Click(object sender, EventArgs e)
         {
-            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository);
-            addEditAuthorForm.ShowDialog();
+            AddNewAuthor();
         }
 
         private void AddNewAuthor() 
         {
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository);
+            addEditAuthorForm.ShowDialog();
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoExit();
         }
     }
 
