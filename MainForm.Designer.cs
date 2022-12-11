@@ -34,6 +34,7 @@
             this.literatureGridView = new System.Windows.Forms.DataGridView();
             this.categoriesTab = new System.Windows.Forms.TabPage();
             this.cateroriesSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.addNewCaterogyButton = new System.Windows.Forms.Button();
             this.cateroriesGridView = new System.Windows.Forms.DataGridView();
             this.tabAuthors = new System.Windows.Forms.TabPage();
             this.authorsSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -42,7 +43,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addNewCaterogyButton = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
@@ -145,6 +145,16 @@
             this.cateroriesSplitContainer.SplitterDistance = 143;
             this.cateroriesSplitContainer.TabIndex = 0;
             // 
+            // addNewCaterogyButton
+            // 
+            this.addNewCaterogyButton.Location = new System.Drawing.Point(710, 20);
+            this.addNewCaterogyButton.Name = "addNewCaterogyButton";
+            this.addNewCaterogyButton.Size = new System.Drawing.Size(150, 30);
+            this.addNewCaterogyButton.TabIndex = 0;
+            this.addNewCaterogyButton.Text = "Add New Category";
+            this.addNewCaterogyButton.UseVisualStyleBackColor = true;
+            this.addNewCaterogyButton.Click += new System.EventHandler(this.AddNewCaterogyButton_Click);
+            // 
             // cateroriesGridView
             // 
             this.cateroriesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -188,9 +198,9 @@
             // 
             // addNewAuthorButton
             // 
-            this.addNewAuthorButton.Location = new System.Drawing.Point(736, 16);
+            this.addNewAuthorButton.Location = new System.Drawing.Point(710, 20);
             this.addNewAuthorButton.Name = "addNewAuthorButton";
-            this.addNewAuthorButton.Size = new System.Drawing.Size(137, 32);
+            this.addNewAuthorButton.Size = new System.Drawing.Size(150, 30);
             this.addNewAuthorButton.TabIndex = 0;
             this.addNewAuthorButton.Text = "Add New Author";
             this.addNewAuthorButton.UseVisualStyleBackColor = true;
@@ -216,7 +226,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(927, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(927, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -225,25 +235,15 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(70, 26);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(70, 24);
             this.toolStripMenuItem1.Text = "System";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
-            // 
-            // addNewCaterogyButton
-            // 
-            this.addNewCaterogyButton.Location = new System.Drawing.Point(724, 23);
-            this.addNewCaterogyButton.Name = "addNewCaterogyButton";
-            this.addNewCaterogyButton.Size = new System.Drawing.Size(136, 32);
-            this.addNewCaterogyButton.TabIndex = 0;
-            this.addNewCaterogyButton.Text = "Add New Category";
-            this.addNewCaterogyButton.UseVisualStyleBackColor = true;
-            this.addNewCaterogyButton.Click += new System.EventHandler(this.AddNewCaterogyButton_Click);
             // 
             // MainForm
             // 
