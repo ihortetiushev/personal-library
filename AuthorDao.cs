@@ -45,8 +45,36 @@ namespace PersonalLibrary.Dao
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Error);
             }
+        }
+        public void UpdateAuthor(Author author)
+        {
+            try
+            {
+                if (author.AuthorId <= 0)
+                {
+                    throw new ArgumentException("AuthorId must be positive");
+                }
+                var sql = @"update author set 
+                            first_name = @FirstName,
+                            last_name = @LastName,
+                            comment = @Comment where author_id = @Id";
+                using (var cmd = new SqlCommand(sql, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@FirstName", author.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", author.LastName);
+                    cmd.Parameters.AddWithValue("@Comment", author.Comment);
+                    cmd.Parameters.AddWithValue("@Id", author.AuthorId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Data is not saved " + e.Message, "Error!",
+                             MessageBoxButtons.OK,
+                             MessageBoxIcon.Error);
+            }
 
-         }
+        }
 
         protected override Author LoadItem(SqlDataReader reader)
         {
@@ -57,6 +85,11 @@ namespace PersonalLibrary.Dao
                 LastName = reader.GetString(reader.GetOrdinal("last_name")),
                 Comment = reader.GetString(reader.GetOrdinal("comment"))
             };
+        }
+
+        public Author GetById(int authorId) 
+        {
+            return base.GetById("select * from author where author_id = @Id", authorId);
         }
     }
 

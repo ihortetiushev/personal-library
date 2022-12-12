@@ -27,5 +27,22 @@ namespace PersonalLibrary.Dao
             reader.Close();
             return items;
         }
+
+        public T GetById(string query, int id)
+        {
+            T found = default;
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            command.Parameters.AddWithValue("@Id", id);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    found = LoadItem(reader);
+                }
+            }
+            reader.Close();
+            return found;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PersonalLibrary.Dao;
+using PersonalLibrary.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,10 @@ namespace PersonalLibrary
             if (!repository.OpenConnection()) {
                 Environment.Exit(-1);
             }
+            UIState uiState = new UIState();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm(repository));
+            Application.Run(new LoginForm(repository, uiState));
         }
     }
 }

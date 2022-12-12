@@ -1,4 +1,5 @@
 ﻿using PersonalLibrary.Dao;
+using PersonalLibrary.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,14 +14,15 @@ namespace PersonalLibrary
 {
     public partial class LoginForm : Form
     {
-        public LoginForm(Repository repository)
+        public LoginForm(Repository repository, UIState uiState)
         {
             InitializeComponent();
             SetInitialState();
             this.repository = repository;
+            this.uiState = uiState;
         }
 
-        private void loginButton_Click(object sender, EventArgs e)
+        private void LoginButton_Click(object sender, EventArgs e)
         {
             DoLogin();
         }

@@ -36,13 +36,22 @@
             this.cateroriesSplitContainer = new System.Windows.Forms.SplitContainer();
             this.addNewCaterogyButton = new System.Windows.Forms.Button();
             this.cateroriesGridView = new System.Windows.Forms.DataGridView();
-            this.tabAuthors = new System.Windows.Forms.TabPage();
+            this.authorsTab = new System.Windows.Forms.TabPage();
             this.authorsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.addNewAuthorButton = new System.Windows.Forms.Button();
             this.authorsGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editViewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteCategotyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.authorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewAutorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
@@ -55,7 +64,7 @@
             this.cateroriesSplitContainer.Panel2.SuspendLayout();
             this.cateroriesSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).BeginInit();
-            this.tabAuthors.SuspendLayout();
+            this.authorsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.authorsSplitContainer)).BeginInit();
             this.authorsSplitContainer.Panel1.SuspendLayout();
             this.authorsSplitContainer.Panel2.SuspendLayout();
@@ -71,12 +80,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.allLiteratureTab);
             this.tabControl.Controls.Add(this.categoriesTab);
-            this.tabControl.Controls.Add(this.tabAuthors);
+            this.tabControl.Controls.Add(this.authorsTab);
             this.tabControl.Location = new System.Drawing.Point(12, 32);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(903, 495);
             this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // allLiteratureTab
             // 
@@ -157,26 +167,34 @@
             // 
             // cateroriesGridView
             // 
-            this.cateroriesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cateroriesGridView.AllowUserToAddRows = false;
+            this.cateroriesGridView.AllowUserToDeleteRows = false;
+            this.cateroriesGridView.AllowUserToResizeColumns = false;
+            this.cateroriesGridView.AllowUserToResizeRows = false;
             this.cateroriesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cateroriesGridView.Location = new System.Drawing.Point(3, 3);
+            this.cateroriesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cateroriesGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.cateroriesGridView.Location = new System.Drawing.Point(0, 0);
+            this.cateroriesGridView.MultiSelect = false;
             this.cateroriesGridView.Name = "cateroriesGridView";
+            this.cateroriesGridView.ReadOnly = true;
             this.cateroriesGridView.RowHeadersWidth = 51;
+            this.cateroriesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cateroriesGridView.RowTemplate.Height = 24;
-            this.cateroriesGridView.Size = new System.Drawing.Size(883, 307);
+            this.cateroriesGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.cateroriesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.cateroriesGridView.Size = new System.Drawing.Size(889, 313);
             this.cateroriesGridView.TabIndex = 0;
             // 
-            // tabAuthors
+            // authorsTab
             // 
-            this.tabAuthors.Controls.Add(this.authorsSplitContainer);
-            this.tabAuthors.Location = new System.Drawing.Point(4, 25);
-            this.tabAuthors.Name = "tabAuthors";
-            this.tabAuthors.Size = new System.Drawing.Size(895, 466);
-            this.tabAuthors.TabIndex = 2;
-            this.tabAuthors.Text = "Authors";
-            this.tabAuthors.UseVisualStyleBackColor = true;
+            this.authorsTab.Controls.Add(this.authorsSplitContainer);
+            this.authorsTab.Location = new System.Drawing.Point(4, 25);
+            this.authorsTab.Name = "authorsTab";
+            this.authorsTab.Size = new System.Drawing.Size(895, 466);
+            this.authorsTab.TabIndex = 2;
+            this.authorsTab.Text = "Authors";
+            this.authorsTab.UseVisualStyleBackColor = true;
             // 
             // authorsSplitContainer
             // 
@@ -208,22 +226,34 @@
             // 
             // authorsGridView
             // 
-            this.authorsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.authorsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.authorsGridView.Location = new System.Drawing.Point(3, 3);
+            this.authorsGridView.AllowUserToAddRows = false;
+            this.authorsGridView.AllowUserToDeleteRows = false;
+            this.authorsGridView.AllowUserToResizeColumns = false;
+            this.authorsGridView.AllowUserToResizeRows = false;
+            this.authorsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
+            this.authorsGridView.ColumnHeadersHeight = 29;
+            this.authorsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.authorsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.authorsGridView.Location = new System.Drawing.Point(0, 0);
+            this.authorsGridView.MultiSelect = false;
             this.authorsGridView.Name = "authorsGridView";
+            this.authorsGridView.ReadOnly = true;
             this.authorsGridView.RowHeadersWidth = 51;
+            this.authorsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.authorsGridView.RowTemplate.Height = 24;
-            this.authorsGridView.Size = new System.Drawing.Size(889, 313);
+            this.authorsGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.authorsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.authorsGridView.Size = new System.Drawing.Size(895, 319);
             this.authorsGridView.TabIndex = 0;
             // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.libraryToolStripMenuItem,
+            this.categoryToolStripMenuItem,
+            this.authorsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(927, 28);
@@ -244,6 +274,74 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // libraryToolStripMenuItem
+            // 
+            this.libraryToolStripMenuItem.Name = "libraryToolStripMenuItem";
+            this.libraryToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
+            this.libraryToolStripMenuItem.Text = "Library";
+            // 
+            // categoryToolStripMenuItem
+            // 
+            this.categoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewCategoryToolStripMenuItem,
+            this.editViewCategoryToolStripMenuItem,
+            this.deleteCategotyToolStripMenuItem});
+            this.categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
+            this.categoryToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
+            this.categoryToolStripMenuItem.Text = "Category";
+            // 
+            // addNewCategoryToolStripMenuItem
+            // 
+            this.addNewCategoryToolStripMenuItem.Name = "addNewCategoryToolStripMenuItem";
+            this.addNewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addNewCategoryToolStripMenuItem.Text = "Add New Category";
+            this.addNewCategoryToolStripMenuItem.Click += new System.EventHandler(this.AddNewCategoryToolStripMenuItem_Click);
+            // 
+            // editViewToolStripMenuItem
+            // 
+            this.editViewCategoryToolStripMenuItem.Name = "editViewCategoryToolStripMenuItem";
+            this.editViewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editViewCategoryToolStripMenuItem.Text = "View/Edit Category";
+            this.editViewCategoryToolStripMenuItem.Click += new System.EventHandler(this.EditViewToolStripMenuItem_Click);
+            // 
+            // deleteCategotyToolStripMenuItem
+            // 
+            this.deleteCategotyToolStripMenuItem.Name = "deleteCategotyToolStripMenuItem";
+            this.deleteCategotyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteCategotyToolStripMenuItem.Text = "Delete Categoty";
+            this.deleteCategotyToolStripMenuItem.Click += new System.EventHandler(this.DeleteCategotyToolStripMenuItem_Click);
+            // 
+            // authorsToolStripMenuItem
+            // 
+            this.authorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewAutorToolStripMenuItem,
+            this.editAuthorToolStripMenuItem,
+            this.deleteAuthorToolStripMenuItem});
+            this.authorsToolStripMenuItem.Name = "authorsToolStripMenuItem";
+            this.authorsToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.authorsToolStripMenuItem.Text = "Authors";
+            // 
+            // addNewAutorToolStripMenuItem
+            // 
+            this.addNewAutorToolStripMenuItem.Name = "addNewAutorToolStripMenuItem";
+            this.addNewAutorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
+            this.addNewAutorToolStripMenuItem.Text = "Add New Autor";
+            this.addNewAutorToolStripMenuItem.Click += new System.EventHandler(this.AddNewAutorToolStripMenuItem_Click);
+            // 
+            // editAuthorToolStripMenuItem
+            // 
+            this.editAuthorToolStripMenuItem.Name = "editAuthorToolStripMenuItem";
+            this.editAuthorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
+            this.editAuthorToolStripMenuItem.Text = "View/Edit Author";
+            this.editAuthorToolStripMenuItem.Click += new System.EventHandler(this.EditAuthorToolStripMenuItem_Click);
+            // 
+            // deleteAuthorToolStripMenuItem
+            // 
+            this.deleteAuthorToolStripMenuItem.Name = "deleteAuthorToolStripMenuItem";
+            this.deleteAuthorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
+            this.deleteAuthorToolStripMenuItem.Text = "Delete Author";
+            this.deleteAuthorToolStripMenuItem.Click += new System.EventHandler(this.DeleteAuthorToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -269,7 +367,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).EndInit();
             this.cateroriesSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).EndInit();
-            this.tabAuthors.ResumeLayout(false);
+            this.authorsTab.ResumeLayout(false);
             this.authorsSplitContainer.Panel1.ResumeLayout(false);
             this.authorsSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.authorsSplitContainer)).EndInit();
@@ -289,7 +387,7 @@
         private System.Windows.Forms.TabPage categoriesTab;
         private System.Windows.Forms.SplitContainer literatureSplitContainer;
         private System.Windows.Forms.DataGridView literatureGridView;
-        private System.Windows.Forms.TabPage tabAuthors;
+        private System.Windows.Forms.TabPage authorsTab;
         private System.Windows.Forms.SplitContainer authorsSplitContainer;
         private System.Windows.Forms.DataGridView authorsGridView;
         private System.Windows.Forms.SplitContainer cateroriesSplitContainer;
@@ -299,5 +397,14 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button addNewCaterogyButton;
+        private System.Windows.Forms.ToolStripMenuItem libraryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem categoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem authorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewAutorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editAuthorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAuthorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewCategoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editViewCategoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteCategotyToolStripMenuItem;
     }
 }

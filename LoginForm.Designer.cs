@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
-
+using PersonalLibrary.View;
 
 namespace PersonalLibrary
 {
@@ -64,7 +64,7 @@ namespace PersonalLibrary
             this.LoginButton.TabIndex = 3;
             this.LoginButton.Text = "Login";
             this.LoginButton.UseVisualStyleBackColor = true;
-            this.LoginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // LoginLabel
             // 
@@ -108,6 +108,7 @@ namespace PersonalLibrary
         #endregion
 
         private readonly Repository repository;
+        private readonly UIState uiState;
         private void SetInitialState()
         {
             this.PasswordInput.PasswordChar = '*';
@@ -124,8 +125,9 @@ namespace PersonalLibrary
                                              MessageBoxIcon.Error);
                 return;
             }
+            uiState.LoggedInUser = user;
             this.Hide();
-            MainForm mainForm = new MainForm(this, user, repository);
+            MainForm mainForm = new MainForm(this, uiState, repository);
             mainForm.ShowDialog();
         }
         

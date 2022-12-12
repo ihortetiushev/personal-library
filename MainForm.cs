@@ -11,38 +11,49 @@ using System.Data.SqlClient;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
 using personal_library;
+using PersonalLibrary.View;
 
 namespace PersonalLibrary
 {
     public partial class MainForm : Form
     {
-        private static readonly int AUTHOR_COLUMN_INDEX_ID = 0;
+        private static readonly int ID_COLUMN_INDEX = 0;
         private static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
         private static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
         private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 3;
 
-        private static readonly int CATEGORY_COLUMN_INDEX_ID = 0;
         private static readonly int CATEGORY_COLUMN_INDEX_NAME = 1;
         private static readonly int CATEGORY_COLUMN_INDEX_DESC = 2;
 
         private readonly Repository repository;
+        private readonly UIState uiState;
+        private readonly bool readOnly;
         private readonly LoginForm loginForm;
-        public MainForm(LoginForm loginForm, User loggedInUser, Repository repository)
+        private DataTable authorsTable;
+        public MainForm(LoginForm loginForm, UIState uiState, Repository repository)
         {
             InitializeComponent();
             this.loginForm = loginForm;
             this.repository = repository;
-            InitializeState(loggedInUser);
+            this.uiState = uiState;
+            this.readOnly = uiState.LoggedInUser.Type == User.UserType.Reader;
+            InitializeState(uiState);
             LoadData();
             
         }
 
-        private void InitializeState(User loggedInUser) 
+        private void InitializeState(UIState uiState) 
         {
-            this.Text = "Personal library (" + loggedInUser.Type + ")";
-            bool readOnly = loggedInUser.Type == User.UserType.Reader;
+            this.Text = "Personal library (" + uiState.LoggedInUser.Type + ")";
             this.addNewAuthorButton.Enabled = !readOnly;
             this.addNewCaterogyButton.Enabled = !readOnly;
+            this.addNewAutorToolStripMenuItem.Enabled = !readOnly;
+            //this.editAuthorToolStripMenuItem.Enabled = !readOnly;
+            this.deleteAuthorToolStripMenuItem.Enabled = !readOnly;
+            this.addNewCategoryToolStripMenuItem.Enabled = !readOnly;
+            //this.editViewCategoryToolStripMenuItem.Enabled = !readOnly;
+            this.deleteCategotyToolStripMenuItem.Enabled = !readOnly;
+            SetActiveTabState();
         }
        
 
@@ -89,7 +100,7 @@ namespace PersonalLibrary
 
         private void PopulateAutorGridData(List<Author> authors) 
         {
-            DataTable authorsTable = CreateAuthorTable();
+            this.authorsTable = CreateAuthorTable();
             foreach (Author author in authors)
             {
                  authorsTable.LoadDataRow(ToAuthorRow(author), true);
@@ -114,7 +125,7 @@ namespace PersonalLibrary
             table.Columns.Add(new DataColumn("Comment", Type.GetType("System.String")));
 
             authorsGridView.DataSource = table;
-            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_ID].Width = 50;
+            authorsGridView.Columns[ID_COLUMN_INDEX].Width = 50;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_FIRST_NAME].Width = 130;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_LAST_NAME].Width = 130;
             authorsGridView.Columns[AUTHOR_COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -129,7 +140,7 @@ namespace PersonalLibrary
             table.Columns.Add(new DataColumn("Description", Type.GetType("System.String")));
 
             cateroriesGridView.DataSource = table;
-            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_ID].Width = 50;
+            cateroriesGridView.Columns[ID_COLUMN_INDEX].Width = 50;
             cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_NAME].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_DESC].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
@@ -138,7 +149,7 @@ namespace PersonalLibrary
         private object[] ToAuthorRow(Author author)
         {
             object[] values = new object[4];
-            values[AUTHOR_COLUMN_INDEX_ID] = author.AuthorId;
+            values[ID_COLUMN_INDEX] = author.AuthorId;
             values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
             values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
             values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
@@ -148,7 +159,7 @@ namespace PersonalLibrary
         private object[] ToCategoryRow(Category category)
         {
             object[] values = new object[3];
-            values[CATEGORY_COLUMN_INDEX_ID]= category.CategoryId;
+            values[ID_COLUMN_INDEX] = category.CategoryId;
             values[CATEGORY_COLUMN_INDEX_NAME] = category.Name;
             values[CATEGORY_COLUMN_INDEX_DESC] = category.Description;
             return values;
@@ -161,8 +172,10 @@ namespace PersonalLibrary
 
         private void AddNewAuthor() 
         {
-            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository);
+            uiState.LastModified = null;
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
             addEditAuthorForm.ShowDialog();
+            RefreshGridData();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -174,6 +187,144 @@ namespace PersonalLibrary
         {
 
         }
+
+        private void RefreshGridData()
+        {
+            if (uiState.LastOperation == Operation.CANCEL)
+            {
+                return;
+            }
+            int? id= uiState.LastModifiedId;
+            Author autor = (Author)uiState.LastModified;
+            //Employee employee = repository.get.repo.getById(id);
+            DataGridView activeGrid = this.authorsGridView;
+            if (uiState.LastOperation == Operation.CREATE)
+            {
+                AddCreatedRecordToTable(autor);
+                return;
+            }
+            if (activeGrid.RowCount > 0)
+            {
+                for (int i = 0; i < activeGrid.RowCount; i++)
+                {
+                    object idObj = activeGrid.Rows[i].Cells[ID_COLUMN_INDEX].Value;
+                    if (id.Equals(idObj))
+                    {
+                        if (uiState.LastOperation == Operation.UPDATE)
+                        {
+                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_FIRST_NAME].Value = autor.FirstName;
+                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_LAST_NAME].Value = autor.LastName;
+                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_COMMENT].Value = autor.Comment;
+                        }
+                        else if (uiState.LastOperation == Operation.DELETE)
+                        {
+                            activeGrid.Rows.RemoveAt(activeGrid.Rows[i].Index);
+                        }
+                        break;
+                    }
+                }
+            }
+            //dataGridActive.Columns[ID_INDEX].Visible = false;
+            //dataGridDeleted.Columns[ID_INDEX].Visible = false;
+        }
+
+        private void AddCreatedRecordToTable(Author author)
+        {
+            object[] rowData = ToAuthorRow(author);
+            /*if (thistableActive == nullptr)
+            {
+                this.tableActive = createTable(dataGridActive);
+            }*/
+            this.authorsTable.LoadDataRow(rowData, true);
+        }
+
+        private void AddNewAutorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddNewAuthor();
+        }
+
+        private void EditAuthorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewEditAuthor();
+        }
+
+        private void DeleteAuthorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //TabControl
+            /*TabControl tab = (TabControl)sender;
+            if (tab.SelectedTab == this.tabAuthors) 
+            {
+            }*/
+            SetActiveTabState();
+        }
+        private void SetActiveTabState() 
+        {
+            SetAutorsItemsState();
+            SetCateroriesItemsState();
+        }
+        private void SetAutorsItemsState() 
+        {
+            if (this.tabControl.SelectedTab == this.authorsTab)
+            {
+                this.editAuthorToolStripMenuItem.Enabled = true;
+                this.deleteAuthorToolStripMenuItem.Enabled = !readOnly;
+            }
+            else
+            {
+                this.editAuthorToolStripMenuItem.Enabled = false;
+                this.deleteAuthorToolStripMenuItem.Enabled = false;
+            }
+        }
+        private void SetCateroriesItemsState()
+        {
+            if (this.tabControl.SelectedTab == this.categoriesTab)
+            {
+                this.editViewCategoryToolStripMenuItem.Enabled = !readOnly;
+                this.deleteCategotyToolStripMenuItem.Enabled = !readOnly;
+            }
+            else
+            {
+                this.editViewCategoryToolStripMenuItem.Enabled = false;
+                this.deleteCategotyToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void AddNewCategoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EditViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewEditAuthor();
+        }
+
+        private void DeleteCategotyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void ViewEditAuthor()
+        {
+            DataGridViewSelectedRowCollection selected = this.authorsGridView.SelectedRows;
+            if (selected.Count == 0)
+            {
+                MessageBox.Show("No data selected for editing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Object objId = this.authorsGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            Author toEdit = this.repository.GetAuthorDao().GetById((int)objId);
+            uiState.LastModified = toEdit;
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
+            addEditAuthorForm.ShowDialog();
+            RefreshGridData();
+        }
     }
+
+
 
 }
