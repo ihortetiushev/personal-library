@@ -1,4 +1,4 @@
-﻿namespace personal_library
+﻿namespace PersonalLibrary
 {
     partial class AddEditAuthorForm
     {
@@ -111,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 344);
+            this.ClientSize = new System.Drawing.Size(352, 343);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

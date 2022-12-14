@@ -52,6 +52,12 @@
     <Compile Include="AddEditAuthorForm.Designer.cs">
       <DependentUpon>AddEditAuthorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddEditCategoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEditCategoryForm.Designer.cs">
+      <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="GenericDao.cs" />
     <Compile Include="CategoryDao.cs" />
@@ -78,6 +84,9 @@
     <Compile Include="User.cs" />
     <EmbeddedResource Include="AddEditAuthorForm.resx">
       <DependentUpon>AddEditAuthorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddEditCategoryForm.resx">
+      <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

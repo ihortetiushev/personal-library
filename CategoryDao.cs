@@ -38,7 +38,7 @@ namespace PersonalLibrary.Dao
                     throw new ArgumentException("CategoryId must be not positive");
                 }
                 var sql = @"INSERT into category 
-                            (name, description) OUTPUT Inserted.caterory_id
+                            (name, description) OUTPUT Inserted.category_id
                             VALUES(@Name, @Description)";
                 using (var cmd = new SqlCommand(sql, sqlConnection))
                 {
@@ -54,6 +54,38 @@ namespace PersonalLibrary.Dao
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Error);
             }
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            try
+            {
+                if (category.CategoryId <= 0)
+                {
+                    throw new ArgumentException("CategoryId must be positive");
+                }
+                var sql = @"update category set 
+                            name = @Name,
+                            description = @Description
+                            where category_id = @Id";
+                using (var cmd = new SqlCommand(sql, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@Name", category.Name);
+                    cmd.Parameters.AddWithValue("@Description", category.Description);
+                    cmd.Parameters.AddWithValue("@Id", category.CategoryId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Data is not saved " + e.Message, "Error!",
+                             MessageBoxButtons.OK,
+                             MessageBoxIcon.Error);
+            }
+        }
+        public Category GetById(int categoryId)
+        {
+            return base.GetById("select * from category where category_id = @Id", categoryId);
         }
     }
 

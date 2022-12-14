@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace personal_library
+namespace PersonalLibrary
 {
     public partial class AddEditAuthorForm : Form
     {

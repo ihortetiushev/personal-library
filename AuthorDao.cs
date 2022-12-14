@@ -20,6 +20,10 @@ namespace PersonalLibrary.Dao
         {
             return ExecuteQuery("select * from author");
         }
+        public bool IsBeingUsed(int authorId)
+        {
+            return base.GetCount("select count(*) from literature_author where author_id = " + authorId) > 0;
+        }
         public void CreateAuthor(Author author)
         {
             try
@@ -45,6 +49,11 @@ namespace PersonalLibrary.Dao
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Error);
             }
+        }
+
+        public void DeleteAutor(int authorId) 
+        {
+            base.ExecuteNonQuery("delete from author where author_id = " + authorId);
         }
         public void UpdateAuthor(Author author)
         {

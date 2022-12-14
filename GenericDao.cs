@@ -28,6 +28,28 @@ namespace PersonalLibrary.Dao
             return items;
         }
 
+        public void ExecuteNonQuery(string query)
+        {
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            command.ExecuteNonQuery();
+        }
+
+        public int GetCount(string query)
+        {
+            int result = 0;
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    result = reader.GetInt32(0);
+                }
+            }
+            reader.Close();
+            return result;
+        }
+
         public T GetById(string query, int id)
         {
             T found = default;

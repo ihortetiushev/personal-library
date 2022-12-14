@@ -30,6 +30,7 @@ namespace PersonalLibrary
         private readonly bool readOnly;
         private readonly LoginForm loginForm;
         private DataTable authorsTable;
+        private DataTable categoryTable;
         public MainForm(LoginForm loginForm, UIState uiState, Repository repository)
         {
             InitializeComponent();
@@ -48,10 +49,8 @@ namespace PersonalLibrary
             this.addNewAuthorButton.Enabled = !readOnly;
             this.addNewCaterogyButton.Enabled = !readOnly;
             this.addNewAutorToolStripMenuItem.Enabled = !readOnly;
-            //this.editAuthorToolStripMenuItem.Enabled = !readOnly;
             this.deleteAuthorToolStripMenuItem.Enabled = !readOnly;
             this.addNewCategoryToolStripMenuItem.Enabled = !readOnly;
-            //this.editViewCategoryToolStripMenuItem.Enabled = !readOnly;
             this.deleteCategotyToolStripMenuItem.Enabled = !readOnly;
             SetActiveTabState();
         }
@@ -109,10 +108,10 @@ namespace PersonalLibrary
 
         private void PopulateCategoryGridData(List<Category> categories)
         {
-            DataTable table = CreateCategotyTable();
+            this.categoryTable = CreateCategotyTable();
             foreach (Category category in categories)
             {
-                table.LoadDataRow(ToCategoryRow(category), true);
+                categoryTable.LoadDataRow(ToCategoryRow(category), true);
             }
         }
 
@@ -175,7 +174,15 @@ namespace PersonalLibrary
             uiState.LastModified = null;
             AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
             addEditAuthorForm.ShowDialog();
-            RefreshGridData();
+            RefreshGridData(authorsGridView);
+        }
+
+        private void AddNewCategory()
+        {
+            uiState.LastModified = null;
+            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(this, repository, uiState);
+            addEditCategoryForm.ShowDialog();
+            RefreshGridData(cateroriesGridView);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -185,57 +192,89 @@ namespace PersonalLibrary
 
         private void AddNewCaterogyButton_Click(object sender, EventArgs e)
         {
-
+            AddNewCategory();
+        }
+        
+        private void updateGridDate(DataGridView activeGrid, int i, Object data) 
+        {
+            if (data.GetType() == typeof(Author)) 
+            {
+                updateGridDate(activeGrid, i, (Author)data);
+            }
+            if (data.GetType() == typeof(Category))
+            {
+                updateGridDate(activeGrid, i, (Category)data);
+            }
         }
 
-        private void RefreshGridData()
+        private void updateGridDate(DataGridView activeGrid, int i, Author autor)
+        {
+            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_FIRST_NAME].Value = autor.FirstName;
+            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_LAST_NAME].Value = autor.LastName;
+            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_COMMENT].Value = autor.Comment;
+        }
+
+        private void updateGridDate(DataGridView activeGrid, int i, Category category)
+        {
+            activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_NAME].Value = category.Name;
+            activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_DESC].Value = category.Description;
+        }
+
+        private void RefreshGridData(DataGridView dataGrid)
         {
             if (uiState.LastOperation == Operation.CANCEL)
             {
                 return;
             }
             int? id= uiState.LastModifiedId;
-            Author autor = (Author)uiState.LastModified;
-            //Employee employee = repository.get.repo.getById(id);
-            DataGridView activeGrid = this.authorsGridView;
+            Object data = uiState.LastModified;
             if (uiState.LastOperation == Operation.CREATE)
             {
-                AddCreatedRecordToTable(autor);
+                AddCreatedRecordToTable(data);
                 return;
             }
-            if (activeGrid.RowCount > 0)
+            if (dataGrid.RowCount > 0)
             {
-                for (int i = 0; i < activeGrid.RowCount; i++)
+                for (int i = 0; i < dataGrid.RowCount; i++)
                 {
-                    object idObj = activeGrid.Rows[i].Cells[ID_COLUMN_INDEX].Value;
+                    object idObj = dataGrid.Rows[i].Cells[ID_COLUMN_INDEX].Value;
                     if (id.Equals(idObj))
                     {
                         if (uiState.LastOperation == Operation.UPDATE)
                         {
-                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_FIRST_NAME].Value = autor.FirstName;
-                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_LAST_NAME].Value = autor.LastName;
-                            activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_COMMENT].Value = autor.Comment;
+                            updateGridDate(dataGrid, i, data);
                         }
                         else if (uiState.LastOperation == Operation.DELETE)
                         {
-                            activeGrid.Rows.RemoveAt(activeGrid.Rows[i].Index);
+                            dataGrid.Rows.RemoveAt(dataGrid.Rows[i].Index);
                         }
                         break;
                     }
                 }
             }
-            //dataGridActive.Columns[ID_INDEX].Visible = false;
-            //dataGridDeleted.Columns[ID_INDEX].Visible = false;
+
         }
 
+        private void AddCreatedRecordToTable(Object data) 
+        {
+            if (data.GetType() == typeof(Author))
+            {
+                AddCreatedRecordToTable((Author)data);
+            }
+            if (data.GetType() == typeof(Category))
+            {
+                AddCreatedRecordToTable((Category)data);
+            }
+        }
         private void AddCreatedRecordToTable(Author author)
         {
             object[] rowData = ToAuthorRow(author);
-            /*if (thistableActive == nullptr)
-            {
-                this.tableActive = createTable(dataGridActive);
-            }*/
             this.authorsTable.LoadDataRow(rowData, true);
+        }
+        private void AddCreatedRecordToTable(Category category)
+        {
+            object[] rowData = ToCategoryRow(category);
+            this.categoryTable.LoadDataRow(rowData, true);
         }
 
         private void AddNewAutorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -250,16 +289,32 @@ namespace PersonalLibrary
 
         private void DeleteAuthorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!HasSelectedRow(this.authorsGridView))
+            {
+                return;
+            }
+            Object objId = this.authorsGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            int authorId = (int)objId;
+            bool canNotDelete = this.repository.GetAuthorDao().IsBeingUsed(authorId);
+            if (canNotDelete) 
+            {
+                MessageBox.Show("Author is being used and can not be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DialogResult res = MessageBox.Show("Do you really want to delete selected author?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (res == DialogResult.Cancel) 
+            {
+                return;
+            }
+            this.repository.GetAuthorDao().DeleteAutor(authorId);
+            uiState.LastModified = null;
+            uiState.LastModifiedId = authorId;
+            uiState.LastOperation = Operation.DELETE;
+            RefreshGridData(this.authorsGridView);
         }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //TabControl
-            /*TabControl tab = (TabControl)sender;
-            if (tab.SelectedTab == this.tabAuthors) 
-            {
-            }*/
             SetActiveTabState();
         }
         private void SetActiveTabState() 
@@ -296,24 +351,33 @@ namespace PersonalLibrary
 
         private void AddNewCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AddNewCategory();
         }
 
-        private void EditViewToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ViewEditCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ViewEditAuthor();
+            ViewEditCategory();
         }
 
         private void DeleteCategotyToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
-        private void ViewEditAuthor()
+
+        private bool HasSelectedRow(DataGridView grid) 
         {
-            DataGridViewSelectedRowCollection selected = this.authorsGridView.SelectedRows;
+            DataGridViewSelectedRowCollection selected = grid.SelectedRows;
             if (selected.Count == 0)
             {
-                MessageBox.Show("No data selected for editing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No data selected for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        private void ViewEditAuthor()
+        {
+            if (!HasSelectedRow(this.authorsGridView))
+            {
                 return;
             }
             Object objId = this.authorsGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
@@ -321,8 +385,23 @@ namespace PersonalLibrary
             uiState.LastModified = toEdit;
             AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
             addEditAuthorForm.ShowDialog();
-            RefreshGridData();
+            RefreshGridData(this.authorsGridView);
         }
+
+        private void ViewEditCategory()
+        {
+            if (!HasSelectedRow(this.cateroriesGridView))
+            {
+                return;
+            }
+            Object objId = this.cateroriesGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            Category toEdit = this.repository.GetCategoryDao().GetById((int)objId);
+            uiState.LastModified = toEdit;
+            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(this, repository, uiState);
+            addEditCategoryForm.ShowDialog();
+            RefreshGridData(this.cateroriesGridView);
+        }
+        
     }
 
 

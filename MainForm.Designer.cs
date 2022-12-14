@@ -303,7 +303,7 @@
             this.editViewCategoryToolStripMenuItem.Name = "editViewCategoryToolStripMenuItem";
             this.editViewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.editViewCategoryToolStripMenuItem.Text = "View/Edit Category";
-            this.editViewCategoryToolStripMenuItem.Click += new System.EventHandler(this.EditViewToolStripMenuItem_Click);
+            this.editViewCategoryToolStripMenuItem.Click += new System.EventHandler(this.ViewEditCategoryToolStripMenuItem_Click);
             // 
             // deleteCategotyToolStripMenuItem
             // 
