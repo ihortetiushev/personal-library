@@ -1,4 +1,4 @@
-﻿namespace PersonalLibrary
+﻿namespace PersonalLibrary.View
 {
     partial class MainForm
     {
@@ -33,9 +33,9 @@
             this.literatureSplitContainer = new System.Windows.Forms.SplitContainer();
             this.literatureGridView = new System.Windows.Forms.DataGridView();
             this.categoriesTab = new System.Windows.Forms.TabPage();
-            this.cateroriesSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.addNewCaterogyButton = new System.Windows.Forms.Button();
-            this.cateroriesGridView = new System.Windows.Forms.DataGridView();
+            this.categoriesSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.addNewCategoryButton = new System.Windows.Forms.Button();
+            this.categoriesGridView = new System.Windows.Forms.DataGridView();
             this.authorsTab = new System.Windows.Forms.TabPage();
             this.authorsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.addNewAuthorButton = new System.Windows.Forms.Button();
@@ -44,6 +44,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editViewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,8 @@
             this.addNewAutorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewEditLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
@@ -59,11 +62,11 @@
             this.literatureSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).BeginInit();
             this.categoriesTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).BeginInit();
-            this.cateroriesSplitContainer.Panel1.SuspendLayout();
-            this.cateroriesSplitContainer.Panel2.SuspendLayout();
-            this.cateroriesSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.categoriesSplitContainer)).BeginInit();
+            this.categoriesSplitContainer.Panel1.SuspendLayout();
+            this.categoriesSplitContainer.Panel2.SuspendLayout();
+            this.categoriesSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.categoriesGridView)).BeginInit();
             this.authorsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.authorsSplitContainer)).BeginInit();
             this.authorsSplitContainer.Panel1.SuspendLayout();
@@ -128,7 +131,7 @@
             // 
             // categoriesTab
             // 
-            this.categoriesTab.Controls.Add(this.cateroriesSplitContainer);
+            this.categoriesTab.Controls.Add(this.categoriesSplitContainer);
             this.categoriesTab.Location = new System.Drawing.Point(4, 25);
             this.categoriesTab.Name = "categoriesTab";
             this.categoriesTab.Padding = new System.Windows.Forms.Padding(3);
@@ -137,54 +140,54 @@
             this.categoriesTab.Text = "Categories";
             this.categoriesTab.UseVisualStyleBackColor = true;
             // 
-            // cateroriesSplitContainer
+            // categoriesSplitContainer
             // 
-            this.cateroriesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cateroriesSplitContainer.Location = new System.Drawing.Point(3, 3);
-            this.cateroriesSplitContainer.Name = "cateroriesSplitContainer";
-            this.cateroriesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.categoriesSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoriesSplitContainer.Location = new System.Drawing.Point(3, 3);
+            this.categoriesSplitContainer.Name = "categoriesSplitContainer";
+            this.categoriesSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // cateroriesSplitContainer.Panel1
+            // categoriesSplitContainer.Panel1
             // 
-            this.cateroriesSplitContainer.Panel1.Controls.Add(this.addNewCaterogyButton);
+            this.categoriesSplitContainer.Panel1.Controls.Add(this.addNewCategoryButton);
             // 
-            // cateroriesSplitContainer.Panel2
+            // categoriesSplitContainer.Panel2
             // 
-            this.cateroriesSplitContainer.Panel2.Controls.Add(this.cateroriesGridView);
-            this.cateroriesSplitContainer.Size = new System.Drawing.Size(889, 460);
-            this.cateroriesSplitContainer.SplitterDistance = 143;
-            this.cateroriesSplitContainer.TabIndex = 0;
+            this.categoriesSplitContainer.Panel2.Controls.Add(this.categoriesGridView);
+            this.categoriesSplitContainer.Size = new System.Drawing.Size(889, 460);
+            this.categoriesSplitContainer.SplitterDistance = 143;
+            this.categoriesSplitContainer.TabIndex = 0;
             // 
-            // addNewCaterogyButton
+            // addNewCategoryButton
             // 
-            this.addNewCaterogyButton.Location = new System.Drawing.Point(710, 20);
-            this.addNewCaterogyButton.Name = "addNewCaterogyButton";
-            this.addNewCaterogyButton.Size = new System.Drawing.Size(150, 30);
-            this.addNewCaterogyButton.TabIndex = 0;
-            this.addNewCaterogyButton.Text = "Add New Category";
-            this.addNewCaterogyButton.UseVisualStyleBackColor = true;
-            this.addNewCaterogyButton.Click += new System.EventHandler(this.AddNewCaterogyButton_Click);
+            this.addNewCategoryButton.Location = new System.Drawing.Point(710, 20);
+            this.addNewCategoryButton.Name = "addNewCategoryButton";
+            this.addNewCategoryButton.Size = new System.Drawing.Size(150, 30);
+            this.addNewCategoryButton.TabIndex = 0;
+            this.addNewCategoryButton.Text = "Add New Category";
+            this.addNewCategoryButton.UseVisualStyleBackColor = true;
+            this.addNewCategoryButton.Click += new System.EventHandler(this.AddNewCategoryButton_Click);
             // 
-            // cateroriesGridView
+            // categoriesGridView
             // 
-            this.cateroriesGridView.AllowUserToAddRows = false;
-            this.cateroriesGridView.AllowUserToDeleteRows = false;
-            this.cateroriesGridView.AllowUserToResizeColumns = false;
-            this.cateroriesGridView.AllowUserToResizeRows = false;
-            this.cateroriesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cateroriesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cateroriesGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.cateroriesGridView.Location = new System.Drawing.Point(0, 0);
-            this.cateroriesGridView.MultiSelect = false;
-            this.cateroriesGridView.Name = "cateroriesGridView";
-            this.cateroriesGridView.ReadOnly = true;
-            this.cateroriesGridView.RowHeadersWidth = 51;
-            this.cateroriesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.cateroriesGridView.RowTemplate.Height = 24;
-            this.cateroriesGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.cateroriesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.cateroriesGridView.Size = new System.Drawing.Size(889, 313);
-            this.cateroriesGridView.TabIndex = 0;
+            this.categoriesGridView.AllowUserToAddRows = false;
+            this.categoriesGridView.AllowUserToDeleteRows = false;
+            this.categoriesGridView.AllowUserToResizeColumns = false;
+            this.categoriesGridView.AllowUserToResizeRows = false;
+            this.categoriesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.categoriesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoriesGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.categoriesGridView.Location = new System.Drawing.Point(0, 0);
+            this.categoriesGridView.MultiSelect = false;
+            this.categoriesGridView.Name = "categoriesGridView";
+            this.categoriesGridView.ReadOnly = true;
+            this.categoriesGridView.RowHeadersWidth = 51;
+            this.categoriesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.categoriesGridView.RowTemplate.Height = 24;
+            this.categoriesGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.categoriesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.categoriesGridView.Size = new System.Drawing.Size(889, 313);
+            this.categoriesGridView.TabIndex = 0;
             // 
             // authorsTab
             // 
@@ -277,9 +280,20 @@
             // 
             // libraryToolStripMenuItem
             // 
+            this.libraryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addLiteratureToolStripMenuItem,
+            this.viewEditLiteratureToolStripMenuItem,
+            this.deleteLiteratureToolStripMenuItem});
             this.libraryToolStripMenuItem.Name = "libraryToolStripMenuItem";
             this.libraryToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.libraryToolStripMenuItem.Text = "Library";
+            // 
+            // addLiteratureToolStripMenuItem
+            // 
+            this.addLiteratureToolStripMenuItem.Name = "addLiteratureToolStripMenuItem";
+            this.addLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addLiteratureToolStripMenuItem.Text = "Add Literature";
+            this.addLiteratureToolStripMenuItem.Click += new System.EventHandler(this.AddLiteratureToolStripMenuItem_Click);
             // 
             // categoryToolStripMenuItem
             // 
@@ -295,10 +309,10 @@
             // 
             this.addNewCategoryToolStripMenuItem.Name = "addNewCategoryToolStripMenuItem";
             this.addNewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.addNewCategoryToolStripMenuItem.Text = "Add New Category";
+            this.addNewCategoryToolStripMenuItem.Text = "Add Category";
             this.addNewCategoryToolStripMenuItem.Click += new System.EventHandler(this.AddNewCategoryToolStripMenuItem_Click);
             // 
-            // editViewToolStripMenuItem
+            // editViewCategoryToolStripMenuItem
             // 
             this.editViewCategoryToolStripMenuItem.Name = "editViewCategoryToolStripMenuItem";
             this.editViewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
@@ -326,7 +340,7 @@
             // 
             this.addNewAutorToolStripMenuItem.Name = "addNewAutorToolStripMenuItem";
             this.addNewAutorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.addNewAutorToolStripMenuItem.Text = "Add New Autor";
+            this.addNewAutorToolStripMenuItem.Text = "Add Autor";
             this.addNewAutorToolStripMenuItem.Click += new System.EventHandler(this.AddNewAutorToolStripMenuItem_Click);
             // 
             // editAuthorToolStripMenuItem
@@ -342,6 +356,18 @@
             this.deleteAuthorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
             this.deleteAuthorToolStripMenuItem.Text = "Delete Author";
             this.deleteAuthorToolStripMenuItem.Click += new System.EventHandler(this.DeleteAuthorToolStripMenuItem_Click);
+            // 
+            // viewEditLiteratureToolStripMenuItem
+            // 
+            this.viewEditLiteratureToolStripMenuItem.Name = "viewEditLiteratureToolStripMenuItem";
+            this.viewEditLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.viewEditLiteratureToolStripMenuItem.Text = "View/Edit Literature";
+            // 
+            // deleteLiteratureToolStripMenuItem
+            // 
+            this.deleteLiteratureToolStripMenuItem.Name = "deleteLiteratureToolStripMenuItem";
+            this.deleteLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteLiteratureToolStripMenuItem.Text = "Delete Literature";
             // 
             // MainForm
             // 
@@ -362,11 +388,11 @@
             this.literatureSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).EndInit();
             this.categoriesTab.ResumeLayout(false);
-            this.cateroriesSplitContainer.Panel1.ResumeLayout(false);
-            this.cateroriesSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cateroriesSplitContainer)).EndInit();
-            this.cateroriesSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cateroriesGridView)).EndInit();
+            this.categoriesSplitContainer.Panel1.ResumeLayout(false);
+            this.categoriesSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.categoriesSplitContainer)).EndInit();
+            this.categoriesSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.categoriesGridView)).EndInit();
             this.authorsTab.ResumeLayout(false);
             this.authorsSplitContainer.Panel1.ResumeLayout(false);
             this.authorsSplitContainer.Panel2.ResumeLayout(false);
@@ -390,13 +416,13 @@
         private System.Windows.Forms.TabPage authorsTab;
         private System.Windows.Forms.SplitContainer authorsSplitContainer;
         private System.Windows.Forms.DataGridView authorsGridView;
-        private System.Windows.Forms.SplitContainer cateroriesSplitContainer;
-        private System.Windows.Forms.DataGridView cateroriesGridView;
+        private System.Windows.Forms.SplitContainer categoriesSplitContainer;
+        private System.Windows.Forms.DataGridView categoriesGridView;
         private System.Windows.Forms.Button addNewAuthorButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Button addNewCaterogyButton;
+        private System.Windows.Forms.Button addNewCategoryButton;
         private System.Windows.Forms.ToolStripMenuItem libraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem authorsToolStripMenuItem;
@@ -406,5 +432,8 @@
         private System.Windows.Forms.ToolStripMenuItem addNewCategoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editViewCategoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteCategotyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addLiteratureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewEditLiteratureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteLiteratureToolStripMenuItem;
     }
 }

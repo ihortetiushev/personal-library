@@ -4,7 +4,7 @@ using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
 using PersonalLibrary.View;
 
-namespace PersonalLibrary
+namespace PersonalLibrary.View
 {
     partial class LoginForm
     {

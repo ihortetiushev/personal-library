@@ -1,4 +1,4 @@
-﻿namespace PersonalLibrary
+﻿namespace PersonalLibrary.View
 {
     partial class AddEditAuthorForm
     {

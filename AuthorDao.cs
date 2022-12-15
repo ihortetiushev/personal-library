@@ -50,7 +50,6 @@ namespace PersonalLibrary.Dao
                              MessageBoxIcon.Error);
             }
         }
-
         public void DeleteAutor(int authorId) 
         {
             base.ExecuteNonQuery("delete from author where author_id = " + authorId);

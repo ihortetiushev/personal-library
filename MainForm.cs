@@ -10,10 +10,9 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
-using personal_library;
 using PersonalLibrary.View;
 
-namespace PersonalLibrary
+namespace PersonalLibrary.View
 {
     public partial class MainForm : Form
     {
@@ -47,11 +46,13 @@ namespace PersonalLibrary
         {
             this.Text = "Personal library (" + uiState.LoggedInUser.Type + ")";
             this.addNewAuthorButton.Enabled = !readOnly;
-            this.addNewCaterogyButton.Enabled = !readOnly;
+            this.addNewCategoryButton.Enabled = !readOnly;
             this.addNewAutorToolStripMenuItem.Enabled = !readOnly;
             this.deleteAuthorToolStripMenuItem.Enabled = !readOnly;
             this.addNewCategoryToolStripMenuItem.Enabled = !readOnly;
             this.deleteCategotyToolStripMenuItem.Enabled = !readOnly;
+            this.addLiteratureToolStripMenuItem.Enabled = !readOnly;
+            this.deleteLiteratureToolStripMenuItem.Enabled = !readOnly;
             SetActiveTabState();
         }
        
@@ -138,10 +139,10 @@ namespace PersonalLibrary
             table.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
             table.Columns.Add(new DataColumn("Description", Type.GetType("System.String")));
 
-            cateroriesGridView.DataSource = table;
-            cateroriesGridView.Columns[ID_COLUMN_INDEX].Width = 50;
-            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_NAME].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            cateroriesGridView.Columns[CATEGORY_COLUMN_INDEX_DESC].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            categoriesGridView.DataSource = table;
+            categoriesGridView.Columns[ID_COLUMN_INDEX].Width = 50;
+            categoriesGridView.Columns[CATEGORY_COLUMN_INDEX_NAME].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            categoriesGridView.Columns[CATEGORY_COLUMN_INDEX_DESC].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
         }
 
@@ -172,7 +173,7 @@ namespace PersonalLibrary
         private void AddNewAuthor() 
         {
             uiState.LastModified = null;
-            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(repository, uiState);
             addEditAuthorForm.ShowDialog();
             RefreshGridData(authorsGridView);
         }
@@ -180,9 +181,9 @@ namespace PersonalLibrary
         private void AddNewCategory()
         {
             uiState.LastModified = null;
-            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(this, repository, uiState);
+            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(repository, uiState);
             addEditCategoryForm.ShowDialog();
-            RefreshGridData(cateroriesGridView);
+            RefreshGridData(categoriesGridView);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,7 +191,7 @@ namespace PersonalLibrary
             DoExit();
         }
 
-        private void AddNewCaterogyButton_Click(object sender, EventArgs e)
+        private void AddNewCategoryButton_Click(object sender, EventArgs e)
         {
             AddNewCategory();
         }
@@ -320,7 +321,8 @@ namespace PersonalLibrary
         private void SetActiveTabState() 
         {
             SetAutorsItemsState();
-            SetCateroriesItemsState();
+            SetCategoriesItemsState();
+            SetLiteratureItemsState();
         }
         private void SetAutorsItemsState() 
         {
@@ -335,17 +337,31 @@ namespace PersonalLibrary
                 this.deleteAuthorToolStripMenuItem.Enabled = false;
             }
         }
-        private void SetCateroriesItemsState()
+        private void SetCategoriesItemsState()
         {
             if (this.tabControl.SelectedTab == this.categoriesTab)
             {
-                this.editViewCategoryToolStripMenuItem.Enabled = !readOnly;
+                this.editViewCategoryToolStripMenuItem.Enabled = true;
                 this.deleteCategotyToolStripMenuItem.Enabled = !readOnly;
             }
             else
             {
                 this.editViewCategoryToolStripMenuItem.Enabled = false;
                 this.deleteCategotyToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void SetLiteratureItemsState()
+        {
+            if (this.tabControl.SelectedTab == this.allLiteratureTab)
+            {
+                this.viewEditLiteratureToolStripMenuItem.Enabled = true;
+                this.deleteLiteratureToolStripMenuItem.Enabled = !readOnly;
+            }
+            else
+            {
+                this.viewEditLiteratureToolStripMenuItem.Enabled = false;
+                this.deleteLiteratureToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -361,7 +377,28 @@ namespace PersonalLibrary
 
         private void DeleteCategotyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!HasSelectedRow(this.categoriesGridView))
+            {
+                return;
+            }
+            Object objId = this.categoriesGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            int itemId = (int)objId;
+            bool canNotDelete = this.repository.GetCategoryDao().IsBeingUsed(itemId);
+            if (canNotDelete)
+            {
+                MessageBox.Show("Category is being used and can not be deleted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DialogResult res = MessageBox.Show("Do you really want to delete selected category?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (res == DialogResult.Cancel)
+            {
+                return;
+            }
+            this.repository.GetCategoryDao().DeleteCategory(itemId);
+            uiState.LastModified = null;
+            uiState.LastModifiedId = itemId;
+            uiState.LastOperation = Operation.DELETE;
+            RefreshGridData(this.categoriesGridView);
         }
 
         private bool HasSelectedRow(DataGridView grid) 
@@ -383,25 +420,37 @@ namespace PersonalLibrary
             Object objId = this.authorsGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
             Author toEdit = this.repository.GetAuthorDao().GetById((int)objId);
             uiState.LastModified = toEdit;
-            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(this, repository, uiState);
+            AddEditAuthorForm addEditAuthorForm = new AddEditAuthorForm(repository, uiState);
             addEditAuthorForm.ShowDialog();
             RefreshGridData(this.authorsGridView);
         }
 
         private void ViewEditCategory()
         {
-            if (!HasSelectedRow(this.cateroriesGridView))
+            if (!HasSelectedRow(this.categoriesGridView))
             {
                 return;
             }
-            Object objId = this.cateroriesGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            Object objId = this.categoriesGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
             Category toEdit = this.repository.GetCategoryDao().GetById((int)objId);
             uiState.LastModified = toEdit;
-            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(this, repository, uiState);
+            AddEditCategoryForm addEditCategoryForm = new AddEditCategoryForm(repository, uiState);
             addEditCategoryForm.ShowDialog();
-            RefreshGridData(this.cateroriesGridView);
+            RefreshGridData(this.categoriesGridView);
         }
-        
+
+        private void AddLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddLiterature();
+        }
+
+        private void AddLiterature()
+        {
+            uiState.LastModified = null;
+            AddEditLiteratureForm addEditLiteratureForm = new AddEditLiteratureForm(repository, uiState);
+            addEditLiteratureForm.ShowDialog();
+            RefreshGridData(literatureGridView);
+        }
     }
 
 

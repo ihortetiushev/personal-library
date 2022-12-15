@@ -12,21 +12,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PersonalLibrary
+namespace PersonalLibrary.View
 {
     public partial class AddEditCategoryForm : Form
     {
-        private readonly MainForm parentForm;
         private readonly Repository repository;
         private readonly UIState uiState;
         private readonly bool readOnly;
         private readonly bool editMode;
         private readonly Category toEdit;
 
-        public AddEditCategoryForm(MainForm parentForm, Repository repository, UIState uiState)
+        public AddEditCategoryForm(Repository repository, UIState uiState)
         {
             InitializeComponent();
-            this.parentForm = parentForm;
             this.repository = repository;
             this.uiState = uiState;
             this.readOnly = this.uiState.LoggedInUser.Type == User.UserType.Reader;
@@ -40,18 +38,18 @@ namespace PersonalLibrary
             if (toEdit != null)
             {
                 this.Text = "Edit Author";
-                this.caterogyNameInput.Text = toEdit.Name;
+                this.categoryNameInput.Text = toEdit.Name;
                 this.categoryDescriptionInput.Text = toEdit.Description;
                 if (readOnly)
                 {
                     this.Text = "View Category";
-                    this.caterogyNameInput.Enabled = false;
+                    this.categoryNameInput.Enabled = false;
                     this.categoryDescriptionInput.Enabled = false;
                 }
             }
         }
 
-        private void SaveCaterogyButton_Click(object sender, EventArgs e)
+        private void SaveCategoryButton_Click(object sender, EventArgs e)
         {
             if (readOnly)
             {
@@ -83,7 +81,7 @@ namespace PersonalLibrary
 
         private void EditCategory()
         {
-            toEdit.Name = this.caterogyNameInput.Text;
+            toEdit.Name = this.categoryNameInput.Text;
             toEdit.Description = this.categoryDescriptionInput.Text;
             this.repository.GetCategoryDao().UpdateCategory(toEdit);
         }
@@ -93,7 +91,7 @@ namespace PersonalLibrary
             Category category = new Category
             {
                 CategoryId = -1,
-                Name = this.caterogyNameInput.Text,
+                Name = this.categoryNameInput.Text,
                 Description = this.categoryDescriptionInput.Text,
             };
             this.repository.GetCategoryDao().CreateCategory(category);

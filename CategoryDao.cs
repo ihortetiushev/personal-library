@@ -87,6 +87,16 @@ namespace PersonalLibrary.Dao
         {
             return base.GetById("select * from category where category_id = @Id", categoryId);
         }
+
+        public bool IsBeingUsed(int categoryId)
+        {
+            return base.GetCount("select count(*) from literature where category_id = " + categoryId) > 0;
+        }
+
+        public void DeleteCategory(int categoryId)
+        {
+            base.ExecuteNonQuery("delete from category where category_id = " + categoryId);
+        }
     }
 
 }

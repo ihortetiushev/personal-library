@@ -12,20 +12,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PersonalLibrary
+namespace PersonalLibrary.View
 {
     public partial class AddEditAuthorForm : Form
     {
-        private readonly MainForm parentForm;
         private readonly Repository repository;
         private readonly UIState uiState;
         private readonly bool readOnly;
         private readonly bool editMode;
         private readonly Author toEdit;
-        public AddEditAuthorForm(MainForm parentForm, Repository repository, UIState uiState)
+        public AddEditAuthorForm(Repository repository, UIState uiState)
         {
             InitializeComponent();
-            this.parentForm = parentForm;
             this.repository = repository;
             this.uiState = uiState;
             this.readOnly = this.uiState.LoggedInUser.Type == User.UserType.Reader;

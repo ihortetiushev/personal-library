@@ -1,4 +1,4 @@
-﻿namespace PersonalLibrary
+﻿namespace PersonalLibrary.View
 {
     partial class AddEditCategoryForm
     {
@@ -31,9 +31,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cancelSaveCategoryButton = new System.Windows.Forms.Button();
-            this.saveCaterogyButton = new System.Windows.Forms.Button();
+            this.saveCategoryButton = new System.Windows.Forms.Button();
             this.categoryDescriptionInput = new System.Windows.Forms.RichTextBox();
-            this.caterogyNameInput = new System.Windows.Forms.TextBox();
+            this.categoryNameInput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label3
@@ -64,15 +64,15 @@
             this.cancelSaveCategoryButton.UseVisualStyleBackColor = true;
             this.cancelSaveCategoryButton.Click += new System.EventHandler(this.CancelSaveCategoryButton_Click);
             // 
-            // saveCaterogyButton
+            // saveCategoryButton
             // 
-            this.saveCaterogyButton.Location = new System.Drawing.Point(83, 259);
-            this.saveCaterogyButton.Name = "saveCaterogyButton";
-            this.saveCaterogyButton.Size = new System.Drawing.Size(82, 23);
-            this.saveCaterogyButton.TabIndex = 12;
-            this.saveCaterogyButton.Text = "Ok";
-            this.saveCaterogyButton.UseVisualStyleBackColor = true;
-            this.saveCaterogyButton.Click += new System.EventHandler(this.SaveCaterogyButton_Click);
+            this.saveCategoryButton.Location = new System.Drawing.Point(83, 259);
+            this.saveCategoryButton.Name = "saveCategoryButton";
+            this.saveCategoryButton.Size = new System.Drawing.Size(82, 23);
+            this.saveCategoryButton.TabIndex = 12;
+            this.saveCategoryButton.Text = "Ok";
+            this.saveCategoryButton.UseVisualStyleBackColor = true;
+            this.saveCategoryButton.Click += new System.EventHandler(this.SaveCategoryButton_Click);
             // 
             // categoryDescriptionInput
             // 
@@ -82,12 +82,12 @@
             this.categoryDescriptionInput.TabIndex = 11;
             this.categoryDescriptionInput.Text = "";
             // 
-            // caterogyNameInput
+            // categoryNameInput
             // 
-            this.caterogyNameInput.Location = new System.Drawing.Point(83, 72);
-            this.caterogyNameInput.Name = "caterogyNameInput";
-            this.caterogyNameInput.Size = new System.Drawing.Size(184, 22);
-            this.caterogyNameInput.TabIndex = 9;
+            this.categoryNameInput.Location = new System.Drawing.Point(83, 72);
+            this.categoryNameInput.Name = "categoryNameInput";
+            this.categoryNameInput.Size = new System.Drawing.Size(184, 22);
+            this.categoryNameInput.TabIndex = 9;
             // 
             // AddEditCategoryForm
             // 
@@ -97,9 +97,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cancelSaveCategoryButton);
-            this.Controls.Add(this.saveCaterogyButton);
+            this.Controls.Add(this.saveCategoryButton);
             this.Controls.Add(this.categoryDescriptionInput);
-            this.Controls.Add(this.caterogyNameInput);
+            this.Controls.Add(this.categoryNameInput);
             this.Name = "AddEditCategoryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddEditCategoryForm";
@@ -113,8 +113,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cancelSaveCategoryButton;
-        private System.Windows.Forms.Button saveCaterogyButton;
+        private System.Windows.Forms.Button saveCategoryButton;
         private System.Windows.Forms.RichTextBox categoryDescriptionInput;
-        private System.Windows.Forms.TextBox caterogyNameInput;
+        private System.Windows.Forms.TextBox categoryNameInput;
     }
 }

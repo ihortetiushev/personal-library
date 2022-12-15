@@ -58,6 +58,12 @@
     <Compile Include="AddEditCategoryForm.Designer.cs">
       <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddEditLiteratureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEditLiteratureForm.Designer.cs">
+      <DependentUpon>AddEditLiteratureForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="GenericDao.cs" />
     <Compile Include="CategoryDao.cs" />
@@ -88,6 +94,9 @@
     <EmbeddedResource Include="AddEditCategoryForm.resx">
       <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddEditLiteratureForm.resx">
+      <DependentUpon>AddEditLiteratureForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +112,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
