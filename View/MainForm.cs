@@ -433,6 +433,20 @@ namespace PersonalLibrary.View
             RefreshGridData(this.categoriesGridView);
         }
 
+        private void ViewEditLiterature()
+        {
+            if (!HasSelectedRow(this.literatureGridView))
+            {
+                return;
+            }
+            Object objId = this.literatureGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            Literature toEdit = this.repository.GetLibraryDao().GetById((int)objId);
+            uiState.LastModified = toEdit;
+            AddEditLiteratureForm addEditLiteratureForm = new AddEditLiteratureForm(repository, uiState);
+            addEditLiteratureForm.ShowDialog();
+            RefreshGridData(this.literatureGridView);
+        }
+
         private void AddLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddLiterature();
@@ -444,6 +458,31 @@ namespace PersonalLibrary.View
             AddEditLiteratureForm addEditLiteratureForm = new AddEditLiteratureForm(repository, uiState);
             addEditLiteratureForm.ShowDialog();
             RefreshGridData(literatureGridView);
+        }
+
+        private void ViewEditLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewEditLiterature();
+        }
+
+        private void DeleteLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!HasSelectedRow(this.literatureGridView))
+            {
+                return;
+            }
+            Object objId = this.literatureGridView.CurrentRow.Cells[ID_COLUMN_INDEX].Value;
+            int itemId = (int)objId;
+            DialogResult res = MessageBox.Show("Do you really want to delete selected literature?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (res == DialogResult.Cancel)
+            {
+                return;
+            }
+            this.repository.GetLibraryDao().DeleteLiterature(itemId);
+            uiState.LastModified = null;
+            uiState.LastModifiedId = itemId;
+            uiState.LastOperation = Operation.DELETE;
+            RefreshGridData(this.literatureGridView);
         }
     }
 

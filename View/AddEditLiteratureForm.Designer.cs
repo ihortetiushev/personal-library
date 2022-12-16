@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.literatureAuthorsGridView = new System.Windows.Forms.DataGridView();
-            this.saveLiteratureButton = new System.Windows.Forms.Button();
             this.cancelSavingLiteratureButton = new System.Windows.Forms.Button();
+            this.saveLiteratureButton = new System.Windows.Forms.Button();
+            this.literatureAuthorsGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -58,6 +58,26 @@
             this.splitContainer1.SplitterDistance = 281;
             this.splitContainer1.TabIndex = 0;
             // 
+            // cancelSavingLiteratureButton
+            // 
+            this.cancelSavingLiteratureButton.Location = new System.Drawing.Point(682, 73);
+            this.cancelSavingLiteratureButton.Name = "cancelSavingLiteratureButton";
+            this.cancelSavingLiteratureButton.Size = new System.Drawing.Size(82, 23);
+            this.cancelSavingLiteratureButton.TabIndex = 1;
+            this.cancelSavingLiteratureButton.Text = "Cancel";
+            this.cancelSavingLiteratureButton.UseVisualStyleBackColor = true;
+            this.cancelSavingLiteratureButton.Click += new System.EventHandler(this.CancelSavingLiteratureButton_Click);
+            // 
+            // saveLiteratureButton
+            // 
+            this.saveLiteratureButton.Location = new System.Drawing.Point(682, 26);
+            this.saveLiteratureButton.Name = "saveLiteratureButton";
+            this.saveLiteratureButton.Size = new System.Drawing.Size(82, 23);
+            this.saveLiteratureButton.TabIndex = 0;
+            this.saveLiteratureButton.Text = "Ok";
+            this.saveLiteratureButton.UseVisualStyleBackColor = true;
+            this.saveLiteratureButton.Click += new System.EventHandler(this.SaveLiteratureButton_Click);
+            // 
             // literatureAuthorsGridView
             // 
             this.literatureAuthorsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -68,24 +88,6 @@
             this.literatureAuthorsGridView.RowTemplate.Height = 24;
             this.literatureAuthorsGridView.Size = new System.Drawing.Size(800, 165);
             this.literatureAuthorsGridView.TabIndex = 0;
-            // 
-            // saveLiteratureButton
-            // 
-            this.saveLiteratureButton.Location = new System.Drawing.Point(682, 26);
-            this.saveLiteratureButton.Name = "saveLiteratureButton";
-            this.saveLiteratureButton.Size = new System.Drawing.Size(82, 23);
-            this.saveLiteratureButton.TabIndex = 0;
-            this.saveLiteratureButton.Text = "Ok";
-            this.saveLiteratureButton.UseVisualStyleBackColor = true;
-            // 
-            // cancelSavingLiteratureButton
-            // 
-            this.cancelSavingLiteratureButton.Location = new System.Drawing.Point(682, 73);
-            this.cancelSavingLiteratureButton.Name = "cancelSavingLiteratureButton";
-            this.cancelSavingLiteratureButton.Size = new System.Drawing.Size(82, 23);
-            this.cancelSavingLiteratureButton.TabIndex = 1;
-            this.cancelSavingLiteratureButton.Text = "Cancel";
-            this.cancelSavingLiteratureButton.UseVisualStyleBackColor = true;
             // 
             // AddEditLiteratureForm
             // 

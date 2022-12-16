@@ -30,5 +30,61 @@ namespace PersonalLibrary.View
             //PopulateEditingData();
         }
 
+        private void SaveLiteratureButton_Click(object sender, EventArgs e)
+        {
+            if (readOnly)
+            {
+                this.uiState.LastModified = null;
+                this.uiState.LastModifiedId = null;
+                this.uiState.LastOperation = Operation.CANCEL;
+                this.Close();
+            }
+            if (!editMode)
+            {
+                Literature created = CreateLiterature();
+                if (created.LiteratureId > 0)
+                {
+                    this.uiState.LastModified = created;
+                    this.uiState.LastModifiedId = created.LiteratureId;
+                    this.uiState.LastOperation = Operation.CREATE;
+                    this.Close();
+                }
+            }
+            else
+            {
+                EditLiterature();
+                this.uiState.LastModified = toEdit;
+                this.uiState.LastModifiedId = toEdit.LiteratureId;
+                this.uiState.LastOperation = Operation.UPDATE;
+                this.Close();
+            }
+        }
+
+        private void EditLiterature()
+        {
+            //TODO - implement
+           /* toEdit.Name = this.categoryNameInput.Text;
+            toEdit.Description = this.categoryDescriptionInput.Text;*/
+            this.repository.GetLibraryDao().UpdateLiterature(toEdit);
+        }
+
+        private Literature CreateLiterature()
+        {
+            Literature literature = new Literature
+            {
+                LiteratureId = -1,
+                Title = "smth"
+            };
+            this.repository.GetLibraryDao().CreateLiterature(literature);
+            return literature;
+        }
+
+        private void CancelSavingLiteratureButton_Click(object sender, EventArgs e)
+        {
+            this.uiState.LastOperation = Operation.CANCEL;
+            this.uiState.LastModified = null;
+            this.uiState.LastModifiedId = null;
+            this.Close();
+        }
     }
 }

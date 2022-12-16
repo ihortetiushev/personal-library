@@ -45,6 +45,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.libraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewEditLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editViewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +55,6 @@
             this.addNewAutorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAuthorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewEditLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteLiteratureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
@@ -295,6 +295,20 @@
             this.addLiteratureToolStripMenuItem.Text = "Add Literature";
             this.addLiteratureToolStripMenuItem.Click += new System.EventHandler(this.AddLiteratureToolStripMenuItem_Click);
             // 
+            // viewEditLiteratureToolStripMenuItem
+            // 
+            this.viewEditLiteratureToolStripMenuItem.Name = "viewEditLiteratureToolStripMenuItem";
+            this.viewEditLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.viewEditLiteratureToolStripMenuItem.Text = "View/Edit Literature";
+            this.viewEditLiteratureToolStripMenuItem.Click += new System.EventHandler(this.ViewEditLiteratureToolStripMenuItem_Click);
+            // 
+            // deleteLiteratureToolStripMenuItem
+            // 
+            this.deleteLiteratureToolStripMenuItem.Name = "deleteLiteratureToolStripMenuItem";
+            this.deleteLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteLiteratureToolStripMenuItem.Text = "Delete Literature";
+            this.deleteLiteratureToolStripMenuItem.Click += new System.EventHandler(this.DeleteLiteratureToolStripMenuItem_Click);
+            // 
             // categoryToolStripMenuItem
             // 
             this.categoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -356,18 +370,6 @@
             this.deleteAuthorToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
             this.deleteAuthorToolStripMenuItem.Text = "Delete Author";
             this.deleteAuthorToolStripMenuItem.Click += new System.EventHandler(this.DeleteAuthorToolStripMenuItem_Click);
-            // 
-            // viewEditLiteratureToolStripMenuItem
-            // 
-            this.viewEditLiteratureToolStripMenuItem.Name = "viewEditLiteratureToolStripMenuItem";
-            this.viewEditLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.viewEditLiteratureToolStripMenuItem.Text = "View/Edit Literature";
-            // 
-            // deleteLiteratureToolStripMenuItem
-            // 
-            this.deleteLiteratureToolStripMenuItem.Name = "deleteLiteratureToolStripMenuItem";
-            this.deleteLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.deleteLiteratureToolStripMenuItem.Text = "Delete Literature";
             // 
             // MainForm
             // 
