@@ -86,5 +86,10 @@ namespace PersonalLibrary.View
             this.uiState.LastModifiedId = null;
             this.Close();
         }
+
+        private void SelectCaterogyButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

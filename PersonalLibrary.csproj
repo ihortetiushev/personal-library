@@ -72,6 +72,12 @@
     <Compile Include="Dao\AuthorDao.cs" />
     <Compile Include="Models\Literature.cs" />
     <Compile Include="Dao\LibraryDao.cs" />
+    <Compile Include="View\CategorySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\CategorySelectionForm.Designer.cs">
+      <DependentUpon>CategorySelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AddEditLiteratureForm.resx">
       <DependentUpon>AddEditLiteratureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\CategorySelectionForm.resx">
+      <DependentUpon>CategorySelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
