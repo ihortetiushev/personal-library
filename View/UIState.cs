@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersonalLibrary.View
 {
-    public enum Operation { CANCEL, CREATE, UPDATE, DELETE };
+    public enum Operation { CANCEL, CREATE, UPDATE, DELETE, SELECTION };
     public class UIState
     {
         public Object LastModified { get; set; }

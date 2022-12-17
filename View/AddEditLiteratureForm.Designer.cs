@@ -44,8 +44,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.isbnText = new System.Windows.Forms.TextBox();
             this.isbnLabel = new System.Windows.Forms.Label();
-            this.caterogyLabel = new System.Windows.Forms.Label();
-            this.selectCaterogyButton = new System.Windows.Forms.Button();
+            this.categoryLabel = new System.Windows.Forms.Label();
+            this.selectCategoryButton = new System.Windows.Forms.Button();
             this.titleLabel = new System.Windows.Forms.Label();
             this.titleText = new System.Windows.Forms.RichTextBox();
             this.cancelSavingLiteratureButton = new System.Windows.Forms.Button();
@@ -82,8 +82,8 @@
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.isbnText);
             this.splitContainer1.Panel1.Controls.Add(this.isbnLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.caterogyLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.selectCaterogyButton);
+            this.splitContainer1.Panel1.Controls.Add(this.categoryLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.selectCategoryButton);
             this.splitContainer1.Panel1.Controls.Add(this.titleLabel);
             this.splitContainer1.Panel1.Controls.Add(this.titleText);
             this.splitContainer1.Panel1.Controls.Add(this.cancelSavingLiteratureButton);
@@ -228,24 +228,24 @@
             this.isbnLabel.TabIndex = 6;
             this.isbnLabel.Text = "ISBN";
             // 
-            // caterogyLabel
+            // categoryLabel
             // 
-            this.caterogyLabel.AutoSize = true;
-            this.caterogyLabel.Location = new System.Drawing.Point(133, 37);
-            this.caterogyLabel.Name = "caterogyLabel";
-            this.caterogyLabel.Size = new System.Drawing.Size(198, 16);
-            this.caterogyLabel.TabIndex = 5;
-            this.caterogyLabel.Text = "No Caterofy Has Been Selected";
+            this.categoryLabel.AutoSize = true;
+            this.categoryLabel.Location = new System.Drawing.Point(133, 37);
+            this.categoryLabel.Name = "categoryLabel";
+            this.categoryLabel.Size = new System.Drawing.Size(198, 16);
+            this.categoryLabel.TabIndex = 5;
+            this.categoryLabel.Text = "No Category Has Been Selected";
             // 
-            // selectCaterogyButton
+            // selectCategoryButton
             // 
-            this.selectCaterogyButton.Location = new System.Drawing.Point(28, 30);
-            this.selectCaterogyButton.Name = "selectCaterogyButton";
-            this.selectCaterogyButton.Size = new System.Drawing.Size(82, 23);
-            this.selectCaterogyButton.TabIndex = 4;
-            this.selectCaterogyButton.Text = "Category";
-            this.selectCaterogyButton.UseVisualStyleBackColor = true;
-            this.selectCaterogyButton.Click += new System.EventHandler(this.SelectCaterogyButton_Click);
+            this.selectCategoryButton.Location = new System.Drawing.Point(28, 30);
+            this.selectCategoryButton.Name = "selectCategoryButton";
+            this.selectCategoryButton.Size = new System.Drawing.Size(82, 23);
+            this.selectCategoryButton.TabIndex = 4;
+            this.selectCategoryButton.Text = "Category";
+            this.selectCategoryButton.UseVisualStyleBackColor = true;
+            this.selectCategoryButton.Click += new System.EventHandler(this.SelectCategoryButton_Click);
             // 
             // titleLabel
             // 
@@ -322,8 +322,8 @@
         private System.Windows.Forms.DataGridView literatureAuthorsGridView;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.RichTextBox titleText;
-        private System.Windows.Forms.Label caterogyLabel;
-        private System.Windows.Forms.Button selectCaterogyButton;
+        private System.Windows.Forms.Label categoryLabel;
+        private System.Windows.Forms.Button selectCategoryButton;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox publisherText;

@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\UIHelper.cs" />
     <Compile Include="View\UIState.cs" />
     <Compile Include="Models\User.cs" />
     <EmbeddedResource Include="View\AddEditAuthorForm.resx">

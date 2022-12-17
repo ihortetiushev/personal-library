@@ -1,4 +1,4 @@
-﻿namespace personal_library.View
+﻿namespace PersonalLibrary.View
 {
     partial class CategorySelectionForm
     {
@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.categorySelectionGridView = new System.Windows.Forms.DataGridView();
-            this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.okButton = new System.Windows.Forms.Button();
+            this.categorySelectionGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -54,9 +54,29 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.categorySelectionGridView);
-            this.splitContainer1.Size = new System.Drawing.Size(711, 525);
-            this.splitContainer1.SplitterDistance = 158;
+            this.splitContainer1.Size = new System.Drawing.Size(713, 494);
+            this.splitContainer1.SplitterDistance = 161;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(580, 72);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(97, 23);
+            this.cancelButton.TabIndex = 1;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(580, 25);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(97, 23);
+            this.okButton.TabIndex = 0;
+            this.okButton.Text = "Ok";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
             // categorySelectionGridView
             // 
@@ -75,32 +95,14 @@
             this.categorySelectionGridView.RowTemplate.Height = 24;
             this.categorySelectionGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.categorySelectionGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.categorySelectionGridView.Size = new System.Drawing.Size(711, 363);
+            this.categorySelectionGridView.Size = new System.Drawing.Size(713, 329);
             this.categorySelectionGridView.TabIndex = 0;
-            // 
-            // okButton
-            // 
-            this.okButton.Location = new System.Drawing.Point(580, 25);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(97, 23);
-            this.okButton.TabIndex = 0;
-            this.okButton.Text = "Ok";
-            this.okButton.UseVisualStyleBackColor = true;
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Location = new System.Drawing.Point(580, 72);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(97, 23);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
             // 
             // CategorySelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(711, 525);
+            this.ClientSize = new System.Drawing.Size(713, 494);
             this.Controls.Add(this.splitContainer1);
             this.Name = "CategorySelectionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

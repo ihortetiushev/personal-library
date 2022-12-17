@@ -19,6 +19,7 @@ namespace PersonalLibrary.View
         private readonly bool readOnly;
         private readonly bool editMode;
         private readonly Literature toEdit;
+        private int? categoryId;
         public AddEditLiteratureForm(Repository repository, UIState uiState)
         {
             InitializeComponent();
@@ -87,9 +88,17 @@ namespace PersonalLibrary.View
             this.Close();
         }
 
-        private void SelectCaterogyButton_Click(object sender, EventArgs e)
+        private void SelectCategoryButton_Click(object sender, EventArgs e)
         {
-
+            this.uiState.LastModifiedId = categoryId;
+            CategorySelectionForm addEditLiteratureForm = new CategorySelectionForm(repository, uiState);
+            addEditLiteratureForm.ShowDialog();
+            if (uiState.LastOperation != Operation.CANCEL) 
+            {
+                Category selected = ((Category)uiState.LastModified);
+                this.categoryLabel.Text = selected.Name;
+                this.categoryId = selected.CategoryId;
+            }
         }
     }
 }

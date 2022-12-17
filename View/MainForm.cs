@@ -4,19 +4,16 @@ using System.Data;
 using System.Windows.Forms;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
+using static PersonalLibrary.View.UIHelper;
 
 
 namespace PersonalLibrary.View
 {
     public partial class MainForm : Form
     {
-        private static readonly int ID_COLUMN_INDEX = 0;
         private static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
         private static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
         private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 3;
-
-        private static readonly int CATEGORY_COLUMN_INDEX_NAME = 1;
-        private static readonly int CATEGORY_COLUMN_INDEX_DESC = 2;
 
         private readonly Repository repository;
         private readonly UIState uiState;
@@ -82,7 +79,7 @@ namespace PersonalLibrary.View
                 List<Literature> literature = this.repository.GetLibraryDao().GetAllLiterature();
                 List<Category> categories = this.repository.GetCategoryDao().GetAllCategories();
                 PopulateAutorGridData(allAuthors);
-                PopulateCategoryGridData(categories);
+                this.categoryTable = PopulateCategoryGridData(categories,this.categoriesGridView);
                 Cursor.Current = oldCur;
             }
             catch (Exception ex)
@@ -98,15 +95,6 @@ namespace PersonalLibrary.View
             foreach (Author author in authors)
             {
                  authorsTable.LoadDataRow(ToAuthorRow(author), true);
-            }
-        }
-
-        private void PopulateCategoryGridData(List<Category> categories)
-        {
-            this.categoryTable = CreateCategotyTable();
-            foreach (Category category in categories)
-            {
-                categoryTable.LoadDataRow(ToCategoryRow(category), true);
             }
         }
 
@@ -126,20 +114,6 @@ namespace PersonalLibrary.View
             return table;
         }
 
-        private DataTable CreateCategotyTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
-            table.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
-            table.Columns.Add(new DataColumn("Description", Type.GetType("System.String")));
-
-            categoriesGridView.DataSource = table;
-            categoriesGridView.Columns[ID_COLUMN_INDEX].Width = 50;
-            categoriesGridView.Columns[CATEGORY_COLUMN_INDEX_NAME].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            categoriesGridView.Columns[CATEGORY_COLUMN_INDEX_DESC].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            return table;
-        }
-
         private object[] ToAuthorRow(Author author)
         {
             object[] values = new object[4];
@@ -147,15 +121,6 @@ namespace PersonalLibrary.View
             values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
             values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
             values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
-            return values;
-        }
-
-        private object[] ToCategoryRow(Category category)
-        {
-            object[] values = new object[3];
-            values[ID_COLUMN_INDEX] = category.CategoryId;
-            values[CATEGORY_COLUMN_INDEX_NAME] = category.Name;
-            values[CATEGORY_COLUMN_INDEX_DESC] = category.Description;
             return values;
         }
 
@@ -395,16 +360,6 @@ namespace PersonalLibrary.View
             RefreshGridData(this.categoriesGridView);
         }
 
-        private bool HasSelectedRow(DataGridView grid) 
-        {
-            DataGridViewSelectedRowCollection selected = grid.SelectedRows;
-            if (selected.Count == 0)
-            {
-                MessageBox.Show("No data selected for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
-        }
         private void ViewEditAuthor()
         {
             if (!HasSelectedRow(this.authorsGridView))
