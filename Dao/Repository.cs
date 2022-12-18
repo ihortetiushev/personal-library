@@ -21,9 +21,9 @@ namespace PersonalLibrary.Dao
         private void Init()
         {
             this.sqlConnection = new SqlConnection(CONNECTION_STRING);
-            this.libraryDao = new LibraryDao(sqlConnection);
             this.authorDao = new AuthorDao(sqlConnection);
             this.categoryDao = new CategoryDao(sqlConnection);
+            this.libraryDao = new LibraryDao(sqlConnection, authorDao, categoryDao);
         }
         public bool OpenConnection() 
         {

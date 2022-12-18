@@ -17,6 +17,7 @@ namespace PersonalLibrary.View
         private readonly LoginForm loginForm;
         private DataTable authorsTable;
         private DataTable categoryTable;
+        private DataTable literatureTable;
         public MainForm(LoginForm loginForm, UIState uiState, Repository repository)
         {
             InitializeComponent();
@@ -74,6 +75,7 @@ namespace PersonalLibrary.View
                 List<Author> allAuthors = this.repository.GetAuthorDao().GetAllAuthors();
                 List<Literature> literature = this.repository.GetLibraryDao().GetAllLiterature();
                 List<Category> categories = this.repository.GetCategoryDao().GetAllCategories();
+                this.literatureTable = PopulateLiteratureGridData(literature, this.literatureGridView);
                 this.authorsTable = PopulateAutorGridData(allAuthors, this.authorsGridView);
                 this.categoryTable = PopulateCategoryGridData(categories,this.categoriesGridView);
                 Cursor.Current = oldCur;

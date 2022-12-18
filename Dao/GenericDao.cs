@@ -12,6 +12,10 @@ namespace PersonalLibrary.Dao
             this.sqlConnection = sqlConnection;
         }
         protected abstract T LoadItem(SqlDataReader reader);
+        protected virtual void PostProcessLoaded(T item) 
+        {
+            //do nothing by default
+        }
         public List<T> ExecuteQuery(string query)
         {
             List<T> items = new List<T>();
@@ -25,6 +29,10 @@ namespace PersonalLibrary.Dao
                 }
             }
             reader.Close();
+            foreach (T item in items) 
+            {
+                PostProcessLoaded(item);
+            }
             return items;
         }
 

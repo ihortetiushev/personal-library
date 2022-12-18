@@ -9,20 +9,49 @@ namespace PersonalLibrary.Dao
 {
     public class LibraryDao:GenericDao<Literature>
     {
-        public LibraryDao(SqlConnection sqlConnection):base(sqlConnection)
+        private readonly AuthorDao authorDao;
+        private readonly CategoryDao categoryDao;
+
+        public LibraryDao(SqlConnection sqlConnection, AuthorDao authorDao, CategoryDao categoryDao) : base(sqlConnection)
         {
+            this.authorDao = authorDao;
+            this.categoryDao = categoryDao;
         }
         public List<Literature> GetAllLiterature()
         {
             return base.ExecuteQuery("select * from literature");
         }
 
+        protected override void PostProcessLoaded(Literature item)
+        {
+            item.CategoryName = categoryDao.GetById(item.CategoryId).Name;
+            var query = "select author_id from literature_author where literature_id = " + item.LiteratureId;
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            SqlDataReader authorsReader = command.ExecuteReader();
+            List<int> authorIds = new List<int>();
+            if (authorsReader.HasRows)
+            {
+                while (authorsReader.Read())
+                {
+                    authorIds.Add(authorsReader.GetInt32(authorsReader.GetOrdinal("author_id")));
+                }
+            }
+            authorsReader.Close();
+            List<Author> authors =new List<Author>();
+            foreach (int authorId in authorIds) 
+            {
+                authors.Add(authorDao.GetById(authorId));
+            }
+            item.Authors = authors;
+
+        }
         protected override Literature LoadItem(SqlDataReader reader)
         {
             return new Literature
             {
                 LiteratureId = reader.GetInt32(reader.GetOrdinal("literature_id")),
-                Title = reader.GetString(reader.GetOrdinal("title"))
+                CategoryId = reader.GetInt32(reader.GetOrdinal("category_id")),
+                Title = reader.GetString(reader.GetOrdinal("title")),
             };
         }
         public bool CreateLiterature(Literature literature)

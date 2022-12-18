@@ -18,6 +18,10 @@ namespace PersonalLibrary.View
         public static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
         public static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
         public static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 3;
+
+        public static readonly int LITERATURE_COLUMN_INDEX_CATEGORY = 1;
+        public static readonly int LITERATURE_COLUMN_INDEX_TITLE = 2;
+        public static readonly int LITERATURE_COLUMN_INDEX_AUTHORS = 3;
         private UIHelper() 
         {
         }
@@ -55,6 +59,17 @@ namespace PersonalLibrary.View
             }
             return table;
         }
+
+        public static DataTable PopulateLiteratureGridData(List<Literature> litertureList, DataGridView gridView)
+        {
+            DataTable table = CreateLiteratureTable(gridView);
+            foreach (Literature literature in litertureList)
+            {
+                table.LoadDataRow(ToLiteratureRow(literature), true);
+            }
+            return table;
+        }
+
         public static object[] ToAuthorRow(Author author)
         {
             object[] values = new object[4];
@@ -62,6 +77,16 @@ namespace PersonalLibrary.View
             values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
             values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
             values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
+            return values;
+        }
+
+        public static object[] ToLiteratureRow(Literature literature)
+        {
+            object[] values = new object[4];
+            values[ID_COLUMN_INDEX] = literature.LiteratureId;
+            values[LITERATURE_COLUMN_INDEX_CATEGORY] = literature.CategoryName;
+            values[LITERATURE_COLUMN_INDEX_TITLE] = literature.Title;
+            values[LITERATURE_COLUMN_INDEX_AUTHORS] = literature.GetAuthorsAsString();
             return values;
         }
         public static DataTable PopulateCategoryGridData(List<Category> categories, DataGridView gridView)
@@ -87,6 +112,22 @@ namespace PersonalLibrary.View
             gridView.Columns[AUTHOR_COLUMN_INDEX_FIRST_NAME].Width = 130;
             gridView.Columns[AUTHOR_COLUMN_INDEX_LAST_NAME].Width = 130;
             gridView.Columns[AUTHOR_COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            return table;
+        }
+
+        public static DataTable CreateLiteratureTable(DataGridView gridView)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
+            table.Columns.Add(new DataColumn("Category", Type.GetType("System.String")));
+            table.Columns.Add(new DataColumn("Title", Type.GetType("System.String")));
+            table.Columns.Add(new DataColumn("Autors", Type.GetType("System.String")));
+
+            gridView.DataSource = table;
+            gridView.Columns[ID_COLUMN_INDEX].Width = 50;
+            gridView.Columns[LITERATURE_COLUMN_INDEX_CATEGORY].Width = 130;
+            gridView.Columns[LITERATURE_COLUMN_INDEX_TITLE].Width = 130;
+            gridView.Columns[LITERATURE_COLUMN_INDEX_AUTHORS].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
         }
 

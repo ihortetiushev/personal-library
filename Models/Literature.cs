@@ -16,7 +16,20 @@ namespace PersonalLibrary.Models
         public DateTime PublishDate { get; set; }
         public bool IsAvailable { get; set; }
         public string Comment { get; set; }
-
-        public List<Author> Authors{ get; set; }   
+        public List<Author> Authors{ get; set; }
+        public string CategoryName { get; set; }
+        public string GetAuthorsAsString() 
+        {
+            if (Authors == null) 
+            {
+                return "";
+            }
+            List<string> names = new List<string>();
+            foreach (Author author in Authors)
+            {
+                names.Add(author.FirstName + " " + author.LastName);
+            }
+            return string.Join(";", names.ToArray());
+        }
     }
 }

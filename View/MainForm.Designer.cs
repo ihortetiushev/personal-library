@@ -118,12 +118,17 @@
             // 
             // literatureGridView
             // 
+            this.literatureGridView.AllowUserToAddRows = false;
+            this.literatureGridView.AllowUserToDeleteRows = false;
+            this.literatureGridView.AllowUserToResizeColumns = false;
+            this.literatureGridView.AllowUserToResizeRows = false;
             this.literatureGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.literatureGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.literatureGridView.Location = new System.Drawing.Point(3, 3);
             this.literatureGridView.Name = "literatureGridView";
+            this.literatureGridView.ReadOnly = true;
             this.literatureGridView.RowHeadersWidth = 51;
             this.literatureGridView.RowTemplate.Height = 24;
             this.literatureGridView.Size = new System.Drawing.Size(889, 307);
@@ -291,21 +296,21 @@
             // addLiteratureToolStripMenuItem
             // 
             this.addLiteratureToolStripMenuItem.Name = "addLiteratureToolStripMenuItem";
-            this.addLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addLiteratureToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.addLiteratureToolStripMenuItem.Text = "Add Literature";
             this.addLiteratureToolStripMenuItem.Click += new System.EventHandler(this.AddLiteratureToolStripMenuItem_Click);
             // 
             // viewEditLiteratureToolStripMenuItem
             // 
             this.viewEditLiteratureToolStripMenuItem.Name = "viewEditLiteratureToolStripMenuItem";
-            this.viewEditLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.viewEditLiteratureToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.viewEditLiteratureToolStripMenuItem.Text = "View/Edit Literature";
             this.viewEditLiteratureToolStripMenuItem.Click += new System.EventHandler(this.ViewEditLiteratureToolStripMenuItem_Click);
             // 
             // deleteLiteratureToolStripMenuItem
             // 
             this.deleteLiteratureToolStripMenuItem.Name = "deleteLiteratureToolStripMenuItem";
-            this.deleteLiteratureToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteLiteratureToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             this.deleteLiteratureToolStripMenuItem.Text = "Delete Literature";
             this.deleteLiteratureToolStripMenuItem.Click += new System.EventHandler(this.DeleteLiteratureToolStripMenuItem_Click);
             // 
@@ -322,21 +327,21 @@
             // addNewCategoryToolStripMenuItem
             // 
             this.addNewCategoryToolStripMenuItem.Name = "addNewCategoryToolStripMenuItem";
-            this.addNewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addNewCategoryToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.addNewCategoryToolStripMenuItem.Text = "Add Category";
             this.addNewCategoryToolStripMenuItem.Click += new System.EventHandler(this.AddNewCategoryToolStripMenuItem_Click);
             // 
             // editViewCategoryToolStripMenuItem
             // 
             this.editViewCategoryToolStripMenuItem.Name = "editViewCategoryToolStripMenuItem";
-            this.editViewCategoryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editViewCategoryToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.editViewCategoryToolStripMenuItem.Text = "View/Edit Category";
             this.editViewCategoryToolStripMenuItem.Click += new System.EventHandler(this.ViewEditCategoryToolStripMenuItem_Click);
             // 
             // deleteCategotyToolStripMenuItem
             // 
             this.deleteCategotyToolStripMenuItem.Name = "deleteCategotyToolStripMenuItem";
-            this.deleteCategotyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.deleteCategotyToolStripMenuItem.Size = new System.Drawing.Size(220, 26);
             this.deleteCategotyToolStripMenuItem.Text = "Delete Categoty";
             this.deleteCategotyToolStripMenuItem.Click += new System.EventHandler(this.DeleteCategotyToolStripMenuItem_Click);
             // 
