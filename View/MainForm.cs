@@ -118,26 +118,26 @@ namespace PersonalLibrary.View
             AddNewCategory();
         }
         
-        private void updateGridDate(DataGridView activeGrid, int i, Object data) 
+        private void UpdateGridData(DataGridView activeGrid, int i, Object data) 
         {
             if (data.GetType() == typeof(Author)) 
             {
-                updateGridDate(activeGrid, i, (Author)data);
+                UpdateGridDate(activeGrid, i, (Author)data);
             }
             if (data.GetType() == typeof(Category))
             {
-                updateGridDate(activeGrid, i, (Category)data);
+                UpdateGridDate(activeGrid, i, (Category)data);
             }
         }
 
-        private void updateGridDate(DataGridView activeGrid, int i, Author autor)
+        private void UpdateGridDate(DataGridView activeGrid, int i, Author autor)
         {
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_FIRST_NAME].Value = autor.FirstName;
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_LAST_NAME].Value = autor.LastName;
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_COMMENT].Value = autor.Comment;
         }
 
-        private void updateGridDate(DataGridView activeGrid, int i, Category category)
+        private void UpdateGridDate(DataGridView activeGrid, int i, Category category)
         {
             activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_NAME].Value = category.Name;
             activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_DESC].Value = category.Description;
@@ -165,7 +165,7 @@ namespace PersonalLibrary.View
                     {
                         if (uiState.LastOperation == Operation.UPDATE)
                         {
-                            updateGridDate(dataGrid, i, data);
+                            UpdateGridData(dataGrid, i, data);
                         }
                         else if (uiState.LastOperation == Operation.DELETE)
                         {
@@ -188,6 +188,15 @@ namespace PersonalLibrary.View
             {
                 AddCreatedRecordToTable((Category)data);
             }
+            if (data.GetType() == typeof(Literature))
+            {
+                AddCreatedRecordToTable((Literature)data);
+            }
+        }
+        private void AddCreatedRecordToTable(Literature literature)
+        {
+            object[] rowData = ToLiteratureRow(literature);
+            this.literatureTable.LoadDataRow(rowData, true);
         }
         private void AddCreatedRecordToTable(Author author)
         {

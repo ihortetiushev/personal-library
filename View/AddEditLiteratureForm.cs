@@ -26,7 +26,66 @@ namespace PersonalLibrary.View
             this.readOnly = this.uiState.LoggedInUser.Type == User.UserType.Reader;
             this.toEdit = (Literature)this.uiState.LastModified;
             this.editMode = toEdit != null;
-            //PopulateEditingData();
+            PopulateEditingData();
+        }
+
+        private void PopulateEditingData()
+        {
+            if (toEdit != null)
+            {
+                PopulateData();
+                ReadOnlyModeIfNeeded();
+            }
+        }
+
+        private void PopulateData()
+        {
+            this.Text = "Edit Literature";
+            this.categoryId = toEdit.CategoryId;
+            this.categoryLabel.Text = toEdit.CategoryName;
+            this.titleText.Text = toEdit.Title;
+            this.isbnText.Text = toEdit.ISBN;
+            this.publisherText.Text = toEdit.Publisher;
+            if (toEdit.PublishDate != null)
+            {
+                this.usePublishDate.Checked = true;
+                this.publishDate.Value = toEdit.PublishDate.Value;
+            }
+            if (toEdit.OriginDate != null)
+            {
+                this.useInLibrarySince.Checked = true;
+                this.inLibrarySince.Value = toEdit.OriginDate.Value;
+            }
+            this.originCommentText.Text = toEdit.OriginComment;
+            this.availabilityCheckBox.Checked = toEdit.IsAvailable;
+            this.commentText.Text = toEdit.Comment;
+            foreach (Author a in toEdit.Authors)
+            {
+                this.authors[a.AuthorId] = a;
+            }
+            List<Author> allAuthors = authors.Values.ToList();
+            PopulateAutorGridData(allAuthors, this.literatureAuthorsGridView);
+        }
+
+        private void ReadOnlyModeIfNeeded()
+        {
+            if (readOnly)
+            {
+                this.Text = "View Literature";
+                this.selectCategoryButton.Enabled = false;
+                this.titleText.Enabled = false;
+                this.isbnText.Enabled = false;
+                this.publisherText.Enabled = false;
+                this.usePublishDate.Enabled = false;
+                this.publishDate.Enabled = false;
+                this.useInLibrarySince.Enabled = false;
+                this.inLibrarySince.Enabled = false;
+                this.originCommentText.Enabled = false;
+                this.availabilityCheckBox.Enabled = false;
+                this.commentText.Enabled = false;
+                this.addAuthorButton.Enabled = false;
+                this.removeAuthorButton.Enabled = false;
+            }
         }
 
         private void SaveLiteratureButton_Click(object sender, EventArgs e)
@@ -77,13 +136,30 @@ namespace PersonalLibrary.View
 
         private Literature CreateLiterature()
         {
+            DateTime? publishDate = null;
+            if (usePublishDate.Checked) 
+            {
+                publishDate = this.publishDate.Value.Date;
+            }
+            DateTime? originDate = null;
+            if (useInLibrarySince.Checked)
+            {
+                originDate = this.inLibrarySince.Value.Date;
+            }
+
             Literature literature = new Literature
             {
                 LiteratureId = -1,
                 CategoryId = this.categoryId.Value,
+                CategoryName = this.categoryLabel.Text,
                 Title = this.titleText.Text.Trim(),
                 ISBN = this.isbnText.Text.Trim(),
                 Publisher = this.publisherText.Text.Trim(),
+                PublishDate = publishDate,
+                IsAvailable = this.availabilityCheckBox.Checked,
+                OriginDate = originDate,
+                OriginComment = this.originCommentText.Text.Trim(),
+                Comment = this.commentText.Text.Trim(),
                 Authors = authors.Values.ToList()
             };
             if (this.repository.GetLibraryDao().CreateLiterature(literature)) 
@@ -163,6 +239,34 @@ namespace PersonalLibrary.View
             object idObj = selected[0].Cells[ID_COLUMN_INDEX].Value;
             literatureAuthorsGridView.Rows.RemoveAt(selected[0].Index);
             this.authors.Remove((int)idObj);
+        }
+
+        private void UsePublishDate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.usePublishDate.Checked)
+            {
+                this.publishDate.CustomFormat = "yyyy";
+                this.publishDate.Enabled = true;
+            }
+            else 
+            {
+                this.publishDate.CustomFormat = " ";
+                this.publishDate.Enabled = false;
+            }
+        }
+
+        private void UseInLibrarySince_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.useInLibrarySince.Checked)
+            {
+                this.inLibrarySince.CustomFormat = "MM yyyy";
+                this.inLibrarySince.Enabled = true;
+            }
+            else
+            {
+                this.inLibrarySince.CustomFormat = " ";
+                this.inLibrarySince.Enabled = false;
+            }
         }
     }
 }

@@ -122,16 +122,17 @@
             this.literatureGridView.AllowUserToDeleteRows = false;
             this.literatureGridView.AllowUserToResizeColumns = false;
             this.literatureGridView.AllowUserToResizeRows = false;
-            this.literatureGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.literatureGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.literatureGridView.Location = new System.Drawing.Point(3, 3);
+            this.literatureGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.literatureGridView.Location = new System.Drawing.Point(0, 0);
             this.literatureGridView.Name = "literatureGridView";
             this.literatureGridView.ReadOnly = true;
+            this.literatureGridView.RowHeadersVisible = false;
             this.literatureGridView.RowHeadersWidth = 51;
             this.literatureGridView.RowTemplate.Height = 24;
-            this.literatureGridView.Size = new System.Drawing.Size(889, 307);
+            this.literatureGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.literatureGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.literatureGridView.Size = new System.Drawing.Size(889, 313);
             this.literatureGridView.TabIndex = 0;
             // 
             // categoriesTab
@@ -186,6 +187,7 @@
             this.categoriesGridView.MultiSelect = false;
             this.categoriesGridView.Name = "categoriesGridView";
             this.categoriesGridView.ReadOnly = true;
+            this.categoriesGridView.RowHeadersVisible = false;
             this.categoriesGridView.RowHeadersWidth = 51;
             this.categoriesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.categoriesGridView.RowTemplate.Height = 24;
@@ -246,6 +248,7 @@
             this.authorsGridView.MultiSelect = false;
             this.authorsGridView.Name = "authorsGridView";
             this.authorsGridView.ReadOnly = true;
+            this.authorsGridView.RowHeadersVisible = false;
             this.authorsGridView.RowHeadersWidth = 51;
             this.authorsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.authorsGridView.RowTemplate.Height = 24;

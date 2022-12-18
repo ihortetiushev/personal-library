@@ -25,6 +25,33 @@ namespace PersonalLibrary.Dao
         protected override void PostProcessLoaded(Literature item)
         {
             item.CategoryName = categoryDao.GetById(item.CategoryId).Name;
+            item.Authors = LoadAuthors(item);
+            LoadOrigin(item);
+        }
+
+        private void LoadOrigin(Literature item)
+        {
+            if (item.OriginId != null)
+            {
+                var query = "select * from origin where origin_id = " + item.OriginId;
+                SqlCommand command = new SqlCommand(query, sqlConnection);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int dateIdx = reader.GetOrdinal("date");
+                        int commentIdx = reader.GetOrdinal("comment");
+                        item.OriginDate = reader.IsDBNull(dateIdx) ? (DateTime?)null : reader.GetDateTime(dateIdx);
+                        item.OriginComment = reader.IsDBNull(commentIdx) ? null : reader.GetString(commentIdx);
+                    }
+                }
+                reader.Close();
+            }
+        }
+
+        private List<Author> LoadAuthors(Literature item)
+        {
             var query = "select author_id from literature_author where literature_id = " + item.LiteratureId;
             SqlCommand command = new SqlCommand(query, sqlConnection);
             SqlDataReader authorsReader = command.ExecuteReader();
@@ -37,21 +64,31 @@ namespace PersonalLibrary.Dao
                 }
             }
             authorsReader.Close();
-            List<Author> authors =new List<Author>();
-            foreach (int authorId in authorIds) 
+            List<Author> authors = new List<Author>();
+            foreach (int authorId in authorIds)
             {
                 authors.Add(authorDao.GetById(authorId));
             }
-            item.Authors = authors;
 
+            return authors;
         }
+
         protected override Literature LoadItem(SqlDataReader reader)
         {
+            int publishDateIdx = reader.GetOrdinal("publish_date");
+            int originIdx = reader.GetOrdinal("origin_id");
+            int commentIdx = reader.GetOrdinal("comment");
             return new Literature
             {
                 LiteratureId = reader.GetInt32(reader.GetOrdinal("literature_id")),
                 CategoryId = reader.GetInt32(reader.GetOrdinal("category_id")),
                 Title = reader.GetString(reader.GetOrdinal("title")),
+                ISBN = reader.GetString(reader.GetOrdinal("isbn")),
+                Publisher = reader.GetString(reader.GetOrdinal("publisher")),
+                PublishDate = reader.IsDBNull(publishDateIdx) ? (DateTime?)null : reader.GetDateTime(publishDateIdx),
+                OriginId = reader.IsDBNull(originIdx) ? (int?)null: reader.GetInt32(originIdx),
+                IsAvailable = reader.GetBoolean(reader.GetOrdinal("is_available")),
+                Comment = reader.IsDBNull(commentIdx) ? null : reader.GetString(commentIdx)
             };
         }
         public bool CreateLiterature(Literature literature)
@@ -65,7 +102,7 @@ namespace PersonalLibrary.Dao
                 }
                 transaction = sqlConnection.BeginTransaction();
 
-                //TODO - implement
+                InsertOrigin(literature, transaction);
                 InsertLiterature(literature, transaction);
                 InsertAuthors(literature, transaction);
 
@@ -82,6 +119,28 @@ namespace PersonalLibrary.Dao
             }
         }
 
+        private void InsertOrigin(Literature literature, SqlTransaction transaction)
+        {
+            if (literature.OriginDate == null && 
+                (literature.OriginComment == null || literature.OriginComment.Trim().Length ==0)) 
+            {
+                literature.OriginId = null;
+                return;
+            }
+            var sql = @"INSERT into origin 
+                            (date, 
+                            comment) OUTPUT Inserted.origin_id
+                            VALUES
+                            (@Date,
+                            @Comment)";
+            using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@Date", SetNullableValue(literature.OriginDate));
+                cmd.Parameters.AddWithValue("@Comment", SetNullableValue(literature.OriginComment));
+                int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+                literature.OriginId = insertedID;
+            }
+        }
         private void InsertLiterature(Literature literature, SqlTransaction transaction)
         {
             var sql = @"INSERT into literature 
@@ -108,10 +167,9 @@ namespace PersonalLibrary.Dao
                 cmd.Parameters.AddWithValue("@Title", literature.Title);
                 cmd.Parameters.AddWithValue("@ISBN", SetNullableValue(literature.ISBN));
                 cmd.Parameters.AddWithValue("@Publisher", SetNullableValue(literature.Publisher));
-                cmd.Parameters.AddWithValue("@PublishDate", SetNullableValue(null)/*literature.PublishDate*/);
-                //TODO
-                cmd.Parameters.AddWithValue("@OriginId", SetNullableValue(null));
-                cmd.Parameters.AddWithValue("@IsAvailable", SetNullableValue(literature.IsAvailable));
+                cmd.Parameters.AddWithValue("@PublishDate", SetNullableValue(literature.PublishDate));
+                cmd.Parameters.AddWithValue("@OriginId", SetNullableValue(literature.OriginId));
+                cmd.Parameters.AddWithValue("@IsAvailable", literature.IsAvailable);
                 cmd.Parameters.AddWithValue("@Comment", SetNullableValue(literature.Comment));
                 int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                 literature.LiteratureId = insertedID;
@@ -184,9 +242,7 @@ namespace PersonalLibrary.Dao
 
         public Literature GetById(int literatureId)
         {
-            Literature literature = base.GetById("select * from literature where author_id = @Id", literatureId);
-            //TODO - populate related objects
-            return literature;
+            return base.GetById("select * from literature where literature_id = @Id", literatureId);
         }
         public void DeleteLiterature(int literatureId)
         {

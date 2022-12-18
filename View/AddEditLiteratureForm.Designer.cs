@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.useInLibrarySince = new System.Windows.Forms.CheckBox();
+            this.usePublishDate = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.removeAuthorButton = new System.Windows.Forms.Button();
             this.addAuthorButton = new System.Windows.Forms.Button();
             this.commentLable = new System.Windows.Forms.Label();
@@ -36,9 +39,9 @@
             this.availabilityCheckBox = new System.Windows.Forms.CheckBox();
             this.originCommentText = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.inLibrarySince = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.publishDate = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.publisherText = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,7 +54,6 @@
             this.cancelSavingLiteratureButton = new System.Windows.Forms.Button();
             this.saveLiteratureButton = new System.Windows.Forms.Button();
             this.literatureAuthorsGridView = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -68,6 +70,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.useInLibrarySince);
+            this.splitContainer1.Panel1.Controls.Add(this.usePublishDate);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.removeAuthorButton);
             this.splitContainer1.Panel1.Controls.Add(this.addAuthorButton);
@@ -76,9 +80,9 @@
             this.splitContainer1.Panel1.Controls.Add(this.availabilityCheckBox);
             this.splitContainer1.Panel1.Controls.Add(this.originCommentText);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
-            this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker2);
+            this.splitContainer1.Panel1.Controls.Add(this.inLibrarySince);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
-            this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker1);
+            this.splitContainer1.Panel1.Controls.Add(this.publishDate);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.publisherText);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
@@ -97,6 +101,37 @@
             this.splitContainer1.Size = new System.Drawing.Size(812, 585);
             this.splitContainer1.SplitterDistance = 485;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // useInLibrarySince
+            // 
+            this.useInLibrarySince.AutoSize = true;
+            this.useInLibrarySince.Location = new System.Drawing.Point(214, 227);
+            this.useInLibrarySince.Name = "useInLibrarySince";
+            this.useInLibrarySince.Size = new System.Drawing.Size(81, 20);
+            this.useInLibrarySince.TabIndex = 25;
+            this.useInLibrarySince.Text = "Set Date";
+            this.useInLibrarySince.UseVisualStyleBackColor = true;
+            this.useInLibrarySince.CheckedChanged += new System.EventHandler(this.UseInLibrarySince_CheckedChanged);
+            // 
+            // usePublishDate
+            // 
+            this.usePublishDate.AutoSize = true;
+            this.usePublishDate.Location = new System.Drawing.Point(28, 227);
+            this.usePublishDate.Name = "usePublishDate";
+            this.usePublishDate.Size = new System.Drawing.Size(81, 20);
+            this.usePublishDate.TabIndex = 24;
+            this.usePublishDate.Text = "Set Date";
+            this.usePublishDate.UseVisualStyleBackColor = true;
+            this.usePublishDate.CheckedChanged += new System.EventHandler(this.UsePublishDate_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(748, 450);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 16);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Authors";
             // 
             // removeAuthorButton
             // 
@@ -164,14 +199,15 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "Comment On Literature Origin (purchase place and price or gift  etc..)";
             // 
-            // dateTimePicker2
+            // inLibrarySince
             // 
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(214, 225);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(117, 22);
-            this.dateTimePicker2.TabIndex = 15;
-            this.dateTimePicker2.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
+            this.inLibrarySince.CustomFormat = " ";
+            this.inLibrarySince.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.inLibrarySince.Location = new System.Drawing.Point(301, 225);
+            this.inLibrarySince.Name = "inLibrarySince";
+            this.inLibrarySince.Size = new System.Drawing.Size(103, 22);
+            this.inLibrarySince.TabIndex = 15;
+            this.inLibrarySince.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
             // 
             // label4
             // 
@@ -182,14 +218,15 @@
             this.label4.TabIndex = 14;
             this.label4.Text = "In Private Library Since";
             // 
-            // dateTimePicker1
+            // publishDate
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(28, 225);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(117, 22);
-            this.dateTimePicker1.TabIndex = 13;
-            this.dateTimePicker1.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
+            this.publishDate.CustomFormat = " ";
+            this.publishDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.publishDate.Location = new System.Drawing.Point(122, 225);
+            this.publishDate.Name = "publishDate";
+            this.publishDate.Size = new System.Drawing.Size(80, 22);
+            this.publishDate.TabIndex = 13;
+            this.publishDate.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
             // 
             // label3
             // 
@@ -245,7 +282,7 @@
             // 
             this.selectCategoryButton.Location = new System.Drawing.Point(28, 30);
             this.selectCategoryButton.Name = "selectCategoryButton";
-            this.selectCategoryButton.Size = new System.Drawing.Size(82, 23);
+            this.selectCategoryButton.Size = new System.Drawing.Size(82, 27);
             this.selectCategoryButton.TabIndex = 4;
             this.selectCategoryButton.Text = "Category";
             this.selectCategoryButton.UseVisualStyleBackColor = true;
@@ -299,20 +336,13 @@
             this.literatureAuthorsGridView.Location = new System.Drawing.Point(0, 0);
             this.literatureAuthorsGridView.Name = "literatureAuthorsGridView";
             this.literatureAuthorsGridView.ReadOnly = true;
+            this.literatureAuthorsGridView.RowHeadersVisible = false;
             this.literatureAuthorsGridView.RowHeadersWidth = 51;
             this.literatureAuthorsGridView.RowTemplate.Height = 24;
+            this.literatureAuthorsGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.literatureAuthorsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.literatureAuthorsGridView.Size = new System.Drawing.Size(812, 96);
             this.literatureAuthorsGridView.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(748, 450);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 16);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Authors";
             // 
             // AddEditLiteratureForm
             // 
@@ -343,14 +373,14 @@
         private System.Windows.Forms.RichTextBox titleText;
         private System.Windows.Forms.Label categoryLabel;
         private System.Windows.Forms.Button selectCategoryButton;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker publishDate;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox publisherText;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox isbnText;
         private System.Windows.Forms.Label isbnLabel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker inLibrarySince;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox originCommentText;
         private System.Windows.Forms.RichTextBox commentText;
@@ -359,5 +389,7 @@
         private System.Windows.Forms.Button addAuthorButton;
         private System.Windows.Forms.Label commentLable;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox usePublishDate;
+        private System.Windows.Forms.CheckBox useInLibrarySince;
     }
 }

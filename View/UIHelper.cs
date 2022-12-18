@@ -126,7 +126,7 @@ namespace PersonalLibrary.View
             gridView.DataSource = table;
             gridView.Columns[ID_COLUMN_INDEX].Width = 50;
             gridView.Columns[LITERATURE_COLUMN_INDEX_CATEGORY].Width = 130;
-            gridView.Columns[LITERATURE_COLUMN_INDEX_TITLE].Width = 130;
+            gridView.Columns[LITERATURE_COLUMN_INDEX_TITLE].Width = 250;
             gridView.Columns[LITERATURE_COLUMN_INDEX_AUTHORS].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             return table;
         }

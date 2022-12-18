@@ -72,6 +72,7 @@ namespace PersonalLibrary.Dao
                 }
             }
             reader.Close();
+            PostProcessLoaded(found);
             return found;
         }
     }

@@ -13,7 +13,10 @@ namespace PersonalLibrary.Models
         public string Title { get; set; }
         public string ISBN { get; set; }
         public string Publisher { get; set; }
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
+        public DateTime? OriginDate { get; set; }
+        public string OriginComment { get; set; }
+        public int? OriginId { get; set; }
         public bool IsAvailable { get; set; }
         public string Comment { get; set; }
         public List<Author> Authors{ get; set; }

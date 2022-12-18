@@ -90,6 +90,7 @@
             this.dataSelectionGridView.MultiSelect = false;
             this.dataSelectionGridView.Name = "dataSelectionGridView";
             this.dataSelectionGridView.ReadOnly = true;
+            this.dataSelectionGridView.RowHeadersVisible = false;
             this.dataSelectionGridView.RowHeadersWidth = 51;
             this.dataSelectionGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataSelectionGridView.RowTemplate.Height = 24;
@@ -98,13 +99,13 @@
             this.dataSelectionGridView.Size = new System.Drawing.Size(713, 329);
             this.dataSelectionGridView.TabIndex = 0;
             // 
-            // CategorySelectionForm
+            // ReferenceSelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 494);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "CategorySelectionForm";
+            this.Name = "ReferenceSelectionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select Category And Press Ok Button";
             this.splitContainer1.Panel1.ResumeLayout(false);
