@@ -2,13 +2,9 @@
 using PersonalLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using static PersonalLibrary.View.UIHelper;
 
 namespace PersonalLibrary.View
 {
@@ -20,6 +16,8 @@ namespace PersonalLibrary.View
         private readonly bool editMode;
         private readonly Literature toEdit;
         private int? categoryId;
+        private Dictionary<int, Author> authors = new Dictionary<int, Author>();
+
         public AddEditLiteratureForm(Repository repository, UIState uiState)
         {
             InitializeComponent();
@@ -42,7 +40,15 @@ namespace PersonalLibrary.View
             }
             if (!editMode)
             {
+                if (!ValidateData())
+                {
+                    return;
+                }
                 Literature created = CreateLiterature();
+                if (created == null) 
+                {
+                    return;
+                }
                 if (created.LiteratureId > 0)
                 {
                     this.uiState.LastModified = created;
@@ -74,10 +80,36 @@ namespace PersonalLibrary.View
             Literature literature = new Literature
             {
                 LiteratureId = -1,
-                Title = "smth"
+                CategoryId = this.categoryId.Value,
+                Title = this.titleText.Text.Trim(),
+                ISBN = this.isbnText.Text.Trim(),
+                Publisher = this.publisherText.Text.Trim(),
+                Authors = authors.Values.ToList()
             };
-            this.repository.GetLibraryDao().CreateLiterature(literature);
-            return literature;
+            if (this.repository.GetLibraryDao().CreateLiterature(literature)) 
+            {
+                return literature;
+            }
+            return null;
+        }
+        private bool ValidateData() 
+        {
+            if (this.categoryId == null) 
+            {
+                MessageBox.Show("Category must be selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (this.titleText.Text.Trim().Length == 0) 
+            {
+                MessageBox.Show("Title must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (this.authors.Count == 0)
+            {
+                MessageBox.Show("Literature must have at least single author", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
 
         private void CancelSavingLiteratureButton_Click(object sender, EventArgs e)
@@ -103,15 +135,34 @@ namespace PersonalLibrary.View
 
         private void AddAuthorButton_Click(object sender, EventArgs e)
         {
-            //this.uiState.LastModifiedId = categoryId;
+            Author last = authors.Count > 0 ? authors.Values.Last() : null;
+            int? lastAuthorId = null;
+            if (last != null) 
+            {
+                lastAuthorId = last.AuthorId;
+            }
+            this.uiState.LastModifiedId = lastAuthorId;
             AuthorSelectionForm authorSelectionForm = new AuthorSelectionForm(repository, uiState);
             authorSelectionForm.ShowDialog();
             if (uiState.LastOperation != Operation.CANCEL)
             {
                 Author selected = ((Author)uiState.LastModified);
-               // this.categoryLabel.Text = selected.Name;
-                //this.categoryId = selected.CategoryId;
+                authors[selected.AuthorId] = selected;
+                List<Author> allAuthors = authors.Values.ToList();
+                PopulateAutorGridData(allAuthors, this.literatureAuthorsGridView);
             }
+        }
+
+        private void RemoveAuthorButton_Click(object sender, EventArgs e)
+        {
+            if (!HasSelectedRow(literatureAuthorsGridView))
+            {
+                return;
+            }
+            DataGridViewSelectedRowCollection selected = literatureAuthorsGridView.SelectedRows;
+            object idObj = selected[0].Cells[ID_COLUMN_INDEX].Value;
+            literatureAuthorsGridView.Rows.RemoveAt(selected[0].Index);
+            this.authors.Remove((int)idObj);
         }
     }
 }

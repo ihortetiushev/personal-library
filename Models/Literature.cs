@@ -9,6 +9,14 @@ namespace PersonalLibrary.Models
     public class Literature
     {
         public int LiteratureId { get; set; }
+        public int CategoryId { get; set; }
         public string Title { get; set; }
+        public string ISBN { get; set; }
+        public string Publisher { get; set; }
+        public DateTime PublishDate { get; set; }
+        public bool IsAvailable { get; set; }
+        public string Comment { get; set; }
+
+        public List<Author> Authors{ get; set; }   
     }
 }

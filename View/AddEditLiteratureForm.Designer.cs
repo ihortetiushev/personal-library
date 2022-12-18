@@ -51,6 +51,7 @@
             this.cancelSavingLiteratureButton = new System.Windows.Forms.Button();
             this.saveLiteratureButton = new System.Windows.Forms.Button();
             this.literatureAuthorsGridView = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -67,6 +68,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.removeAuthorButton);
             this.splitContainer1.Panel1.Controls.Add(this.addAuthorButton);
             this.splitContainer1.Panel1.Controls.Add(this.commentLable);
@@ -104,6 +106,7 @@
             this.removeAuthorButton.TabIndex = 22;
             this.removeAuthorButton.Text = "Remove Author";
             this.removeAuthorButton.UseVisualStyleBackColor = true;
+            this.removeAuthorButton.Click += new System.EventHandler(this.RemoveAuthorButton_Click);
             // 
             // addAuthorButton
             // 
@@ -287,14 +290,29 @@
             // 
             // literatureAuthorsGridView
             // 
+            this.literatureAuthorsGridView.AllowUserToAddRows = false;
+            this.literatureAuthorsGridView.AllowUserToDeleteRows = false;
+            this.literatureAuthorsGridView.AllowUserToResizeColumns = false;
+            this.literatureAuthorsGridView.AllowUserToResizeRows = false;
             this.literatureAuthorsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.literatureAuthorsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.literatureAuthorsGridView.Location = new System.Drawing.Point(0, 0);
             this.literatureAuthorsGridView.Name = "literatureAuthorsGridView";
+            this.literatureAuthorsGridView.ReadOnly = true;
             this.literatureAuthorsGridView.RowHeadersWidth = 51;
             this.literatureAuthorsGridView.RowTemplate.Height = 24;
+            this.literatureAuthorsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.literatureAuthorsGridView.Size = new System.Drawing.Size(812, 96);
             this.literatureAuthorsGridView.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(748, 450);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 16);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Authors";
             // 
             // AddEditLiteratureForm
             // 
@@ -340,5 +358,6 @@
         private System.Windows.Forms.Button removeAuthorButton;
         private System.Windows.Forms.Button addAuthorButton;
         private System.Windows.Forms.Label commentLable;
+        private System.Windows.Forms.Label label1;
     }
 }

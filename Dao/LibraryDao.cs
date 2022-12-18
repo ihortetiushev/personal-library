@@ -25,31 +25,102 @@ namespace PersonalLibrary.Dao
                 Title = reader.GetString(reader.GetOrdinal("title"))
             };
         }
-        public void CreateLiterature(Literature literature)
+        public bool CreateLiterature(Literature literature)
         {
+            SqlTransaction transaction = null;
             try
             {
                 if (literature.LiteratureId > 0)
                 {
                     throw new ArgumentException("CategoryId must be not positive");
                 }
+                transaction = sqlConnection.BeginTransaction();
+
                 //TODO - implement
-                var sql = @"INSERT into category 
-                            (name, description) OUTPUT Inserted.category_id
-                            VALUES(@Name, @Description)";
-                using (var cmd = new SqlCommand(sql, sqlConnection))
-                {
-                    //cmd.Parameters.AddWithValue("@Name", category.Name);
-                    //cmd.Parameters.AddWithValue("@Description", category.Description);
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    literature.LiteratureId = insertedID;
-                }
+                InsertLiterature(literature, transaction);
+                InsertAuthors(literature, transaction);
+
+                transaction.Commit();
+                return true;
             }
             catch (Exception e)
             {
+                transaction.Rollback();
                 MessageBox.Show("Data is not saved " + e.Message, "Error!",
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void InsertLiterature(Literature literature, SqlTransaction transaction)
+        {
+            var sql = @"INSERT into literature 
+                            (category_id, 
+                            title,
+                            isbn,
+                            publisher,
+                            publish_date,
+                            origin_id,
+                            is_available,
+                            comment) OUTPUT Inserted.literature_id
+                            VALUES
+                            (@CategoryId,
+                            @Title,
+                            @ISBN,
+                            @Publisher,
+                            @PublishDate,
+                            @OriginId,
+                            @IsAvailable,
+                            @Comment)";
+            using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@CategoryId", literature.CategoryId);
+                cmd.Parameters.AddWithValue("@Title", literature.Title);
+                cmd.Parameters.AddWithValue("@ISBN", SetNullableValue(literature.ISBN));
+                cmd.Parameters.AddWithValue("@Publisher", SetNullableValue(literature.Publisher));
+                cmd.Parameters.AddWithValue("@PublishDate", SetNullableValue(null)/*literature.PublishDate*/);
+                //TODO
+                cmd.Parameters.AddWithValue("@OriginId", SetNullableValue(null));
+                cmd.Parameters.AddWithValue("@IsAvailable", SetNullableValue(literature.IsAvailable));
+                cmd.Parameters.AddWithValue("@Comment", SetNullableValue(literature.Comment));
+                int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+                literature.LiteratureId = insertedID;
+            }
+        }
+
+        private Object SetNullableValue(Object value) 
+        {
+            if (value == null) 
+            {
+                return DBNull.Value;
+            }
+            return value;
+        }
+
+        //for the simplicity delete all authors for the literature and add them from scratch
+        private void DeleteAllAuthorsForLiterature(Literature literature, SqlTransaction transaction) 
+        {
+            string sql = "delete from literature_author where literature_id = @LiteratureId";
+            using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+            {
+               cmd.Parameters.AddWithValue("@LiteratureId", literature.LiteratureId);
+               cmd.ExecuteScalar();
+            }
+        }
+
+        private void InsertAuthors(Literature literature, SqlTransaction transaction)
+        {
+            string sql = @"INSERT into literature_author (literature_id, author_id)
+                            VALUES (@LiteratureId, @AuthorId)";
+            foreach (Author author in literature.Authors)
+            {
+                using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@LiteratureId", literature.LiteratureId);
+                    cmd.Parameters.AddWithValue("@AuthorId", author.AuthorId);
+                    cmd.ExecuteScalar();
+                }
             }
         }
 

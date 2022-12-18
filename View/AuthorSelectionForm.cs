@@ -12,7 +12,6 @@ namespace PersonalLibrary.View
         public AuthorSelectionForm(Repository repository, UIState uiState):base(repository, uiState) 
         {
             Initialize();
-
         }
         private void Initialize() 
         {
@@ -22,17 +21,14 @@ namespace PersonalLibrary.View
         {
             return this.repository.GetAuthorDao().GetAllAuthors();
         }
-
         protected override DataTable CreateDataTable(DataGridView gridView) 
         {
             return CreateAuthorTable(gridView);
         }
-
         protected override object[] ToDataRow(Author data) 
         {
             return ToAuthorRow(data);
         }
-
         protected override Author loadSelectItem(int itemId)
         {
            return this.repository.GetAuthorDao().GetById(itemId);
