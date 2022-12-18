@@ -175,7 +175,6 @@ namespace PersonalLibrary.View
                     }
                 }
             }
-
         }
 
         private void AddCreatedRecordToTable(Object data) 

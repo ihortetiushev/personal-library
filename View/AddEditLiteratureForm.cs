@@ -53,12 +53,12 @@ namespace PersonalLibrary.View
             }
             if (toEdit.OriginDate != null)
             {
-                this.useInLibrarySince.Checked = true;
-                this.inLibrarySince.Value = toEdit.OriginDate.Value;
+                useInLibrarySince.Checked = true;
+                inLibrarySince.Value = toEdit.OriginDate.Value;
             }
-            this.originCommentText.Text = toEdit.OriginComment;
-            this.availabilityCheckBox.Checked = toEdit.IsAvailable;
-            this.commentText.Text = toEdit.Comment;
+            originCommentText.Text = toEdit.OriginComment;
+            availabilityCheckBox.Checked = toEdit.IsAvailable;
+            commentText.Text = toEdit.Comment;
             foreach (Author a in toEdit.Authors)
             {
                 this.authors[a.AuthorId] = a;
@@ -71,20 +71,20 @@ namespace PersonalLibrary.View
         {
             if (readOnly)
             {
-                this.Text = "View Literature";
-                this.selectCategoryButton.Enabled = false;
-                this.titleText.Enabled = false;
-                this.isbnText.Enabled = false;
-                this.publisherText.Enabled = false;
-                this.usePublishDate.Enabled = false;
-                this.publishDate.Enabled = false;
-                this.useInLibrarySince.Enabled = false;
-                this.inLibrarySince.Enabled = false;
-                this.originCommentText.Enabled = false;
-                this.availabilityCheckBox.Enabled = false;
-                this.commentText.Enabled = false;
-                this.addAuthorButton.Enabled = false;
-                this.removeAuthorButton.Enabled = false;
+                Text = "View Literature";
+                selectCategoryButton.Enabled = false;
+                titleText.Enabled = false;
+                isbnText.Enabled = false;
+                publisherText.Enabled = false;
+                usePublishDate.Enabled = false;
+                publishDate.Enabled = false;
+                useInLibrarySince.Enabled = false;
+                inLibrarySince.Enabled = false;
+                originCommentText.Enabled = false;
+                availabilityCheckBox.Enabled = false;
+                commentText.Enabled = false;
+                addAuthorButton.Enabled = false;
+                removeAuthorButton.Enabled = false;
             }
         }
 
@@ -96,6 +96,7 @@ namespace PersonalLibrary.View
                 this.uiState.LastModifiedId = null;
                 this.uiState.LastOperation = Operation.CANCEL;
                 this.Close();
+                return; 
             }
             if (!editMode)
             {
@@ -118,7 +119,14 @@ namespace PersonalLibrary.View
             }
             else
             {
-                EditLiterature();
+                if (!ValidateData())
+                {
+                    return;
+                }
+                if (!EditLiterature()) 
+                {
+                    return;
+                }
                 this.uiState.LastModified = toEdit;
                 this.uiState.LastModifiedId = toEdit.LiteratureId;
                 this.uiState.LastOperation = Operation.UPDATE;
@@ -126,18 +134,16 @@ namespace PersonalLibrary.View
             }
         }
 
-        private void EditLiterature()
+        private bool EditLiterature()
         {
-            //TODO - implement
-           /* toEdit.Name = this.categoryNameInput.Text;
-            toEdit.Description = this.categoryDescriptionInput.Text;*/
-            this.repository.GetLibraryDao().UpdateLiterature(toEdit);
+            MapUiToModel(toEdit);
+            return this.repository.GetLibraryDao().UpdateLiterature(toEdit);
         }
 
-        private Literature CreateLiterature()
+        private void MapUiToModel(Literature toPopulate) 
         {
             DateTime? publishDate = null;
-            if (usePublishDate.Checked) 
+            if (usePublishDate.Checked)
             {
                 publishDate = this.publishDate.Value.Date;
             }
@@ -147,21 +153,23 @@ namespace PersonalLibrary.View
                 originDate = this.inLibrarySince.Value.Date;
             }
 
-            Literature literature = new Literature
-            {
-                LiteratureId = -1,
-                CategoryId = this.categoryId.Value,
-                CategoryName = this.categoryLabel.Text,
-                Title = this.titleText.Text.Trim(),
-                ISBN = this.isbnText.Text.Trim(),
-                Publisher = this.publisherText.Text.Trim(),
-                PublishDate = publishDate,
-                IsAvailable = this.availabilityCheckBox.Checked,
-                OriginDate = originDate,
-                OriginComment = this.originCommentText.Text.Trim(),
-                Comment = this.commentText.Text.Trim(),
-                Authors = authors.Values.ToList()
-            };
+            toPopulate.CategoryId = this.categoryId.Value;
+            toPopulate.CategoryName = this.categoryLabel.Text;
+            toPopulate.Title = this.titleText.Text.Trim();
+            toPopulate.ISBN = this.isbnText.Text.Trim();
+            toPopulate.Publisher = this.publisherText.Text.Trim();
+            toPopulate.PublishDate = publishDate;
+            toPopulate.IsAvailable = this.availabilityCheckBox.Checked;
+            toPopulate.OriginDate = originDate;
+            toPopulate.OriginComment = this.originCommentText.Text.Trim();
+            toPopulate.Comment = this.commentText.Text.Trim();
+            toPopulate.Authors = authors.Values.ToList();
+        }
+        private Literature CreateLiterature()
+        {
+            Literature literature = new Literature();
+            literature.LiteratureId = -1;
+            MapUiToModel(literature);
             if (this.repository.GetLibraryDao().CreateLiterature(literature)) 
             {
                 return literature;

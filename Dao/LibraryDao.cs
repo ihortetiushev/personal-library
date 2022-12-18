@@ -176,6 +176,33 @@ namespace PersonalLibrary.Dao
             }
         }
 
+        private void UpdateLiterature(Literature literature, SqlTransaction transaction)
+        {
+            var sql = @"update literature set
+                               category_id = @CategoryId,
+                               title = @Title,
+                               isbn =  @ISBN,
+                               publisher = @Publisher,
+                               publish_date = @PublishDate,
+                               origin_id = @OriginId,
+                               is_available = @IsAvailable,
+                               comment = @Comment      
+                               where literature_id = @Id";
+            using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@CategoryId", literature.CategoryId);
+                cmd.Parameters.AddWithValue("@Title", literature.Title);
+                cmd.Parameters.AddWithValue("@ISBN", SetNullableValue(literature.ISBN));
+                cmd.Parameters.AddWithValue("@Publisher", SetNullableValue(literature.Publisher));
+                cmd.Parameters.AddWithValue("@PublishDate", SetNullableValue(literature.PublishDate));
+                cmd.Parameters.AddWithValue("@OriginId", SetNullableValue(literature.OriginId));
+                cmd.Parameters.AddWithValue("@IsAvailable", literature.IsAvailable);
+                cmd.Parameters.AddWithValue("@Comment", SetNullableValue(literature.Comment));
+                cmd.Parameters.AddWithValue("@Id", literature.LiteratureId);
+                cmd.ExecuteScalar();
+            }
+        }
+
         private Object SetNullableValue(Object value) 
         {
             if (value == null) 
@@ -183,6 +210,21 @@ namespace PersonalLibrary.Dao
                 return DBNull.Value;
             }
             return value;
+        }
+
+        //for the simplicity delete origin for the literature in order to handle update the same way as create
+        private void DeleteOriginIfPresent(Literature literature, SqlTransaction transaction)
+        {
+            if (literature.OriginId == null) 
+            {
+                return;
+            }
+            string sql = "delete from origin where origin_id = @OriginId";
+            using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+            {
+                cmd.Parameters.AddWithValue("@OriginId", literature.OriginId);
+                cmd.ExecuteScalar();
+            }
         }
 
         //for the simplicity delete all authors for the literature and add them from scratch
@@ -211,32 +253,32 @@ namespace PersonalLibrary.Dao
             }
         }
 
-        public void UpdateLiterature(Literature literature)
+        public bool UpdateLiterature(Literature literature)
         {
+            SqlTransaction transaction = null;
             try
             {
-                if (literature.LiteratureId <= 0)
+                if (literature.LiteratureId < 0)
                 {
-                    throw new ArgumentException("LiteratureId must be positive");
+                    throw new ArgumentException("CategoryId must be positive");
                 }
-                //TODO - implement
-                var sql = @"update category set 
-                            name = @Name,
-                            description = @Description
-                            where category_id = @Id";
-                using (var cmd = new SqlCommand(sql, sqlConnection))
-                {
-                   // cmd.Parameters.AddWithValue("@Name", category.Name);
-                   // cmd.Parameters.AddWithValue("@Description", category.Description);
-                   // cmd.Parameters.AddWithValue("@Id", category.CategoryId);
-                    cmd.ExecuteNonQuery();
-                }
+                transaction = sqlConnection.BeginTransaction();
+                DeleteOriginIfPresent(literature, transaction);
+                InsertOrigin(literature, transaction);
+                UpdateLiterature(literature, transaction);
+                DeleteAllAuthorsForLiterature(literature, transaction);
+                InsertAuthors(literature, transaction);
+
+                transaction.Commit();
+                return true;
             }
             catch (Exception e)
             {
+                transaction.Rollback();
                 MessageBox.Show("Data is not saved " + e.Message, "Error!",
                              MessageBoxButtons.OK,
                              MessageBoxIcon.Error);
+                return false;
             }
         }
 

@@ -65,6 +65,7 @@ namespace PersonalLibrary.View
                 this.uiState.LastModifiedId = null;
                 this.uiState.LastOperation = Operation.CANCEL;
                 this.Close();
+                return;
             }
             if (!editMode)
             {
