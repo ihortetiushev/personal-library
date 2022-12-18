@@ -113,6 +113,7 @@
             this.addAuthorButton.TabIndex = 21;
             this.addAuthorButton.Text = "Add Author";
             this.addAuthorButton.UseVisualStyleBackColor = true;
+            this.addAuthorButton.Click += new System.EventHandler(this.AddAuthorButton_Click);
             // 
             // commentLable
             // 
@@ -233,7 +234,7 @@
             this.categoryLabel.AutoSize = true;
             this.categoryLabel.Location = new System.Drawing.Point(133, 37);
             this.categoryLabel.Name = "categoryLabel";
-            this.categoryLabel.Size = new System.Drawing.Size(198, 16);
+            this.categoryLabel.Size = new System.Drawing.Size(203, 16);
             this.categoryLabel.TabIndex = 5;
             this.categoryLabel.Text = "No Category Has Been Selected";
             // 

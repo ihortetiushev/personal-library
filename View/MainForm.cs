@@ -11,10 +11,6 @@ namespace PersonalLibrary.View
 {
     public partial class MainForm : Form
     {
-        private static readonly int AUTHOR_COLUMN_INDEX_FIRST_NAME = 1;
-        private static readonly int AUTHOR_COLUMN_INDEX_LAST_NAME = 2;
-        private static readonly int AUTHOR_COLUMN_INDEX_COMMENT = 3;
-
         private readonly Repository repository;
         private readonly UIState uiState;
         private readonly bool readOnly;
@@ -78,7 +74,7 @@ namespace PersonalLibrary.View
                 List<Author> allAuthors = this.repository.GetAuthorDao().GetAllAuthors();
                 List<Literature> literature = this.repository.GetLibraryDao().GetAllLiterature();
                 List<Category> categories = this.repository.GetCategoryDao().GetAllCategories();
-                PopulateAutorGridData(allAuthors);
+                this.authorsTable = PopulateAutorGridData(allAuthors, this.authorsGridView);
                 this.categoryTable = PopulateCategoryGridData(categories,this.categoriesGridView);
                 Cursor.Current = oldCur;
             }
@@ -87,41 +83,6 @@ namespace PersonalLibrary.View
                 Cursor.Current = oldCur;
                 MessageBox.Show("Error loading data!:" + ex.Message);
             }
-        }
-
-        private void PopulateAutorGridData(List<Author> authors) 
-        {
-            this.authorsTable = CreateAuthorTable();
-            foreach (Author author in authors)
-            {
-                 authorsTable.LoadDataRow(ToAuthorRow(author), true);
-            }
-        }
-
-        private DataTable CreateAuthorTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
-            table.Columns.Add(new DataColumn("First Name", Type.GetType("System.String")));
-            table.Columns.Add(new DataColumn("Last Name", Type.GetType("System.String")));
-            table.Columns.Add(new DataColumn("Comment", Type.GetType("System.String")));
-
-            authorsGridView.DataSource = table;
-            authorsGridView.Columns[ID_COLUMN_INDEX].Width = 50;
-            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_FIRST_NAME].Width = 130;
-            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_LAST_NAME].Width = 130;
-            authorsGridView.Columns[AUTHOR_COLUMN_INDEX_COMMENT].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            return table;
-        }
-
-        private object[] ToAuthorRow(Author author)
-        {
-            object[] values = new object[4];
-            values[ID_COLUMN_INDEX] = author.AuthorId;
-            values[AUTHOR_COLUMN_INDEX_FIRST_NAME] = author.FirstName;
-            values[AUTHOR_COLUMN_INDEX_LAST_NAME] = author.LastName;
-            values[AUTHOR_COLUMN_INDEX_COMMENT] = author.Comment;
-            return values;
         }
 
         private void AddNewAuthorButton_Click(object sender, EventArgs e)

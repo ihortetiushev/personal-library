@@ -1,6 +1,6 @@
 ﻿namespace PersonalLibrary.View
 {
-    partial class CategorySelectionForm
+    partial class AuthorSelectionForm
     {
         /// <summary>
         /// Required designer variable.

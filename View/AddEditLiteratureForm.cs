@@ -91,13 +91,26 @@ namespace PersonalLibrary.View
         private void SelectCategoryButton_Click(object sender, EventArgs e)
         {
             this.uiState.LastModifiedId = categoryId;
-            CategorySelectionForm addEditLiteratureForm = new CategorySelectionForm(repository, uiState);
-            addEditLiteratureForm.ShowDialog();
+            CategorySelectionForm categorySelectionForm = new CategorySelectionForm(repository, uiState);
+            categorySelectionForm.ShowDialog();
             if (uiState.LastOperation != Operation.CANCEL) 
             {
                 Category selected = ((Category)uiState.LastModified);
                 this.categoryLabel.Text = selected.Name;
                 this.categoryId = selected.CategoryId;
+            }
+        }
+
+        private void AddAuthorButton_Click(object sender, EventArgs e)
+        {
+            //this.uiState.LastModifiedId = categoryId;
+            AuthorSelectionForm authorSelectionForm = new AuthorSelectionForm(repository, uiState);
+            authorSelectionForm.ShowDialog();
+            if (uiState.LastOperation != Operation.CANCEL)
+            {
+                Author selected = ((Author)uiState.LastModified);
+               // this.categoryLabel.Text = selected.Name;
+                //this.categoryId = selected.CategoryId;
             }
         }
     }
