@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PersonalLibrary.View
@@ -35,7 +32,6 @@ namespace PersonalLibrary.View
             }
             return true;
         }
-
         public static DataTable CreateCategoryTable(DataGridView gridView)
         {
             DataTable table = new DataTable();

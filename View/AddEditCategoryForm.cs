@@ -1,15 +1,6 @@
-﻿using PersonalLibrary;
-using PersonalLibrary.Dao;
+﻿using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
-using PersonalLibrary.View;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PersonalLibrary.View
@@ -48,7 +39,6 @@ namespace PersonalLibrary.View
                 }
             }
         }
-
         private void SaveCategoryButton_Click(object sender, EventArgs e)
         {
             if (readOnly)
@@ -79,14 +69,12 @@ namespace PersonalLibrary.View
                 this.Close();
             }
         }
-
         private void EditCategory()
         {
             toEdit.Name = this.categoryNameInput.Text;
             toEdit.Description = this.categoryDescriptionInput.Text;
             this.repository.GetCategoryDao().UpdateCategory(toEdit);
         }
-
         private Category CreateNewCategory()
         {
             Category category = new Category
@@ -98,7 +86,6 @@ namespace PersonalLibrary.View
             this.repository.GetCategoryDao().CreateCategory(category);
             return category;
         }
-
         private void CancelSaveCategoryButton_Click(object sender, EventArgs e)
         {
             this.uiState.LastOperation = Operation.CANCEL;

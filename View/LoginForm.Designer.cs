@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
-using PersonalLibrary.View;
 
 namespace PersonalLibrary.View
 {
@@ -136,11 +135,11 @@ namespace PersonalLibrary.View
         private System.Windows.Forms.Button LoginButton;
         private System.Windows.Forms.Label LoginLabel;
         private System.Windows.Forms.Label PasswordLabel;
+        //This is the place to handle users
         private Dictionary<string, User> USERS = new Dictionary<string, User>()
         {
-            //TODO - change to smth meaningful 
-            { "1", new User("1","1",User.UserType.Administrator)},
-            { "2", new User("2","2",User.UserType.Reader)}
+            { "admin", new User("admin", "AdminPassword", User.UserType.Administrator)},
+            { "reader", new User("reader", "ReaderPassword", User.UserType.Reader)}
         };
     }
 }

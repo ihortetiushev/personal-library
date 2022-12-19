@@ -1,15 +1,6 @@
-﻿using PersonalLibrary;
-using PersonalLibrary.Dao;
+﻿using PersonalLibrary.Dao;
 using PersonalLibrary.Models;
-using PersonalLibrary.View;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PersonalLibrary.View
@@ -56,10 +47,9 @@ namespace PersonalLibrary.View
             this.uiState.LastModifiedId = null;
             this.Close();
         }
-
         private void SaveAuthorButton_Click(object sender, EventArgs e)
         {
-            if (readOnly) 
+            if (readOnly)
             {
                 this.uiState.LastModified = null;
                 this.uiState.LastModifiedId = null;
@@ -88,7 +78,6 @@ namespace PersonalLibrary.View
             }
 
         }
-
         private void EditAuthor()
         {
             toEdit.FirstName = this.authorFirstNameInput.Text;
@@ -96,8 +85,7 @@ namespace PersonalLibrary.View
             toEdit.Comment = this.authorCommentInput.Text;
             this.repository.GetAuthorDao().UpdateAuthor(toEdit);
         }
-
-        private Author CreateNewAuthor() 
+        private Author CreateNewAuthor()
         {
             Author author = new Author
             {

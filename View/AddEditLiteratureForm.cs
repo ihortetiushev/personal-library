@@ -26,9 +26,10 @@ namespace PersonalLibrary.View
             this.readOnly = this.uiState.LoggedInUser.Type == User.UserType.Reader;
             this.toEdit = (Literature)this.uiState.LastModified;
             this.editMode = toEdit != null;
+            this.publishDate.Checked = false;
+            this.inLibrarySince.Checked = false;
             PopulateEditingData();
         }
-
         private void PopulateEditingData()
         {
             if (toEdit != null)
@@ -37,7 +38,6 @@ namespace PersonalLibrary.View
                 ReadOnlyModeIfNeeded();
             }
         }
-
         private void PopulateData()
         {
             this.Text = "Edit Literature";
@@ -46,14 +46,14 @@ namespace PersonalLibrary.View
             this.titleText.Text = toEdit.Title;
             this.isbnText.Text = toEdit.ISBN;
             this.publisherText.Text = toEdit.Publisher;
-            if (toEdit.PublishDate != null)
+            this.publishDate.Checked = toEdit.PublishDate != null;
+            if (this.publishDate.Checked)
             {
-                this.usePublishDate.Checked = true;
                 this.publishDate.Value = toEdit.PublishDate.Value;
             }
-            if (toEdit.OriginDate != null)
+            this.inLibrarySince.Checked = toEdit.OriginDate != null;
+            if (this.inLibrarySince.Checked)
             {
-                useInLibrarySince.Checked = true;
                 inLibrarySince.Value = toEdit.OriginDate.Value;
             }
             originCommentText.Text = toEdit.OriginComment;
@@ -66,7 +66,6 @@ namespace PersonalLibrary.View
             List<Author> allAuthors = authors.Values.ToList();
             PopulateAutorGridData(allAuthors, this.literatureAuthorsGridView);
         }
-
         private void ReadOnlyModeIfNeeded()
         {
             if (readOnly)
@@ -76,9 +75,7 @@ namespace PersonalLibrary.View
                 titleText.Enabled = false;
                 isbnText.Enabled = false;
                 publisherText.Enabled = false;
-                usePublishDate.Enabled = false;
                 publishDate.Enabled = false;
-                useInLibrarySince.Enabled = false;
                 inLibrarySince.Enabled = false;
                 originCommentText.Enabled = false;
                 availabilityCheckBox.Enabled = false;
@@ -87,7 +84,6 @@ namespace PersonalLibrary.View
                 removeAuthorButton.Enabled = false;
             }
         }
-
         private void SaveLiteratureButton_Click(object sender, EventArgs e)
         {
             if (readOnly)
@@ -143,12 +139,12 @@ namespace PersonalLibrary.View
         private void MapUiToModel(Literature toPopulate) 
         {
             DateTime? publishDate = null;
-            if (usePublishDate.Checked)
+            if (this.publishDate.Checked)
             {
                 publishDate = this.publishDate.Value.Date;
             }
             DateTime? originDate = null;
-            if (useInLibrarySince.Checked)
+            if (this.inLibrarySince.Checked)
             {
                 originDate = this.inLibrarySince.Value.Date;
             }
@@ -195,7 +191,6 @@ namespace PersonalLibrary.View
             }
             return true;
         }
-
         private void CancelSavingLiteratureButton_Click(object sender, EventArgs e)
         {
             this.uiState.LastOperation = Operation.CANCEL;
@@ -203,7 +198,6 @@ namespace PersonalLibrary.View
             this.uiState.LastModifiedId = null;
             this.Close();
         }
-
         private void SelectCategoryButton_Click(object sender, EventArgs e)
         {
             this.uiState.LastModifiedId = categoryId;
@@ -216,7 +210,6 @@ namespace PersonalLibrary.View
                 this.categoryId = selected.CategoryId;
             }
         }
-
         private void AddAuthorButton_Click(object sender, EventArgs e)
         {
             Author last = authors.Count > 0 ? authors.Values.Last() : null;
@@ -236,7 +229,6 @@ namespace PersonalLibrary.View
                 PopulateAutorGridData(allAuthors, this.literatureAuthorsGridView);
             }
         }
-
         private void RemoveAuthorButton_Click(object sender, EventArgs e)
         {
             if (!HasSelectedRow(literatureAuthorsGridView))
@@ -248,32 +240,27 @@ namespace PersonalLibrary.View
             literatureAuthorsGridView.Rows.RemoveAt(selected[0].Index);
             this.authors.Remove((int)idObj);
         }
-
-        private void UsePublishDate_CheckedChanged(object sender, EventArgs e)
+        private void PublishDate_ValueChanged(object sender, EventArgs e)
         {
-            if (this.usePublishDate.Checked)
+            if (this.publishDate.Checked)
             {
                 this.publishDate.CustomFormat = "yyyy";
-                this.publishDate.Enabled = true;
             }
-            else 
+            else
             {
                 this.publishDate.CustomFormat = " ";
-                this.publishDate.Enabled = false;
             }
         }
 
-        private void UseInLibrarySince_CheckedChanged(object sender, EventArgs e)
+        private void InLibrarySince_ValueChanged(object sender, EventArgs e)
         {
-            if (this.useInLibrarySince.Checked)
+            if (this.inLibrarySince.Checked)
             {
                 this.inLibrarySince.CustomFormat = "MM yyyy";
-                this.inLibrarySince.Enabled = true;
             }
             else
             {
                 this.inLibrarySince.CustomFormat = " ";
-                this.inLibrarySince.Enabled = false;
             }
         }
     }

@@ -213,16 +213,16 @@ namespace PersonalLibrary.Dao
         }
 
         //for the simplicity delete origin for the literature in order to handle update the same way as create
-        private void DeleteOriginIfPresent(Literature literature, SqlTransaction transaction)
+        private void DeleteOriginIfPresent(int? originId, SqlTransaction transaction)
         {
-            if (literature.OriginId == null) 
+            if (originId == null) 
             {
                 return;
             }
             string sql = "delete from origin where origin_id = @OriginId";
             using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
             {
-                cmd.Parameters.AddWithValue("@OriginId", literature.OriginId);
+                cmd.Parameters.AddWithValue("@OriginId", originId);
                 cmd.ExecuteScalar();
             }
         }
@@ -263,9 +263,10 @@ namespace PersonalLibrary.Dao
                     throw new ArgumentException("CategoryId must be positive");
                 }
                 transaction = sqlConnection.BeginTransaction();
-                DeleteOriginIfPresent(literature, transaction);
+                int? oldOrigin = literature.OriginId;
                 InsertOrigin(literature, transaction);
                 UpdateLiterature(literature, transaction);
+                DeleteOriginIfPresent(oldOrigin, transaction);
                 DeleteAllAuthorsForLiterature(literature, transaction);
                 InsertAuthors(literature, transaction);
 
@@ -286,11 +287,81 @@ namespace PersonalLibrary.Dao
         {
             return base.GetById("select * from literature where literature_id = @Id", literatureId);
         }
-        public void DeleteLiterature(int literatureId)
+        public bool DeleteLiterature(int literatureId)
         {
-            //TODO - implement
-            //base.ExecuteNonQuery("delete from category where category_id = " + literatureId);
+            Literature literature = this.GetById(literatureId);
+            int? originId = literature.OriginId;
+            SqlTransaction transaction = null;
+            try
+            {
+
+                transaction = sqlConnection.BeginTransaction();
+                string sql = "delete from literature_author where literature_id = @Id";
+                using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@Id", literatureId);
+                    cmd.ExecuteScalar();
+                }
+                sql = "delete from literature where literature_id = @Id";
+                using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@Id", literatureId);
+                    cmd.ExecuteScalar();
+                }
+                if (originId != null) 
+                {
+                   sql = "delete from origin where origin_id = @Id";   
+                    using (var cmd = new SqlCommand(sql, sqlConnection, transaction))
+                    {
+                     cmd.Parameters.AddWithValue("@Id", originId);
+                     cmd.ExecuteScalar();
+                    }
+                }
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                MessageBox.Show("Data is not Deleted" + e.Message, "Error!",
+                             MessageBoxButtons.OK,
+                             MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public List<Literature> DoSearch(SearchCriteria searchCriteria)
+        {
+            int available = searchCriteria.IsAvailable ? 1 : 0;
+            string sql = "select * from literature where is_available = " + available;
+            if (searchCriteria.Title.Length !=0) 
+            {
+                sql = sql + " and title like '%" + searchCriteria.Title + "%'";
+            }
+            if (IsAuthorSearchIncluded(searchCriteria)) 
+            {
+                sql = sql + " and literature_id in (" + AddAuthorSearchCriteria(searchCriteria) + ")";
+            }
+            return base.ExecuteQuery(sql);
+        }
+        private bool IsAuthorSearchIncluded(SearchCriteria searchCriteria) 
+        {
+            return searchCriteria.AuthorFirstName.Length != 0 || searchCriteria.AuthorLastName.Length != 0;
+        }
+
+        private string AddAuthorSearchCriteria(SearchCriteria searchCriteria) 
+        {
+            string authorSql = "select author_id from author where 1=1";
+            if (searchCriteria.AuthorFirstName.Length != 0)
+            {
+                authorSql = authorSql + " and first_name like '%" + searchCriteria.AuthorFirstName + "%'";
+            }
+            if (searchCriteria.AuthorLastName.Length != 0)
+            {
+                authorSql = authorSql + " and last_name like '%" + searchCriteria.AuthorLastName + "%'";
+            }
+            string authorLiteratureSql = "select literature_id from literature_author where author_id in (" + authorSql + ")";
+            return authorLiteratureSql;
         }
     }
-
 }

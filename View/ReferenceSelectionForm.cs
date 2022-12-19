@@ -1,5 +1,4 @@
 ﻿using PersonalLibrary.Dao;
-using PersonalLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,11 +20,8 @@ namespace PersonalLibrary.View
             SetSelectedRow();
         }
         protected abstract List<T> LoadData();
-
         protected abstract DataTable CreateDataTable(DataGridView gridView);
-
         protected abstract object[] ToDataRow(T data);
-
         protected DataTable PopulateDataGridData(List<T> data, DataGridView gridView)
         {
             DataTable table = CreateDataTable(gridView);
@@ -35,7 +31,6 @@ namespace PersonalLibrary.View
             }
             return table;
         }
-
         private void LoadDataInternal()
         {
             Cursor oldCur = Cursor.Current;
@@ -86,7 +81,6 @@ namespace PersonalLibrary.View
             this.uiState.LastModified = selected;
             this.Close();
         }
-
         private void CancelButton_Click(object sender, EventArgs e)
         {
             uiState.LastModified = null;

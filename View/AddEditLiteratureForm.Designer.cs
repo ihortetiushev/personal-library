@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.useInLibrarySince = new System.Windows.Forms.CheckBox();
-            this.usePublishDate = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.removeAuthorButton = new System.Windows.Forms.Button();
             this.addAuthorButton = new System.Windows.Forms.Button();
@@ -70,8 +68,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.useInLibrarySince);
-            this.splitContainer1.Panel1.Controls.Add(this.usePublishDate);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.removeAuthorButton);
             this.splitContainer1.Panel1.Controls.Add(this.addAuthorButton);
@@ -101,28 +97,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(812, 585);
             this.splitContainer1.SplitterDistance = 485;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // useInLibrarySince
-            // 
-            this.useInLibrarySince.AutoSize = true;
-            this.useInLibrarySince.Location = new System.Drawing.Point(214, 227);
-            this.useInLibrarySince.Name = "useInLibrarySince";
-            this.useInLibrarySince.Size = new System.Drawing.Size(81, 20);
-            this.useInLibrarySince.TabIndex = 25;
-            this.useInLibrarySince.Text = "Set Date";
-            this.useInLibrarySince.UseVisualStyleBackColor = true;
-            this.useInLibrarySince.CheckedChanged += new System.EventHandler(this.UseInLibrarySince_CheckedChanged);
-            // 
-            // usePublishDate
-            // 
-            this.usePublishDate.AutoSize = true;
-            this.usePublishDate.Location = new System.Drawing.Point(28, 227);
-            this.usePublishDate.Name = "usePublishDate";
-            this.usePublishDate.Size = new System.Drawing.Size(81, 20);
-            this.usePublishDate.TabIndex = 24;
-            this.usePublishDate.Text = "Set Date";
-            this.usePublishDate.UseVisualStyleBackColor = true;
-            this.usePublishDate.CheckedChanged += new System.EventHandler(this.UsePublishDate_CheckedChanged);
             // 
             // label1
             // 
@@ -203,11 +177,13 @@
             // 
             this.inLibrarySince.CustomFormat = " ";
             this.inLibrarySince.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.inLibrarySince.Location = new System.Drawing.Point(301, 225);
+            this.inLibrarySince.Location = new System.Drawing.Point(214, 227);
             this.inLibrarySince.Name = "inLibrarySince";
-            this.inLibrarySince.Size = new System.Drawing.Size(103, 22);
+            this.inLibrarySince.ShowCheckBox = true;
+            this.inLibrarySince.Size = new System.Drawing.Size(140, 22);
             this.inLibrarySince.TabIndex = 15;
             this.inLibrarySince.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
+            this.inLibrarySince.ValueChanged += new System.EventHandler(this.InLibrarySince_ValueChanged);
             // 
             // label4
             // 
@@ -222,11 +198,13 @@
             // 
             this.publishDate.CustomFormat = " ";
             this.publishDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.publishDate.Location = new System.Drawing.Point(122, 225);
+            this.publishDate.Location = new System.Drawing.Point(28, 227);
             this.publishDate.Name = "publishDate";
-            this.publishDate.Size = new System.Drawing.Size(80, 22);
+            this.publishDate.ShowCheckBox = true;
+            this.publishDate.Size = new System.Drawing.Size(102, 22);
             this.publishDate.TabIndex = 13;
             this.publishDate.Value = new System.DateTime(2022, 12, 17, 0, 0, 0, 0);
+            this.publishDate.ValueChanged += new System.EventHandler(this.PublishDate_ValueChanged);
             // 
             // label3
             // 
@@ -389,7 +367,5 @@
         private System.Windows.Forms.Button addAuthorButton;
         private System.Windows.Forms.Label commentLable;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox usePublishDate;
-        private System.Windows.Forms.CheckBox useInLibrarySince;
     }
 }

@@ -31,6 +31,16 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.allLiteratureTab = new System.Windows.Forms.TabPage();
             this.literatureSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.availabilityCheckbox = new System.Windows.Forms.CheckBox();
+            this.searchLabel = new System.Windows.Forms.Label();
+            this.titleInput = new System.Windows.Forms.TextBox();
+            this.titleLabel = new System.Windows.Forms.Label();
+            this.lastNameLabel = new System.Windows.Forms.Label();
+            this.lastNameInput = new System.Windows.Forms.TextBox();
+            this.firstNameInput = new System.Windows.Forms.TextBox();
+            this.firstNameLabel = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
             this.literatureGridView = new System.Windows.Forms.DataGridView();
             this.categoriesTab = new System.Windows.Forms.TabPage();
             this.categoriesSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -58,6 +68,7 @@
             this.tabControl.SuspendLayout();
             this.allLiteratureTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).BeginInit();
+            this.literatureSplitContainer.Panel1.SuspendLayout();
             this.literatureSplitContainer.Panel2.SuspendLayout();
             this.literatureSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.literatureGridView)).BeginInit();
@@ -109,12 +120,118 @@
             this.literatureSplitContainer.Name = "literatureSplitContainer";
             this.literatureSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // literatureSplitContainer.Panel1
+            // 
+            this.literatureSplitContainer.Panel1.Controls.Add(this.availabilityCheckbox);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.searchLabel);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.titleInput);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.titleLabel);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.lastNameLabel);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.lastNameInput);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.firstNameInput);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.firstNameLabel);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.searchButton);
+            this.literatureSplitContainer.Panel1.Controls.Add(this.clearButton);
+            // 
             // literatureSplitContainer.Panel2
             // 
             this.literatureSplitContainer.Panel2.Controls.Add(this.literatureGridView);
             this.literatureSplitContainer.Size = new System.Drawing.Size(889, 460);
-            this.literatureSplitContainer.SplitterDistance = 143;
+            this.literatureSplitContainer.SplitterDistance = 166;
             this.literatureSplitContainer.TabIndex = 0;
+            // 
+            // availabilityCheckbox
+            // 
+            this.availabilityCheckbox.AutoSize = true;
+            this.availabilityCheckbox.Checked = true;
+            this.availabilityCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.availabilityCheckbox.Location = new System.Drawing.Point(27, 147);
+            this.availabilityCheckbox.Name = "availabilityCheckbox";
+            this.availabilityCheckbox.Size = new System.Drawing.Size(99, 20);
+            this.availabilityCheckbox.TabIndex = 21;
+            this.availabilityCheckbox.Text = "Is Available";
+            this.availabilityCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // searchLabel
+            // 
+            this.searchLabel.AutoSize = true;
+            this.searchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.searchLabel.Location = new System.Drawing.Point(24, 16);
+            this.searchLabel.Name = "searchLabel";
+            this.searchLabel.Size = new System.Drawing.Size(90, 16);
+            this.searchLabel.TabIndex = 20;
+            this.searchLabel.Text = "Search Fields";
+            // 
+            // titleInput
+            // 
+            this.titleInput.Location = new System.Drawing.Point(143, 97);
+            this.titleInput.Name = "titleInput";
+            this.titleInput.Size = new System.Drawing.Size(623, 22);
+            this.titleInput.TabIndex = 19;
+            // 
+            // titleLabel
+            // 
+            this.titleLabel.AutoSize = true;
+            this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.titleLabel.Location = new System.Drawing.Point(24, 103);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(33, 16);
+            this.titleLabel.TabIndex = 18;
+            this.titleLabel.Text = "Title";
+            // 
+            // lastNameLabel
+            // 
+            this.lastNameLabel.AutoSize = true;
+            this.lastNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lastNameLabel.Location = new System.Drawing.Point(398, 58);
+            this.lastNameLabel.Name = "lastNameLabel";
+            this.lastNameLabel.Size = new System.Drawing.Size(113, 16);
+            this.lastNameLabel.TabIndex = 17;
+            this.lastNameLabel.Text = "Author Last Name";
+            // 
+            // lastNameInput
+            // 
+            this.lastNameInput.Location = new System.Drawing.Point(526, 52);
+            this.lastNameInput.Name = "lastNameInput";
+            this.lastNameInput.Size = new System.Drawing.Size(240, 22);
+            this.lastNameInput.TabIndex = 16;
+            // 
+            // firstNameInput
+            // 
+            this.firstNameInput.Location = new System.Drawing.Point(143, 52);
+            this.firstNameInput.Name = "firstNameInput";
+            this.firstNameInput.Size = new System.Drawing.Size(240, 22);
+            this.firstNameInput.TabIndex = 15;
+            // 
+            // firstNameLabel
+            // 
+            this.firstNameLabel.AutoSize = true;
+            this.firstNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.firstNameLabel.Location = new System.Drawing.Point(24, 58);
+            this.firstNameLabel.Name = "firstNameLabel";
+            this.firstNameLabel.Size = new System.Drawing.Size(113, 16);
+            this.firstNameLabel.TabIndex = 14;
+            this.firstNameLabel.Text = "Author First Name";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(773, 92);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(95, 32);
+            this.searchButton.TabIndex = 12;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.SearchButton_Click);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(773, 135);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(95, 32);
+            this.clearButton.TabIndex = 13;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // literatureGridView
             // 
@@ -132,7 +249,7 @@
             this.literatureGridView.RowTemplate.Height = 24;
             this.literatureGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.literatureGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.literatureGridView.Size = new System.Drawing.Size(889, 313);
+            this.literatureGridView.Size = new System.Drawing.Size(889, 290);
             this.literatureGridView.TabIndex = 0;
             // 
             // categoriesTab
@@ -393,6 +510,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.allLiteratureTab.ResumeLayout(false);
+            this.literatureSplitContainer.Panel1.ResumeLayout(false);
+            this.literatureSplitContainer.Panel1.PerformLayout();
             this.literatureSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.literatureSplitContainer)).EndInit();
             this.literatureSplitContainer.ResumeLayout(false);
@@ -445,5 +564,15 @@
         private System.Windows.Forms.ToolStripMenuItem addLiteratureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewEditLiteratureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteLiteratureToolStripMenuItem;
+        private System.Windows.Forms.Label searchLabel;
+        private System.Windows.Forms.TextBox titleInput;
+        private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Label lastNameLabel;
+        private System.Windows.Forms.TextBox lastNameInput;
+        private System.Windows.Forms.TextBox firstNameInput;
+        private System.Windows.Forms.Label firstNameLabel;
+        private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.CheckBox availabilityCheckbox;
     }
 }

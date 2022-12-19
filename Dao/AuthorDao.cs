@@ -90,7 +90,6 @@ namespace PersonalLibrary.Dao
                 Comment = reader.GetString(reader.GetOrdinal("comment"))
             };
         }
-
         public Author GetById(int authorId) 
         {
             return base.GetById("select * from author where author_id = @Id", authorId);

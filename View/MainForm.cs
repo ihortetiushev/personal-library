@@ -26,8 +26,7 @@ namespace PersonalLibrary.View
             this.uiState = uiState;
             this.readOnly = uiState.LoggedInUser.Type == User.UserType.Reader;
             InitializeState(uiState);
-            LoadData();
-            
+            LoadData();            
         }
 
         private void InitializeState(UIState uiState) 
@@ -42,8 +41,7 @@ namespace PersonalLibrary.View
             this.addLiteratureToolStripMenuItem.Enabled = !readOnly;
             this.deleteLiteratureToolStripMenuItem.Enabled = !readOnly;
             SetActiveTabState();
-        }
-       
+        }       
 
         private void MainForm_FormClosing(Object sender, FormClosingEventArgs e)
         {
@@ -52,7 +50,6 @@ namespace PersonalLibrary.View
                 e.Cancel = true;
             }
         }
-
         private bool DoExit() 
         {
             var result = MessageBox.Show("Do you want to exit?", "Confirm exit",
@@ -91,7 +88,6 @@ namespace PersonalLibrary.View
         {
             AddNewAuthor();
         }
-
         private void AddNewAuthor() 
         {
             uiState.LastModified = null;
@@ -99,7 +95,6 @@ namespace PersonalLibrary.View
             addEditAuthorForm.ShowDialog();
             RefreshGridData(authorsGridView);
         }
-
         private void AddNewCategory()
         {
             uiState.LastModified = null;
@@ -107,17 +102,14 @@ namespace PersonalLibrary.View
             addEditCategoryForm.ShowDialog();
             RefreshGridData(categoriesGridView);
         }
-
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoExit();
         }
-
         private void AddNewCategoryButton_Click(object sender, EventArgs e)
         {
             AddNewCategory();
-        }
-        
+        }        
         private void UpdateGridData(DataGridView activeGrid, int i, Object data) 
         {
             if (data.GetType() == typeof(Author)) 
@@ -128,21 +120,28 @@ namespace PersonalLibrary.View
             {
                 UpdateGridDate(activeGrid, i, (Category)data);
             }
+            if (data.GetType() == typeof(Literature))
+            {
+                UpdateGridDate(activeGrid, i, (Literature)data);
+            }
         }
-
         private void UpdateGridDate(DataGridView activeGrid, int i, Author autor)
         {
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_FIRST_NAME].Value = autor.FirstName;
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_LAST_NAME].Value = autor.LastName;
             activeGrid.Rows[i].Cells[AUTHOR_COLUMN_INDEX_COMMENT].Value = autor.Comment;
         }
-
         private void UpdateGridDate(DataGridView activeGrid, int i, Category category)
         {
             activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_NAME].Value = category.Name;
             activeGrid.Rows[i].Cells[CATEGORY_COLUMN_INDEX_DESC].Value = category.Description;
         }
-
+        private void UpdateGridDate(DataGridView activeGrid, int i, Literature literature)
+        {
+            activeGrid.Rows[i].Cells[LITERATURE_COLUMN_INDEX_CATEGORY].Value = literature.CategoryName;
+            activeGrid.Rows[i].Cells[LITERATURE_COLUMN_INDEX_TITLE].Value = literature.Title;
+            activeGrid.Rows[i].Cells[LITERATURE_COLUMN_INDEX_AUTHORS].Value = literature.GetAuthorsAsString();
+        }
         private void RefreshGridData(DataGridView dataGrid)
         {
             if (uiState.LastOperation == Operation.CANCEL)
@@ -176,7 +175,6 @@ namespace PersonalLibrary.View
                 }
             }
         }
-
         private void AddCreatedRecordToTable(Object data) 
         {
             if (data.GetType() == typeof(Author))
@@ -207,17 +205,14 @@ namespace PersonalLibrary.View
             object[] rowData = ToCategoryRow(category);
             this.categoryTable.LoadDataRow(rowData, true);
         }
-
         private void AddNewAutorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddNewAuthor();
         }
-
         private void EditAuthorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ViewEditAuthor();
         }
-
         private void DeleteAuthorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!HasSelectedRow(this.authorsGridView))
@@ -243,7 +238,6 @@ namespace PersonalLibrary.View
             uiState.LastOperation = Operation.DELETE;
             RefreshGridData(this.authorsGridView);
         }
-
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetActiveTabState();
@@ -280,7 +274,6 @@ namespace PersonalLibrary.View
                 this.deleteCategotyToolStripMenuItem.Enabled = false;
             }
         }
-
         private void SetLiteratureItemsState()
         {
             if (this.tabControl.SelectedTab == this.allLiteratureTab)
@@ -294,17 +287,14 @@ namespace PersonalLibrary.View
                 this.deleteLiteratureToolStripMenuItem.Enabled = false;
             }
         }
-
         private void AddNewCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddNewCategory();
         }
-
         private void ViewEditCategoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ViewEditCategory();
         }
-
         private void DeleteCategotyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!HasSelectedRow(this.categoriesGridView))
@@ -330,7 +320,6 @@ namespace PersonalLibrary.View
             uiState.LastOperation = Operation.DELETE;
             RefreshGridData(this.categoriesGridView);
         }
-
         private void ViewEditAuthor()
         {
             if (!HasSelectedRow(this.authorsGridView))
@@ -344,7 +333,6 @@ namespace PersonalLibrary.View
             addEditAuthorForm.ShowDialog();
             RefreshGridData(this.authorsGridView);
         }
-
         private void ViewEditCategory()
         {
             if (!HasSelectedRow(this.categoriesGridView))
@@ -358,7 +346,6 @@ namespace PersonalLibrary.View
             addEditCategoryForm.ShowDialog();
             RefreshGridData(this.categoriesGridView);
         }
-
         private void ViewEditLiterature()
         {
             if (!HasSelectedRow(this.literatureGridView))
@@ -372,12 +359,10 @@ namespace PersonalLibrary.View
             addEditLiteratureForm.ShowDialog();
             RefreshGridData(this.literatureGridView);
         }
-
         private void AddLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddLiterature();
         }
-
         private void AddLiterature()
         {
             uiState.LastModified = null;
@@ -385,12 +370,10 @@ namespace PersonalLibrary.View
             addEditLiteratureForm.ShowDialog();
             RefreshGridData(literatureGridView);
         }
-
         private void ViewEditLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ViewEditLiterature();
         }
-
         private void DeleteLiteratureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!HasSelectedRow(this.literatureGridView))
@@ -404,14 +387,38 @@ namespace PersonalLibrary.View
             {
                 return;
             }
-            this.repository.GetLibraryDao().DeleteLiterature(itemId);
+            if (!this.repository.GetLibraryDao().DeleteLiterature(itemId)) 
+            {
+                return;
+            }            
             uiState.LastModified = null;
             uiState.LastModifiedId = itemId;
             uiState.LastOperation = Operation.DELETE;
             RefreshGridData(this.literatureGridView);
         }
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            this.firstNameInput.Text = "";
+            this.lastNameInput.Text = "";
+            this.titleInput.Text = "";
+            this.availabilityCheckbox.Checked = false;
+        }
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SearchCriteria searchCriteria = new SearchCriteria()
+            {
+                AuthorFirstName = firstNameInput.Text,
+                AuthorLastName = lastNameInput.Text,
+                Title = titleInput.Text,
+                IsAvailable = availabilityCheckbox.Checked
+            };
+            List<Literature> found = this.repository.GetLibraryDao().DoSearch(searchCriteria);
+            this.literatureTable.Clear();
+            foreach(Literature literature in found)
+            {
+                object[] rowData = ToLiteratureRow(literature);
+                this.literatureTable.LoadDataRow(rowData, true);
+            }
+        }
     }
-
-
-
 }
