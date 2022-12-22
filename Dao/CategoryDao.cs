@@ -98,5 +98,4 @@ namespace PersonalLibrary.Dao
             base.ExecuteNonQuery("delete from category where category_id = " + categoryId);
         }
     }
-
 }
